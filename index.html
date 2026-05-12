@@ -706,6 +706,13 @@ body{
     cursor:pointer;
 }
 
+.buy-btn:disabled{
+
+    opacity:.45;
+
+    cursor:not-allowed;
+}
+
 /* ========================================================= */
 /* PUZZLE */
 /* ========================================================= */
@@ -840,6 +847,10 @@ body{
     font-size:22px;
     font-weight:bold;
 }
+
+/* ========================================================= */
+/* MOBILE */
+/* ========================================================= */
 
 @media(max-width:1300px){
 
@@ -1129,6 +1140,8 @@ body{
 
                 </div>
 
+                <!-- STREAK -->
+
                 <div class="streak">
 
                     <div class="streak-left">
@@ -1153,6 +1166,40 @@ body{
 
                     <div>
                         +0 XP
+                    </div>
+
+                </div>
+
+                <!-- COINS PROFILE -->
+
+                <div class="streak">
+
+                    <div class="streak-left">
+
+                        <div class="fire">
+                            🪙
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                NeonChess Coin
+                            </h3>
+
+                            <p id="profileCoinText">
+
+                                0 Coin
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div id="coinRank">
+
+                        Bronze
+
                     </div>
 
                 </div>
@@ -1241,12 +1288,8 @@ id="puzzleScreen">
 
     <div class="puzzle-container">
 
-        <!-- BOARD -->
-
         <div class="puzzle-board"
         id="puzzleBoard"></div>
-
-        <!-- SIDE -->
 
         <div class="puzzle-side">
 
@@ -1372,6 +1415,38 @@ function updateCoins(){
         "coinText"
     ).textContent =
     coins;
+
+    document.getElementById(
+        "profileCoinText"
+    ).textContent =
+
+    coins + " Coin";
+
+    const rank =
+    document.getElementById(
+        "coinRank"
+    );
+
+    if(coins >= 1000){
+
+        rank.textContent =
+        "Diamond";
+    }
+    else if(coins >= 500){
+
+        rank.textContent =
+        "Gold";
+    }
+    else if(coins >= 200){
+
+        rank.textContent =
+        "Silver";
+    }
+    else{
+
+        rank.textContent =
+        "Bronze";
+    }
 }
 
 function rewardCoins(amount){
@@ -1530,10 +1605,6 @@ const pieceMap = {
     K:'https://upload.wikimedia.org/wikipedia/commons/4/42/Chess_klt45.svg',
     P:'https://upload.wikimedia.org/wikipedia/commons/4/45/Chess_plt45.svg'
 };
-
-/* ========================================================= */
-/* PUZZLES */
-/* ========================================================= */
 
 const puzzles = [
 
