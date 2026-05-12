@@ -1,0 +1,1528 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NeonChess</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+
+    background:
+        radial-gradient(circle at top,#16202b,#090d13 75%);
+
+    color:white;
+
+    overflow:hidden;
+}
+
+/* ========================================================= */
+/* BG */
+/* ========================================================= */
+
+.bg{
+
+    position:fixed;
+    inset:0;
+
+    overflow:hidden;
+
+    z-index:-1;
+}
+
+.glow{
+
+    position:absolute;
+
+    border-radius:50%;
+
+    filter:blur(130px);
+
+    opacity:.18;
+
+    animation:float 7s ease-in-out infinite;
+}
+
+.glow1{
+
+    width:500px;
+    height:500px;
+
+    background:#00ffae;
+
+    top:-180px;
+    left:-120px;
+}
+
+.glow2{
+
+    width:420px;
+    height:420px;
+
+    background:#00bfff;
+
+    bottom:-140px;
+    right:-120px;
+}
+
+@keyframes float{
+
+    0%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-18px);
+    }
+
+    100%{
+        transform:translateY(0px);
+    }
+}
+
+/* ========================================================= */
+/* APP */
+/* ========================================================= */
+
+.app{
+
+    display:flex;
+
+    height:100vh;
+}
+
+/* ========================================================= */
+/* SIDEBAR */
+/* ========================================================= */
+
+.sidebar{
+
+    width:280px;
+
+    background:
+        rgba(255,255,255,.05);
+
+    border-right:
+        1px solid rgba(255,255,255,.08);
+
+    backdrop-filter:blur(16px);
+
+    padding:20px 16px;
+
+    transition:.35s;
+
+    overflow:hidden;
+
+    display:flex;
+    flex-direction:column;
+}
+
+.sidebar.collapsed{
+
+    width:90px;
+}
+
+.top-side{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:30px;
+}
+
+.logo{
+
+    font-size:30px;
+    font-weight:900;
+
+    white-space:nowrap;
+}
+
+.logo span{
+
+    color:#00ffae;
+
+    text-shadow:
+        0 0 15px #00ffae;
+}
+
+.toggle{
+
+    width:42px;
+    height:42px;
+
+    border:none;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    background:
+        rgba(255,255,255,.08);
+
+    color:white;
+
+    font-size:18px;
+}
+
+.menu{
+
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.item{
+
+    display:flex;
+    align-items:center;
+    gap:16px;
+
+    padding:16px;
+
+    border-radius:16px;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+    white-space:nowrap;
+}
+
+.item:hover{
+
+    background:
+        rgba(255,255,255,.08);
+
+    transform:translateX(4px);
+}
+
+.icon{
+
+    font-size:24px;
+
+    min-width:28px;
+}
+
+.text{
+
+    font-size:17px;
+}
+
+.sidebar.collapsed .text,
+.sidebar.collapsed .logo-text{
+
+    display:none;
+}
+
+/* ========================================================= */
+/* CONTENT */
+/* ========================================================= */
+
+.content{
+
+    flex:1;
+
+    overflow:auto;
+
+    padding:35px;
+}
+
+/* ========================================================= */
+/* HERO */
+/* ========================================================= */
+
+.hero{
+
+    display:grid;
+
+    grid-template-columns:
+        1.1fr .9fr;
+
+    gap:35px;
+}
+
+.left{
+
+    display:flex;
+    flex-direction:column;
+    gap:24px;
+}
+
+.badge{
+
+    width:max-content;
+
+    padding:10px 18px;
+
+    border-radius:999px;
+
+    background:
+        rgba(0,255,174,.12);
+
+    border:
+        1px solid rgba(0,255,174,.3);
+
+    color:#00ffae;
+}
+
+.title{
+
+    font-size:78px;
+
+    font-weight:900;
+
+    line-height:.95;
+}
+
+.title span{
+
+    color:#00ffae;
+
+    text-shadow:
+        0 0 18px #00ffae;
+}
+
+.desc{
+
+    font-size:22px;
+
+    line-height:1.6;
+
+    opacity:.8;
+
+    max-width:720px;
+}
+
+.buttons{
+
+    display:flex;
+    gap:18px;
+}
+
+.play{
+
+    border:none;
+
+    background:#00ffae;
+
+    color:black;
+
+    font-size:24px;
+    font-weight:bold;
+
+    padding:22px 38px;
+
+    border-radius:18px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+    box-shadow:
+        0 0 25px rgba(0,255,174,.3);
+}
+
+.play:hover{
+
+    transform:
+        translateY(-4px)
+        scale(1.02);
+}
+
+.secondary{
+
+    border:none;
+
+    background:
+        rgba(255,255,255,.08);
+
+    color:white;
+
+    font-size:22px;
+
+    padding:22px 34px;
+
+    border-radius:18px;
+
+    cursor:pointer;
+}
+
+/* ========================================================= */
+/* STATS */
+/* ========================================================= */
+
+.stats{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:18px;
+
+    margin-top:10px;
+}
+
+.card{
+
+    background:
+        rgba(255,255,255,.05);
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    border-radius:24px;
+
+    padding:24px;
+
+    transition:.25s;
+}
+
+.card:hover{
+
+    transform:translateY(-6px);
+
+    border-color:
+        rgba(0,255,174,.3);
+
+    box-shadow:
+        0 0 24px rgba(0,255,174,.12);
+}
+
+.card h2{
+
+    font-size:36px;
+
+    margin-bottom:6px;
+}
+
+.card p{
+
+    opacity:.7;
+}
+
+/* ========================================================= */
+/* PROFILE */
+/* ========================================================= */
+
+.profile{
+
+    background:
+        rgba(255,255,255,.05);
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    border-radius:28px;
+
+    padding:28px;
+
+    backdrop-filter:blur(18px);
+
+    display:flex;
+    flex-direction:column;
+    gap:24px;
+}
+
+.profile-top{
+
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
+
+.avatar{
+
+    width:90px;
+    height:90px;
+
+    border-radius:22px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #00ffae,
+            #00bfff
+        );
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:black;
+
+    font-size:42px;
+    font-weight:bold;
+}
+
+.profile-info h2{
+
+    font-size:32px;
+}
+
+.profile-info p{
+
+    opacity:.75;
+
+    margin-top:4px;
+}
+
+/* ========================================================= */
+/* ELO */
+/* ========================================================= */
+
+.bar{
+
+    width:100%;
+    height:16px;
+
+    border-radius:999px;
+
+    overflow:hidden;
+
+    background:
+        rgba(255,255,255,.08);
+}
+
+.fill{
+
+    width:72%;
+    height:100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #00ffae,
+            #00bfff
+        );
+
+    box-shadow:
+        0 0 18px #00ffae;
+}
+
+/* ========================================================= */
+/* STREAK */
+/* ========================================================= */
+
+.streak{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    background:
+        rgba(255,120,0,.12);
+
+    border:
+        1px solid rgba(255,120,0,.2);
+
+    border-radius:22px;
+
+    padding:18px 20px;
+}
+
+.streak-left{
+
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.fire{
+
+    font-size:34px;
+
+    animation:pulse 1.2s infinite;
+}
+
+@keyframes pulse{
+
+    0%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.18);
+    }
+
+    100%{
+        transform:scale(1);
+    }
+}
+
+/* ========================================================= */
+/* PUZZLE SCREEN */
+/* ========================================================= */
+
+.puzzle-screen{
+
+    position:fixed;
+    inset:0;
+
+    background:
+        radial-gradient(circle at top,#111827,#05070c 80%);
+
+    z-index:9999;
+
+    display:none;
+
+    overflow:auto;
+
+    padding:30px;
+}
+
+.puzzle-container{
+
+    max-width:1500px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+        820px 1fr;
+
+    gap:30px;
+}
+
+.puzzle-board{
+
+    width:820px;
+    height:820px;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(8,1fr);
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    box-shadow:
+        0 25px 60px rgba(0,0,0,.5);
+}
+
+.pcell{
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    position:relative;
+
+    cursor:pointer;
+}
+
+.plight{
+    background:#eeeed2;
+}
+
+.pdark{
+    background:#769656;
+}
+
+.pcell img{
+
+    width:82%;
+    height:82%;
+
+    pointer-events:none;
+
+    user-select:none;
+}
+
+.pselected{
+
+    box-shadow:
+        inset 0 0 0 6px #ffee00;
+}
+
+.puzzle-side{
+
+    display:flex;
+    flex-direction:column;
+
+    gap:20px;
+}
+
+.pcard{
+
+    background:
+        rgba(255,255,255,.05);
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    border-radius:24px;
+
+    padding:24px;
+}
+
+.big{
+
+    font-size:54px;
+    font-weight:900;
+}
+
+.green{
+
+    color:#00ffae;
+}
+
+.timer{
+
+    font-size:72px;
+    font-weight:900;
+}
+
+.puzzle-btn{
+
+    border:none;
+
+    background:#00ffae;
+
+    color:black;
+
+    padding:18px;
+
+    border-radius:18px;
+
+    cursor:pointer;
+
+    font-size:22px;
+    font-weight:bold;
+}
+
+/* ========================================================= */
+/* MOBILE */
+/* ========================================================= */
+
+@media(max-width:1300px){
+
+    .hero{
+
+        grid-template-columns:1fr;
+    }
+
+    .stats{
+
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .puzzle-container{
+
+        grid-template-columns:1fr;
+    }
+
+    .puzzle-board{
+
+        width:95vw;
+        height:95vw;
+
+        max-width:820px;
+        max-height:820px;
+    }
+}
+
+@media(max-width:700px){
+
+    .sidebar{
+
+        position:fixed;
+
+        z-index:999;
+
+        height:100%;
+    }
+
+    .content{
+
+        margin-left:90px;
+    }
+
+    .title{
+
+        font-size:48px;
+    }
+
+    .buttons{
+
+        flex-direction:column;
+    }
+
+    .stats{
+
+        grid-template-columns:1fr;
+    }
+}
+
+</style>
+</head>
+<body>
+
+<div class="bg">
+
+    <div class="glow glow1"></div>
+    <div class="glow glow2"></div>
+
+</div>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+
+    <div class="sidebar"
+    id="sidebar">
+
+        <div>
+
+            <div class="top-side">
+
+                <div class="logo">
+
+                    <span>♟</span>
+                    <span class="logo-text">
+                        NeonChess
+                    </span>
+
+                </div>
+
+                <button class="toggle"
+                onclick="toggleSidebar()">
+
+                    ☰
+
+                </button>
+
+            </div>
+
+            <div class="menu">
+
+                <div class="item">
+
+                    <div class="icon">▶</div>
+                    <div class="text">Play</div>
+
+                </div>
+
+                <div class="item">
+
+                    <div class="icon">📚</div>
+                    <div class="text">Lesson</div>
+
+                </div>
+
+                <div class="item">
+
+                    <div class="icon">🧠</div>
+                    <div class="text">Trainer</div>
+
+                </div>
+
+                <div class="item">
+
+                    <div class="icon">📺</div>
+                    <div class="text">NeonChess TV</div>
+
+                </div>
+
+                <div class="item">
+
+                    <div class="icon">🔍</div>
+                    <div class="text">
+                        Tìm kiếm tài khoản
+                    </div>
+
+                </div>
+
+                <div class="item">
+
+                    <div class="icon">👤</div>
+                    <div class="text">Tài khoản</div>
+
+                </div>
+
+                <div class="item">
+
+                    <div class="icon">⚙</div>
+                    <div class="text">Cài đặt</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- CONTENT -->
+
+    <div class="content">
+
+        <div class="hero">
+
+            <!-- LEFT -->
+
+            <div class="left">
+
+                <div class="badge">
+
+                    ⚡ Next Gen Chess Platform
+
+                </div>
+
+                <div class="title">
+
+                    Chơi cờ vua<br>
+                    như <span>esports</span>
+
+                </div>
+
+                <div class="desc">
+
+                    Đấu online, luyện bot,
+                    giải Puzzle Rush,
+                    tăng elo và leo rank.
+
+                </div>
+
+                <div class="buttons">
+
+                    <button class="play">
+
+                        ▶ Chơi ngay
+
+                    </button>
+
+                    <button class="secondary"
+                    onclick="openPuzzle()">
+
+                        🧩 Puzzle Rush
+
+                    </button>
+
+                </div>
+
+                <!-- STATS -->
+
+                <div class="stats">
+
+                    <div class="card">
+
+                        <h2>0</h2>
+
+                        <p>🔥 Day Streak</p>
+
+                    </div>
+
+                    <div class="card">
+
+                        <h2 id="puzzleRating">
+                            1850
+                        </h2>
+
+                        <p>Puzzle Rating</p>
+
+                    </div>
+
+                    <div class="card">
+
+                        <h2>2200</h2>
+
+                        <p>Rapid Elo</p>
+
+                    </div>
+
+                    <div class="card">
+
+                        <h2>#218</h2>
+
+                        <p>Global Rank</p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- RIGHT -->
+
+            <div class="profile">
+
+                <div class="profile-top">
+
+                    <div class="avatar">
+                        H
+                    </div>
+
+                    <div class="profile-info">
+
+                        <h2>
+                            HungCHESS_yt
+                        </h2>
+
+                        <p>
+                            Admin Site
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <!-- ELO -->
+
+                <div>
+
+                    <div style="
+                        margin-bottom:10px;
+                    ">
+                        Elo Progress
+                    </div>
+
+                    <div class="bar">
+
+                        <div class="fill"></div>
+
+                    </div>
+
+                </div>
+
+                <!-- STREAK -->
+
+                <div class="streak">
+
+                    <div class="streak-left">
+
+                        <div class="fire">
+
+                            🔥
+
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Daily Streak
+                            </h3>
+
+                            <p id="streakText">
+
+                                0 ngày liên tiếp
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div>
+
+                        +0 XP
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ========================================================= -->
+<!-- PUZZLE SCREEN -->
+<!-- ========================================================= -->
+
+<div class="puzzle-screen"
+id="puzzleScreen">
+
+    <div class="puzzle-container">
+
+        <!-- BOARD -->
+
+        <div class="puzzle-board"
+        id="puzzleBoard"></div>
+
+        <!-- SIDE -->
+
+        <div class="puzzle-side">
+
+            <div class="pcard">
+
+                <h1 class="big">
+                    🧩 Puzzle Rush
+                </h1>
+
+                <br>
+
+                <p>
+                    Tìm nước đi tốt nhất!
+                </p>
+
+            </div>
+
+            <div class="pcard">
+
+                <div>⚡ Score</div>
+
+                <div class="big green"
+                id="score">
+                    0
+                </div>
+
+            </div>
+
+            <div class="pcard">
+
+                <div>🔥 Streak</div>
+
+                <div class="big"
+                id="pstreak">
+                    0
+                </div>
+
+            </div>
+
+            <div class="pcard">
+
+                <div>⏳ Time</div>
+
+                <div class="timer"
+                id="timer">
+                    60
+                </div>
+
+            </div>
+
+            <button class="puzzle-btn"
+            onclick="nextPuzzle()">
+
+                ▶ Next Puzzle
+
+            </button>
+
+            <button class="puzzle-btn"
+            onclick="closePuzzle()">
+
+                ✖ Exit
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+/* ========================================================= */
+/* SIDEBAR */
+/* ========================================================= */
+
+function toggleSidebar(){
+
+    document
+    .getElementById(
+        "sidebar"
+    )
+    .classList
+    .toggle(
+        "collapsed"
+    );
+}
+
+/* ========================================================= */
+/* STREAK */
+/* ========================================================= */
+
+if(
+    localStorage.getItem(
+        "streak"
+    )===null
+){
+
+    localStorage.setItem(
+        "streak",
+        0
+    );
+}
+
+document.getElementById(
+    "streakText"
+).textContent =
+
+localStorage.getItem(
+    "streak"
+)
++
+" ngày liên tiếp";
+
+/* ========================================================= */
+/* PIECES */
+/* ========================================================= */
+
+const pieceMap = {
+
+    r:'https://upload.wikimedia.org/wikipedia/commons/f/ff/Chess_rdt45.svg',
+    n:'https://upload.wikimedia.org/wikipedia/commons/e/ef/Chess_ndt45.svg',
+    b:'https://upload.wikimedia.org/wikipedia/commons/9/98/Chess_bdt45.svg',
+    q:'https://upload.wikimedia.org/wikipedia/commons/4/47/Chess_qdt45.svg',
+    k:'https://upload.wikimedia.org/wikipedia/commons/f/f0/Chess_kdt45.svg',
+    p:'https://upload.wikimedia.org/wikipedia/commons/c/c7/Chess_pdt45.svg',
+
+    R:'https://upload.wikimedia.org/wikipedia/commons/7/72/Chess_rlt45.svg',
+    N:'https://upload.wikimedia.org/wikipedia/commons/7/70/Chess_nlt45.svg',
+    B:'https://upload.wikimedia.org/wikipedia/commons/b/b1/Chess_blt45.svg',
+    Q:'https://upload.wikimedia.org/wikipedia/commons/1/15/Chess_qlt45.svg',
+    K:'https://upload.wikimedia.org/wikipedia/commons/4/42/Chess_klt45.svg',
+    P:'https://upload.wikimedia.org/wikipedia/commons/4/45/Chess_plt45.svg'
+};
+
+/* ========================================================= */
+/* PUZZLES */
+/* ========================================================= */
+
+const puzzles = [
+
+{
+board:[
+
+["r","","b","q","k","b","n","r"],
+["p","p","p","","","p","p","p"],
+["","","n","","","","",""],
+["","","","Q","","","",""],
+["","","","","","","",""],
+["","","","","","","",""],
+["P","P","P","P","P","P","P","P"],
+["R","N","B","","K","B","N","R"]
+
+],
+
+solution:{
+fx:3,
+fy:3,
+tx:5,
+ty:1
+}
+},
+
+{
+board:[
+
+["r","n","b","q","k","b","n","r"],
+["p","p","p","p","","p","p","p"],
+["","","","","","","",""],
+["","","","","p","","",""],
+["","","","Q","","","",""],
+["","","","","","","",""],
+["P","P","P","P","P","P","P","P"],
+["R","N","B","","K","B","N","R"]
+
+],
+
+solution:{
+fx:3,
+fy:4,
+tx:4,
+ty:4
+}
+}
+
+];
+
+/* ========================================================= */
+/* STATE */
+/* ========================================================= */
+
+let pboard = [];
+let selected = null;
+let currentPuzzle = 0;
+
+let score = 0;
+let pstreak = 0;
+
+let timer = 60;
+let timerInterval = null;
+
+/* ========================================================= */
+/* OPEN */
+/* ========================================================= */
+
+function openPuzzle(){
+
+    document.getElementById(
+        "puzzleScreen"
+    ).style.display = "block";
+
+    loadPuzzle();
+
+    startTimer();
+}
+
+function closePuzzle(){
+
+    document.getElementById(
+        "puzzleScreen"
+    ).style.display = "none";
+
+    clearInterval(timerInterval);
+}
+
+/* ========================================================= */
+/* LOAD */
+/* ========================================================= */
+
+function loadPuzzle(){
+
+    const p =
+    puzzles[currentPuzzle];
+
+    pboard =
+    JSON.parse(
+        JSON.stringify(p.board)
+    );
+
+    renderPuzzle();
+}
+
+/* ========================================================= */
+/* RENDER */
+/* ========================================================= */
+
+function renderPuzzle(){
+
+    const board =
+    document.getElementById(
+        "puzzleBoard"
+    );
+
+    board.innerHTML = "";
+
+    for(let y=0;y<8;y++){
+
+        for(let x=0;x<8;x++){
+
+            const cell =
+            document.createElement("div");
+
+            cell.className =
+            "pcell " +
+            (
+                (x+y)%2===0
+                ? "plight"
+                : "pdark"
+            );
+
+            if(
+                selected &&
+                selected.x===x &&
+                selected.y===y
+            ){
+
+                cell.classList.add(
+                    "pselected"
+                );
+            }
+
+            const piece =
+            pboard[y][x];
+
+            if(piece){
+
+                const img =
+                document.createElement("img");
+
+                img.src =
+                pieceMap[piece];
+
+                cell.appendChild(img);
+            }
+
+            cell.dataset.x = x;
+            cell.dataset.y = y;
+
+            cell.onclick =
+            puzzleClick;
+
+            board.appendChild(cell);
+        }
+    }
+}
+
+/* ========================================================= */
+/* CLICK */
+/* ========================================================= */
+
+function puzzleClick(){
+
+    const x =
+    parseInt(this.dataset.x);
+
+    const y =
+    parseInt(this.dataset.y);
+
+    const piece =
+    pboard[y][x];
+
+    if(selected){
+
+        const sol =
+        puzzles[currentPuzzle]
+        .solution;
+
+        if(
+
+            selected.x===sol.fx &&
+            selected.y===sol.fy &&
+
+            x===sol.tx &&
+            y===sol.ty
+
+        ){
+
+            pboard[y][x] =
+            pboard[selected.y]
+            [selected.x];
+
+            pboard[selected.y]
+            [selected.x] = "";
+
+            score += 100;
+            pstreak++;
+
+            updateUI();
+
+            renderPuzzle();
+
+            setTimeout(()=>{
+
+                nextPuzzle();
+
+            },700);
+
+        }else{
+
+            pstreak = 0;
+
+            updateUI();
+
+            alert(
+                "❌ Sai nước!"
+            );
+        }
+
+        selected = null;
+
+        renderPuzzle();
+
+        return;
+    }
+
+    if(piece){
+
+        selected = {x,y};
+
+        renderPuzzle();
+    }
+}
+
+/* ========================================================= */
+/* NEXT */
+/* ========================================================= */
+
+function nextPuzzle(){
+
+    currentPuzzle++;
+
+    if(
+        currentPuzzle >=
+        puzzles.length
+    ){
+
+        currentPuzzle = 0;
+    }
+
+    loadPuzzle();
+}
+
+/* ========================================================= */
+/* TIMER */
+/* ========================================================= */
+
+function startTimer(){
+
+    clearInterval(timerInterval);
+
+    timer = 60;
+
+    updateUI();
+
+    timerInterval =
+    setInterval(()=>{
+
+        timer--;
+
+        updateUI();
+
+        if(timer<=0){
+
+            clearInterval(
+                timerInterval
+            );
+
+            alert(
+                "⏰ Hết giờ!"
+            );
+        }
+
+    },1000);
+}
+
+/* ========================================================= */
+/* UI */
+/* ========================================================= */
+
+function updateUI(){
+
+    document.getElementById(
+        "score"
+    ).textContent =
+    score;
+
+    document.getElementById(
+        "pstreak"
+    ).textContent =
+    pstreak;
+
+    document.getElementById(
+        "timer"
+    ).textContent =
+    timer;
+}
+
+/* ========================================================= */
+/* INIT */
+/* ========================================================= */
+
+updateUI();
+
+</script>
+
+</body>
+</html>
