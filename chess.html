@@ -562,7 +562,152 @@ body{
 }
 
 /* ========================================================= */
-/* PUZZLE SCREEN */
+/* STORE */
+/* ========================================================= */
+
+.store-screen{
+
+    position:fixed;
+    inset:0;
+
+    background:
+        rgba(0,0,0,.82);
+
+    backdrop-filter:blur(12px);
+
+    z-index:10000;
+
+    display:none;
+
+    align-items:center;
+    justify-content:center;
+
+    padding:30px;
+}
+
+.store{
+
+    width:100%;
+    max-width:1200px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(20,25,35,.95),
+            rgba(10,15,22,.95)
+        );
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    border-radius:32px;
+
+    padding:35px;
+}
+
+.store-top{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:30px;
+}
+
+.store-title{
+
+    font-size:48px;
+    font-weight:900;
+}
+
+.store-title span{
+
+    color:#00ffae;
+}
+
+.close-store{
+
+    width:52px;
+    height:52px;
+
+    border:none;
+
+    border-radius:16px;
+
+    background:
+        rgba(255,255,255,.08);
+
+    color:white;
+
+    font-size:22px;
+
+    cursor:pointer;
+}
+
+.shop-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fit,minmax(320px,1fr));
+
+    gap:24px;
+}
+
+.shop-card{
+
+    background:
+        rgba(255,255,255,.05);
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    border-radius:28px;
+
+    padding:28px;
+}
+
+.shop-icon{
+
+    font-size:60px;
+
+    margin-bottom:18px;
+}
+
+.price{
+
+    margin-top:22px;
+
+    font-size:26px;
+    font-weight:bold;
+
+    color:#ffd54a;
+}
+
+.buy-btn{
+
+    width:100%;
+
+    margin-top:22px;
+
+    border:none;
+
+    background:#00ffae;
+
+    color:black;
+
+    padding:18px;
+
+    border-radius:18px;
+
+    font-size:20px;
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+/* ========================================================= */
+/* PUZZLE */
 /* ========================================================= */
 
 .puzzle-screen{
@@ -609,9 +754,6 @@ body{
     border-radius:18px;
 
     overflow:hidden;
-
-    box-shadow:
-        0 25px 60px rgba(0,0,0,.5);
 }
 
 .pcell{
@@ -619,8 +761,6 @@ body{
     display:flex;
     align-items:center;
     justify-content:center;
-
-    position:relative;
 
     cursor:pointer;
 }
@@ -637,10 +777,6 @@ body{
 
     width:82%;
     height:82%;
-
-    pointer-events:none;
-
-    user-select:none;
 }
 
 .pselected{
@@ -704,10 +840,6 @@ body{
     font-size:22px;
     font-weight:bold;
 }
-
-/* ========================================================= */
-/* MOBILE */
-/* ========================================================= */
 
 @media(max-width:1300px){
 
@@ -812,54 +944,51 @@ body{
             <div class="menu">
 
                 <div class="item">
-
                     <div class="icon">▶</div>
                     <div class="text">Play</div>
-
                 </div>
 
                 <div class="item">
-
                     <div class="icon">📚</div>
                     <div class="text">Lesson</div>
-
                 </div>
 
                 <div class="item">
-
                     <div class="icon">🧠</div>
                     <div class="text">Trainer</div>
-
                 </div>
 
                 <div class="item">
-
                     <div class="icon">📺</div>
                     <div class="text">NeonChess TV</div>
-
                 </div>
 
-                <div class="item">
+                <div class="item"
+                onclick="openStore()">
 
-                    <div class="icon">🔍</div>
+                    <div class="icon">🛒</div>
+
                     <div class="text">
-                        Tìm kiếm tài khoản
+                        NeonChess Store
                     </div>
 
                 </div>
 
                 <div class="item">
-
-                    <div class="icon">👤</div>
-                    <div class="text">Tài khoản</div>
-
+                    <div class="icon">🔍</div>
+                    <div class="text">
+                        Tìm kiếm tài khoản
+                    </div>
                 </div>
 
                 <div class="item">
+                    <div class="icon">👤</div>
+                    <div class="text">Tài khoản</div>
+                </div>
 
+                <div class="item">
                     <div class="icon">⚙</div>
                     <div class="text">Cài đặt</div>
-
                 </div>
 
             </div>
@@ -902,9 +1031,7 @@ body{
                 <div class="buttons">
 
                     <button class="play">
-
                         ▶ Chơi ngay
-
                     </button>
 
                     <button class="secondary"
@@ -948,9 +1075,13 @@ body{
 
                     <div class="card">
 
-                        <h2>#218</h2>
+                        <h2 id="coinText">
+                            0
+                        </h2>
 
-                        <p>Global Rank</p>
+                        <p>
+                            🪙 NeonChess Coin
+                        </p>
 
                     </div>
 
@@ -982,8 +1113,6 @@ body{
 
                 </div>
 
-                <!-- ELO -->
-
                 <div>
 
                     <div style="
@@ -1000,16 +1129,12 @@ body{
 
                 </div>
 
-                <!-- STREAK -->
-
                 <div class="streak">
 
                     <div class="streak-left">
 
                         <div class="fire">
-
                             🔥
-
                         </div>
 
                         <div>
@@ -1019,9 +1144,7 @@ body{
                             </h3>
 
                             <p id="streakText">
-
                                 0 ngày liên tiếp
-
                             </p>
 
                         </div>
@@ -1029,9 +1152,7 @@ body{
                     </div>
 
                     <div>
-
                         +0 XP
-
                     </div>
 
                 </div>
@@ -1045,7 +1166,74 @@ body{
 </div>
 
 <!-- ========================================================= -->
-<!-- PUZZLE SCREEN -->
+<!-- STORE -->
+<!-- ========================================================= -->
+
+<div class="store-screen"
+id="storeScreen">
+
+    <div class="store">
+
+        <div class="store-top">
+
+            <div class="store-title">
+
+                🛒 <span>NeonChess</span> Store
+
+            </div>
+
+            <button class="close-store"
+            onclick="closeStore()">
+
+                ✖
+
+            </button>
+
+        </div>
+
+        <div class="shop-grid">
+
+            <div class="shop-card">
+
+                <div class="shop-icon">
+                    🧊
+                </div>
+
+                <h2>
+                    Streak Freeze
+                </h2>
+
+                <p>
+
+                    Giữ streak của bạn
+                    kể cả khi bỏ lỡ 1 ngày.
+
+                </p>
+
+                <div class="price">
+
+                    🪙 100 NeonChess Coin
+
+                </div>
+
+                <button class="buy-btn"
+                id="freezeBtn"
+                onclick="buyFreeze()">
+
+                    Mua ngay
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ========================================================= -->
+<!-- PUZZLE -->
 <!-- ========================================================= -->
 
 <div class="puzzle-screen"
@@ -1078,7 +1266,9 @@ id="puzzleScreen">
 
             <div class="pcard">
 
-                <div>⚡ Score</div>
+                <div>
+                    ⚡ Score
+                </div>
 
                 <div class="big green"
                 id="score">
@@ -1089,7 +1279,9 @@ id="puzzleScreen">
 
             <div class="pcard">
 
-                <div>🔥 Streak</div>
+                <div>
+                    🔥 Streak
+                </div>
 
                 <div class="big"
                 id="pstreak">
@@ -1100,7 +1292,9 @@ id="puzzleScreen">
 
             <div class="pcard">
 
-                <div>⏳ Time</div>
+                <div>
+                    ⏳ Time
+                </div>
 
                 <div class="timer"
                 id="timer">
@@ -1145,6 +1339,149 @@ function toggleSidebar(){
     .toggle(
         "collapsed"
     );
+}
+
+/* ========================================================= */
+/* COINS */
+/* ========================================================= */
+
+if(
+    localStorage.getItem(
+        "coins"
+    )===null
+){
+
+    localStorage.setItem(
+        "coins",
+        0
+    );
+}
+
+let coins =
+parseInt(
+    localStorage.getItem(
+        "coins"
+    )
+);
+
+updateCoins();
+
+function updateCoins(){
+
+    document.getElementById(
+        "coinText"
+    ).textContent =
+    coins;
+}
+
+function rewardCoins(amount){
+
+    coins += amount;
+
+    localStorage.setItem(
+        "coins",
+        coins
+    );
+
+    updateCoins();
+}
+
+/* ========================================================= */
+/* STORE */
+/* ========================================================= */
+
+function openStore(){
+
+    document.getElementById(
+        "storeScreen"
+    ).style.display = "flex";
+
+    checkOwned();
+}
+
+function closeStore(){
+
+    document.getElementById(
+        "storeScreen"
+    ).style.display = "none";
+}
+
+/* ========================================================= */
+/* STREAK FREEZE */
+/* ========================================================= */
+
+if(
+    localStorage.getItem(
+        "freeze"
+    )===null
+){
+
+    localStorage.setItem(
+        "freeze",
+        "false"
+    );
+}
+
+function buyFreeze(){
+
+    if(coins < 100){
+
+        alert(
+            "❌ Không đủ NeonChess Coin!"
+        );
+
+        return;
+    }
+
+    if(
+        localStorage.getItem(
+            "freeze"
+        )==="true"
+    ){
+
+        return;
+    }
+
+    coins -= 100;
+
+    localStorage.setItem(
+        "coins",
+        coins
+    );
+
+    localStorage.setItem(
+        "freeze",
+        "true"
+    );
+
+    updateCoins();
+
+    checkOwned();
+
+    alert(
+        "🧊 Đã mua Streak Freeze!"
+    );
+}
+
+function checkOwned(){
+
+    const owned =
+    localStorage.getItem(
+        "freeze"
+    )==="true";
+
+    const btn =
+    document.getElementById(
+        "freezeBtn"
+    );
+
+    if(owned){
+
+        btn.disabled = true;
+
+        btn.textContent =
+        "Đã sở hữu";
+    }
 }
 
 /* ========================================================= */
@@ -1404,6 +1741,9 @@ function puzzleClick(){
             [selected.x] = "";
 
             score += 100;
+
+            rewardCoins(25);
+
             pstreak++;
 
             updateUI();
