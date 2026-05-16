@@ -156,10 +156,6 @@ body{
     cursor:pointer;
 }
 
-/* ========================================================= */
-/* COLLAPSE */
-/* ========================================================= */
-
 .sidebar.collapsed{
 
     width:90px;
@@ -289,7 +285,7 @@ button:hover{
     display:grid;
 
     grid-template-columns:
-    1fr 1fr;
+    1.2fr .8fr;
 
     gap:20px;
 }
@@ -322,6 +318,105 @@ button:hover{
     margin-bottom:18px;
 
     font-size:28px;
+}
+
+/* ========================================================= */
+/* CHESS BOARD */
+/* ========================================================= */
+
+.chess-card{
+
+    grid-row:
+    span 2;
+}
+
+.board-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:18px;
+}
+
+.status{
+
+    color:#94a3b8;
+
+    margin-top:6px;
+}
+
+.board-buttons{
+
+    display:flex;
+
+    gap:10px;
+}
+
+.board{
+
+    width:100%;
+
+    max-width:720px;
+
+    aspect-ratio:1;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(8,1fr);
+
+    border-radius:24px;
+
+    overflow:hidden;
+
+    border:
+    4px solid rgba(255,255,255,.08);
+
+    box-shadow:
+    0 0 50px rgba(0,255,180,.12);
+}
+
+.square{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:56px;
+
+    cursor:pointer;
+
+    user-select:none;
+
+    transition:.15s;
+}
+
+.square:hover{
+
+    filter:brightness(1.1);
+}
+
+.light{
+
+    background:#f0d9b5;
+}
+
+.dark{
+
+    background:#b58863;
+}
+
+.selected{
+
+    box-shadow:
+    inset 0 0 0 5px #00ffae;
 }
 
 /* ========================================================= */
@@ -475,7 +570,7 @@ button:hover{
 
 #chatBox{
 
-    max-height:320px;
+    max-height:280px;
 
     overflow:auto;
 }
@@ -530,6 +625,21 @@ button:hover{
 /* MOBILE */
 /* ========================================================= */
 
+@media(max-width:1100px){
+
+    .grid{
+
+        grid-template-columns:
+        1fr;
+    }
+
+    .chess-card{
+
+        grid-row:auto;
+    }
+
+}
+
 @media(max-width:900px){
 
     .sidebar{
@@ -542,10 +652,9 @@ button:hover{
         margin-left:110px;
     }
 
-    .grid{
+    .square{
 
-        grid-template-columns:
-        1fr;
+        font-size:36px;
     }
 
 }
@@ -662,6 +771,48 @@ class="sidebar">
     <!-- GRID -->
 
     <div class="grid">
+
+        <!-- CHESS -->
+
+        <div class="card chess-card">
+
+            <div class="board-top">
+
+                <div>
+
+                    <h2>♟ NeonChess Board</h2>
+
+                    <p class="status">
+
+                        White to move
+
+                    </p>
+
+                </div>
+
+                <div class="board-buttons">
+
+                    <button onclick="resetBoard()">
+
+                        🔄 Reset
+
+                    </button>
+
+                    <button onclick="flipBoard()">
+
+                        🔃 Flip
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div
+            id="board"
+            class="board"></div>
+
+        </div>
 
         <!-- PROFILE -->
 
@@ -797,10 +948,6 @@ class="sidebar">
 
 </div>
 
-<!-- ========================================================= -->
-<!-- FIREBASE -->
-<!-- ========================================================= -->
-
 <script type="module">
 
 import { initializeApp } from
@@ -831,7 +978,7 @@ import {
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
 
 /* ========================================================= */
-/* FIREBASE CONFIG */
+/* FIREBASE */
 /* ========================================================= */
 
 const firebaseConfig = {
@@ -887,6 +1034,240 @@ window.toggleSidebar = function(){
     ).classList.toggle(
         "collapsed"
     );
+
+}
+
+/* ========================================================= */
+/* CHESS */
+/* ========================================================= */
+
+const pieces = {
+
+    r:"♜",
+    n:"♞",
+    b:"♝",
+    q:"♛",
+    k:"♚",
+    p:"♟",
+
+    R:"♖",
+    N:"♘",
+    B:"♗",
+    Q:"♕",
+    K:"♔",
+    P:"♙"
+
+};
+
+let boardFlipped = false;
+
+let selected = null;
+
+let boardState = [
+
+    ["r","n","b","q","k","b","n","r"],
+    ["p","p","p","p","p","p","p","p"],
+
+    ["","","","","","","",""],
+    ["","","","","","","",""],
+    ["","","","","","","",""],
+    ["","","","","","","",""],
+
+    ["P","P","P","P","P","P","P","P"],
+    ["R","N","B","Q","K","B","N","R"]
+
+];
+
+/* ========================================================= */
+/* DRAW */
+/* ========================================================= */
+
+function drawBoard(){
+
+    const board =
+    document.getElementById(
+        "board"
+    );
+
+    board.innerHTML = "";
+
+    let renderBoard =
+    boardState;
+
+    if(boardFlipped){
+
+        renderBoard =
+        [...boardState]
+        .reverse()
+        .map(row=>
+            [...row].reverse()
+        );
+
+    }
+
+    for(let y=0;y<8;y++){
+
+        for(let x=0;x<8;x++){
+
+            const square =
+            document.createElement(
+                "div"
+            );
+
+            square.className =
+            "square " +
+            (
+                (x+y)%2==0
+                ? "light"
+                : "dark"
+            );
+
+            square.dataset.x = x;
+            square.dataset.y = y;
+
+            const piece =
+            renderBoard[y][x];
+
+            square.textContent =
+            pieces[piece] || "";
+
+            square.onclick = ()=>{
+
+                clickSquare(x,y);
+
+            };
+
+            board.appendChild(square);
+
+        }
+
+    }
+
+}
+
+/* ========================================================= */
+/* CLICK */
+/* ========================================================= */
+
+function clickSquare(x,y){
+
+    if(selected){
+
+        movePiece(
+            selected.x,
+            selected.y,
+            x,
+            y
+        );
+
+        selected = null;
+
+        drawBoard();
+
+        return;
+    }
+
+    selected = {x,y};
+
+    highlightSquare(x,y);
+
+}
+
+/* ========================================================= */
+/* MOVE */
+/* ========================================================= */
+
+function movePiece(fx,fy,tx,ty){
+
+    let realFX = fx;
+    let realFY = fy;
+
+    let realTX = tx;
+    let realTY = ty;
+
+    if(boardFlipped){
+
+        realFX = 7 - fx;
+        realFY = 7 - fy;
+
+        realTX = 7 - tx;
+        realTY = 7 - ty;
+    }
+
+    boardState[realTY][realTX] =
+    boardState[realFY][realFX];
+
+    boardState[realFY][realFX] =
+    "";
+
+}
+
+/* ========================================================= */
+/* HIGHLIGHT */
+/* ========================================================= */
+
+function highlightSquare(x,y){
+
+    drawBoard();
+
+    const squares =
+    document.querySelectorAll(
+        ".square"
+    );
+
+    squares.forEach(s=>{
+
+        if(
+            Number(s.dataset.x)==x
+            &&
+            Number(s.dataset.y)==y
+        ){
+
+            s.classList.add(
+                "selected"
+            );
+
+        }
+
+    });
+
+}
+
+/* ========================================================= */
+/* RESET */
+/* ========================================================= */
+
+window.resetBoard = function(){
+
+    boardState = [
+
+        ["r","n","b","q","k","b","n","r"],
+        ["p","p","p","p","p","p","p","p"],
+
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+
+        ["P","P","P","P","P","P","P","P"],
+        ["R","N","B","Q","K","B","N","R"]
+
+    ];
+
+    drawBoard();
+
+}
+
+/* ========================================================= */
+/* FLIP */
+/* ========================================================= */
+
+window.flipBoard = function(){
+
+    boardFlipped =
+    !boardFlipped;
+
+    drawBoard();
 
 }
 
@@ -1274,6 +1655,12 @@ async function(){
     );
 
 }
+
+/* ========================================================= */
+/* START */
+/* ========================================================= */
+
+drawBoard();
 
 console.log(
     "NeonChess Ultimate Ready"
