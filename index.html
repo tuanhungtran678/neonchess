@@ -6,6 +6,12 @@
 
 <title>NeonChess Ultimate</title>
 
+<!-- ========================================================= -->
+<!-- CHESS JS -->
+<!-- ========================================================= -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.13.4/chess.min.js"></script>
+
 <style>
 
 /* ========================================================= */
@@ -566,42 +572,6 @@ button:hover{
 }
 
 /* ========================================================= */
-/* BUTTONS */
-/* ========================================================= */
-
-.store-btn{
-
-    width:100%;
-
-    margin-top:18px;
-
-    background:
-    linear-gradient(
-        90deg,
-        #00c3ff,
-        #0099ff
-    );
-
-    color:white;
-}
-
-.room-btn{
-
-    width:100%;
-
-    margin-top:14px;
-
-    background:
-    linear-gradient(
-        90deg,
-        #8b5cf6,
-        #6366f1
-    );
-
-    color:white;
-}
-
-/* ========================================================= */
 /* LEADERBOARD */
 /* ========================================================= */
 
@@ -621,63 +591,6 @@ button:hover{
     padding:14px;
 
     margin-top:12px;
-}
-
-/* ========================================================= */
-/* CHAT */
-/* ========================================================= */
-
-#chatBox{
-
-    max-height:280px;
-
-    overflow:auto;
-}
-
-.chat-message{
-
-    display:flex;
-
-    gap:12px;
-
-    align-items:center;
-
-    background:
-    rgba(255,255,255,.05);
-
-    padding:12px;
-
-    border-radius:14px;
-
-    margin-top:10px;
-}
-
-.chat-message img{
-
-    width:50px;
-    height:50px;
-
-    border-radius:50%;
-}
-
-.chat-controls{
-
-    display:flex;
-
-    gap:10px;
-
-    margin-top:16px;
-}
-
-.chat-controls input{
-
-    flex:1;
-
-    padding:12px;
-
-    border:none;
-
-    border-radius:14px;
 }
 
 /* ========================================================= */
@@ -850,12 +763,6 @@ class="sidebar">
                     <button onclick="resetBoard()">
 
                         🔄 Reset
-
-                    </button>
-
-                    <button onclick="flipBoard()">
-
-                        🔃 Flip
 
                     </button>
 
@@ -1044,261 +951,6 @@ window.toggleSidebar = function(){
     ).classList.toggle(
         "collapsed"
     );
-
-}
-
-/* ========================================================= */
-/* PIECES */
-/* ========================================================= */
-
-const pieces = {
-
-    r:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/br.png",
-    n:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/bn.png",
-    b:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/bb.png",
-    q:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/bq.png",
-    k:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/bk.png",
-    p:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/bp.png",
-
-    R:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/wr.png",
-    N:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/wn.png",
-    B:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/wb.png",
-    Q:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/wq.png",
-    K:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/wk.png",
-    P:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/wp.png"
-
-};
-
-let boardFlipped = false;
-
-let selected = null;
-
-let boardState = [
-
-    ["r","n","b","q","k","b","n","r"],
-    ["p","p","p","p","p","p","p","p"],
-
-    ["","","","","","","",""],
-    ["","","","","","","",""],
-    ["","","","","","","",""],
-    ["","","","","","","",""],
-
-    ["P","P","P","P","P","P","P","P"],
-    ["R","N","B","Q","K","B","N","R"]
-
-];
-
-/* ========================================================= */
-/* DRAW */
-/* ========================================================= */
-
-function drawBoard(){
-
-    const board =
-    document.getElementById(
-        "board"
-    );
-
-    board.innerHTML = "";
-
-    let renderBoard =
-    boardState;
-
-    if(boardFlipped){
-
-        renderBoard =
-        [...boardState]
-        .reverse()
-        .map(row=>
-            [...row].reverse()
-        );
-
-    }
-
-    for(let y=0;y<8;y++){
-
-        for(let x=0;x<8;x++){
-
-            const square =
-            document.createElement(
-                "div"
-            );
-
-            square.className =
-            "square " +
-            (
-                (x+y)%2==0
-                ? "light"
-                : "dark"
-            );
-
-            square.dataset.x = x;
-            square.dataset.y = y;
-
-            const piece =
-            renderBoard[y][x];
-
-            if(piece){
-
-                const img =
-                document.createElement(
-                    "img"
-                );
-
-                img.src =
-                pieces[piece];
-
-                img.className =
-                "piece";
-
-                img.draggable =
-                false;
-
-                square.appendChild(
-                    img
-                );
-
-            }
-
-            square.onclick = ()=>{
-
-                clickSquare(x,y);
-
-            };
-
-            board.appendChild(
-                square
-            );
-
-        }
-
-    }
-
-}
-
-/* ========================================================= */
-/* CLICK */
-/* ========================================================= */
-
-function clickSquare(x,y){
-
-    if(selected){
-
-        movePiece(
-            selected.x,
-            selected.y,
-            x,
-            y
-        );
-
-        selected = null;
-
-        drawBoard();
-
-        return;
-    }
-
-    selected = {x,y};
-
-    highlightSquare(x,y);
-
-}
-
-/* ========================================================= */
-/* MOVE */
-/* ========================================================= */
-
-function movePiece(fx,fy,tx,ty){
-
-    let realFX = fx;
-    let realFY = fy;
-
-    let realTX = tx;
-    let realTY = ty;
-
-    if(boardFlipped){
-
-        realFX = 7 - fx;
-        realFY = 7 - fy;
-
-        realTX = 7 - tx;
-        realTY = 7 - ty;
-    }
-
-    boardState[realTY][realTX] =
-    boardState[realFY][realFX];
-
-    boardState[realFY][realFX] =
-    "";
-
-}
-
-/* ========================================================= */
-/* HIGHLIGHT */
-/* ========================================================= */
-
-function highlightSquare(x,y){
-
-    drawBoard();
-
-    const squares =
-    document.querySelectorAll(
-        ".square"
-    );
-
-    squares.forEach(s=>{
-
-        if(
-            Number(s.dataset.x)==x
-            &&
-            Number(s.dataset.y)==y
-        ){
-
-            s.classList.add(
-                "selected"
-            );
-
-        }
-
-    });
-
-}
-
-/* ========================================================= */
-/* RESET */
-/* ========================================================= */
-
-window.resetBoard = function(){
-
-    boardState = [
-
-        ["r","n","b","q","k","b","n","r"],
-        ["p","p","p","p","p","p","p","p"],
-
-        ["","","","","","","",""],
-        ["","","","","","","",""],
-        ["","","","","","","",""],
-        ["","","","","","","",""],
-
-        ["P","P","P","P","P","P","P","P"],
-        ["R","N","B","Q","K","B","N","R"]
-
-    ];
-
-    drawBoard();
-
-}
-
-/* ========================================================= */
-/* FLIP */
-/* ========================================================= */
-
-window.flipBoard = function(){
-
-    boardFlipped =
-    !boardFlipped;
-
-    drawBoard();
 
 }
 
@@ -1515,10 +1167,315 @@ function loadLeaderboard(){
 }
 
 /* ========================================================= */
+/* REAL CHESS */
+/* ========================================================= */
+
+const game = new Chess();
+
+let selectedSquare = null;
+
+const pieces = {
+
+r:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/br.png",
+n:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/bn.png",
+b:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/bb.png",
+q:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/bq.png",
+k:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/bk.png",
+p:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/bp.png",
+
+R:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wr.png",
+N:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wn.png",
+B:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wb.png",
+Q:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wq.png",
+K:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wk.png",
+P:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wp.png"
+
+};
+
+/* ========================================================= */
+/* DRAW */
+/* ========================================================= */
+
+function drawBoard(){
+
+    const board =
+    document.getElementById(
+        "board"
+    );
+
+    board.innerHTML = "";
+
+    const currentBoard =
+    game.board();
+
+    for(let y=0;y<8;y++){
+
+        for(let x=0;x<8;x++){
+
+            const square =
+            document.createElement(
+                "div"
+            );
+
+            square.className =
+            "square " +
+            (
+                (x+y)%2==0
+                ? "light"
+                : "dark"
+            );
+
+            const file =
+            "abcdefgh"[x];
+
+            const rank =
+            8-y;
+
+            const squareName =
+            file + rank;
+
+            square.dataset.square =
+            squareName;
+
+            const piece =
+            currentBoard[y][x];
+
+            if(piece){
+
+                const code =
+                piece.color === "w"
+                ? piece.type.toUpperCase()
+                : piece.type;
+
+                const img =
+                document.createElement(
+                    "img"
+                );
+
+                img.src =
+                pieces[code];
+
+                img.className =
+                "piece";
+
+                img.draggable =
+                false;
+
+                square.appendChild(
+                    img
+                );
+
+            }
+
+            square.onclick = ()=>{
+
+                clickSquare(
+                    squareName
+                );
+
+            };
+
+            board.appendChild(
+                square
+            );
+
+        }
+
+    }
+
+}
+
+/* ========================================================= */
+/* CLICK */
+/* ========================================================= */
+
+function clickSquare(square){
+
+    if(!selectedSquare){
+
+        const piece =
+        game.get(square);
+
+        if(!piece) return;
+
+        if(piece.color !== game.turn())
+        return;
+
+        selectedSquare =
+        square;
+
+        highlightSquare(square);
+
+        showMoves(square);
+
+        return;
+    }
+
+    const move =
+    game.move({
+
+        from:selectedSquare,
+        to:square,
+
+        promotion:"q"
+
+    });
+
+    selectedSquare = null;
+
+    drawBoard();
+
+    if(move){
+
+        updateStatus();
+
+        checkGameState();
+
+    }
+
+}
+
+/* ========================================================= */
+/* HIGHLIGHT */
+/* ========================================================= */
+
+function highlightSquare(squareName){
+
+    const squares =
+    document.querySelectorAll(
+        ".square"
+    );
+
+    squares.forEach(s=>{
+
+        if(
+            s.dataset.square ===
+            squareName
+        ){
+
+            s.classList.add(
+                "selected"
+            );
+
+        }
+
+    });
+
+}
+
+/* ========================================================= */
+/* SHOW MOVES */
+/* ========================================================= */
+
+function showMoves(square){
+
+    const moves =
+    game.moves({
+
+        square:square,
+        verbose:true
+
+    });
+
+    moves.forEach(move=>{
+
+        const target =
+        document.querySelector(
+            `[data-square="${move.to}"]`
+        );
+
+        if(target){
+
+            target.classList.add(
+                "selected"
+            );
+
+        }
+
+    });
+
+}
+
+/* ========================================================= */
+/* STATUS */
+/* ========================================================= */
+
+function updateStatus(){
+
+    const status =
+    document.querySelector(
+        ".status"
+    );
+
+    if(game.turn()==="w"){
+
+        status.textContent =
+        "White to move";
+
+    }else{
+
+        status.textContent =
+        "Black to move";
+
+    }
+
+}
+
+/* ========================================================= */
+/* GAME STATE */
+/* ========================================================= */
+
+function checkGameState(){
+
+    if(game.in_checkmate()){
+
+        alert(
+            "Checkmate!"
+        );
+
+    }
+
+    else if(game.in_draw()){
+
+        alert(
+            "Draw!"
+        );
+
+    }
+
+    else if(game.in_check()){
+
+        alert(
+            "Check!"
+        );
+
+    }
+
+}
+
+/* ========================================================= */
+/* RESET */
+/* ========================================================= */
+
+window.resetBoard = function(){
+
+    game.reset();
+
+    selectedSquare = null;
+
+    drawBoard();
+
+    updateStatus();
+
+}
+
+/* ========================================================= */
 /* START */
 /* ========================================================= */
 
 drawBoard();
+
+updateStatus();
 
 console.log(
     "NeonChess Ready"
