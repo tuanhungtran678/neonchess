@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>NeonChess Firebase</title>
+<title>NeonChess Ultimate</title>
 
 <style>
 
@@ -28,9 +28,176 @@ body{
 
     min-height:100vh;
 
+    overflow-x:hidden;
+}
+
+/* ========================================================= */
+/* SIDEBAR */
+/* ========================================================= */
+
+.sidebar{
+
+    position:fixed;
+
+    left:0;
+    top:0;
+
+    width:260px;
+
+    height:100vh;
+
+    background:
+    rgba(15,23,42,.96);
+
+    backdrop-filter:
+    blur(18px);
+
+    border-right:
+    1px solid rgba(255,255,255,.08);
+
     padding:20px;
 
-    overflow-x:hidden;
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:space-between;
+
+    z-index:999;
+}
+
+.sidebar-logo{
+
+    font-size:34px;
+
+    font-weight:900;
+
+    margin-bottom:30px;
+
+    background:
+    linear-gradient(
+        90deg,
+        #00ffae,
+        #00c3ff
+    );
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+}
+
+.sidebar-menu{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+}
+
+.side-btn{
+
+    width:100%;
+
+    background:
+    rgba(255,255,255,.05);
+
+    color:white;
+
+    border:none;
+
+    padding:16px;
+
+    border-radius:16px;
+
+    text-align:left;
+
+    font-size:17px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.side-btn:hover{
+
+    background:
+    linear-gradient(
+        90deg,
+        #00ffae,
+        #00c3ff
+    );
+
+    color:#001b12;
+
+    transform:
+    translateX(6px);
+}
+
+.collapse-btn{
+
+    width:100%;
+
+    background:
+    rgba(255,255,255,.06);
+
+    color:white;
+
+    border:none;
+
+    padding:16px;
+
+    border-radius:16px;
+
+    font-size:22px;
+
+    cursor:pointer;
+}
+
+/* ========================================================= */
+/* COLLAPSE */
+/* ========================================================= */
+
+.sidebar.collapsed{
+
+    width:90px;
+}
+
+.sidebar.collapsed .sidebar-logo{
+
+    font-size:22px;
+}
+
+.sidebar.collapsed .side-btn{
+
+    text-align:center;
+
+    font-size:0;
+}
+
+.sidebar.collapsed .side-btn::first-letter{
+
+    font-size:22px;
+}
+
+/* ========================================================= */
+/* MAIN */
+/* ========================================================= */
+
+.main{
+
+    margin-left:280px;
+
+    padding:20px;
+
+    transition:.2s;
+}
+
+.sidebar.collapsed ~ .main{
+
+    margin-left:110px;
 }
 
 /* ========================================================= */
@@ -94,10 +261,6 @@ button:hover{
     scale(1.05);
 }
 
-/* ========================================================= */
-/* BUTTONS */
-/* ========================================================= */
-
 .login-btn{
 
     background:
@@ -113,38 +276,6 @@ button:hover{
 .logout-btn{
 
     background:#ff4d4d;
-
-    color:white;
-}
-
-.store-btn{
-
-    width:100%;
-
-    margin-top:18px;
-
-    background:
-    linear-gradient(
-        90deg,
-        #00c3ff,
-        #0099ff
-    );
-
-    color:white;
-}
-
-.room-btn{
-
-    width:100%;
-
-    margin-top:14px;
-
-    background:
-    linear-gradient(
-        90deg,
-        #8b5cf6,
-        #6366f1
-    );
 
     color:white;
 }
@@ -281,6 +412,42 @@ button:hover{
 }
 
 /* ========================================================= */
+/* BUTTONS */
+/* ========================================================= */
+
+.store-btn{
+
+    width:100%;
+
+    margin-top:18px;
+
+    background:
+    linear-gradient(
+        90deg,
+        #00c3ff,
+        #0099ff
+    );
+
+    color:white;
+}
+
+.room-btn{
+
+    width:100%;
+
+    margin-top:14px;
+
+    background:
+    linear-gradient(
+        90deg,
+        #8b5cf6,
+        #6366f1
+    );
+
+    color:white;
+}
+
+/* ========================================================= */
 /* LEADERBOARD */
 /* ========================================================= */
 
@@ -357,8 +524,6 @@ button:hover{
     border:none;
 
     border-radius:14px;
-
-    background:white;
 }
 
 /* ========================================================= */
@@ -366,6 +531,16 @@ button:hover{
 /* ========================================================= */
 
 @media(max-width:900px){
+
+    .sidebar{
+
+        width:90px;
+    }
+
+    .main{
+
+        margin-left:110px;
+    }
 
     .grid{
 
@@ -380,33 +555,62 @@ button:hover{
 <body>
 
 <!-- ========================================================= -->
-<!-- TOPBAR -->
+<!-- SIDEBAR -->
 <!-- ========================================================= -->
 
-<div class="topbar">
+<div
+id="sidebar"
+class="sidebar">
 
-    <div class="logo">
-        ♟ NeonChess
+    <div>
+
+        <div class="sidebar-logo">
+
+            ♟ NeonChess
+
+        </div>
+
+        <div class="sidebar-menu">
+
+            <button class="side-btn">
+                ▶ Play
+            </button>
+
+            <button class="side-btn">
+                📚 Lesson
+            </button>
+
+            <button class="side-btn">
+                🧩 Trainer
+            </button>
+
+            <button class="side-btn">
+                📺 NeonChess TV
+            </button>
+
+            <button class="side-btn">
+                🔍 Search Player
+            </button>
+
+            <button class="side-btn">
+                👤 Account
+            </button>
+
+            <button class="side-btn">
+                ⚙ Settings
+            </button>
+
+        </div>
+
     </div>
 
-    <div class="top-buttons">
+    <div>
 
         <button
-        id="loginBtn"
-        class="login-btn"
-        onclick="loginGoogle()">
+        class="collapse-btn"
+        onclick="toggleSidebar()">
 
-            🔐 Login
-
-        </button>
-
-        <button
-        id="logoutBtn"
-        class="logout-btn"
-        onclick="logoutGoogle()"
-        style="display:none;">
-
-            Logout
+            ☰
 
         </button>
 
@@ -415,136 +619,177 @@ button:hover{
 </div>
 
 <!-- ========================================================= -->
-<!-- GRID -->
+<!-- MAIN -->
 <!-- ========================================================= -->
 
-<div class="grid">
+<div class="main">
 
-    <!-- PROFILE -->
+    <!-- TOPBAR -->
 
-    <div class="card">
+    <div class="topbar">
 
-        <h2>👤 Profile</h2>
+        <div class="logo">
 
-        <div class="profile">
-
-            <img
-            id="avatar"
-            class="avatar">
-
-            <div>
-
-                <h2 id="name">
-                    Guest
-                </h2>
-
-                <p id="email">
-                    Chưa đăng nhập
-                </p>
-
-                <div class="badge">
-                    ADMIN SITE
-                </div>
-
-            </div>
+            NeonChess
 
         </div>
 
-        <!-- STATS -->
+        <div class="top-buttons">
 
-        <div class="stats">
+            <button
+            id="loginBtn"
+            class="login-btn"
+            onclick="loginGoogle()">
 
-            <div class="stat">
-
-                🪙 Coin
-
-                <div
-                id="coin"
-                class="stat-value">
-
-                    0
-
-                </div>
-
-            </div>
-
-            <div class="stat">
-
-                🏆 ELO
-
-                <div
-                id="elo"
-                class="stat-value">
-
-                    1200
-
-                </div>
-
-            </div>
-
-            <div class="stat">
-
-                🔥 Streak
-
-                <div
-                id="streak"
-                class="stat-value">
-
-                    0
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <button
-        class="store-btn"
-        onclick="buyFreeze()">
-
-            Buy Streak Freeze (100 Coin)
-
-        </button>
-
-        <button
-        class="room-btn"
-        onclick="createRoom()">
-
-            Create Multiplayer Room
-
-        </button>
-
-    </div>
-
-    <!-- LEADERBOARD -->
-
-    <div class="card">
-
-        <h2>🏆 Global Leaderboard</h2>
-
-        <div id="leaderboard"></div>
-
-    </div>
-
-    <!-- CHAT -->
-
-    <div class="card">
-
-        <h2>💬 Realtime Chat</h2>
-
-        <div id="chatBox"></div>
-
-        <div class="chat-controls">
-
-            <input
-            id="chatInput"
-            placeholder="Nhắn gì đó...">
-
-            <button onclick="sendChat()">
-
-                Send
+                🔐 Login
 
             </button>
+
+            <button
+            id="logoutBtn"
+            class="logout-btn"
+            onclick="logoutGoogle()"
+            style="display:none;">
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- GRID -->
+
+    <div class="grid">
+
+        <!-- PROFILE -->
+
+        <div class="card">
+
+            <h2>👤 Profile</h2>
+
+            <div class="profile">
+
+                <img
+                id="avatar"
+                class="avatar">
+
+                <div>
+
+                    <h2 id="name">
+                        Guest
+                    </h2>
+
+                    <p id="email">
+                        Chưa đăng nhập
+                    </p>
+
+                    <div class="badge">
+
+                        ADMIN SITE
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="stats">
+
+                <div class="stat">
+
+                    🪙 Coin
+
+                    <div
+                    id="coin"
+                    class="stat-value">
+
+                        0
+
+                    </div>
+
+                </div>
+
+                <div class="stat">
+
+                    🏆 ELO
+
+                    <div
+                    id="elo"
+                    class="stat-value">
+
+                        1200
+
+                    </div>
+
+                </div>
+
+                <div class="stat">
+
+                    🔥 Streak
+
+                    <div
+                    id="streak"
+                    class="stat-value">
+
+                        0
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <button
+            class="store-btn"
+            onclick="buyFreeze()">
+
+                Buy Streak Freeze (100 Coin)
+
+            </button>
+
+            <button
+            class="room-btn"
+            onclick="createRoom()">
+
+                Create Multiplayer Room
+
+            </button>
+
+        </div>
+
+        <!-- LEADERBOARD -->
+
+        <div class="card">
+
+            <h2>🏆 Global Leaderboard</h2>
+
+            <div id="leaderboard"></div>
+
+        </div>
+
+        <!-- CHAT -->
+
+        <div class="card">
+
+            <h2>💬 Realtime Chat</h2>
+
+            <div id="chatBox"></div>
+
+            <div class="chat-controls">
+
+                <input
+                id="chatInput"
+                placeholder="Nhắn gì đó...">
+
+                <button onclick="sendChat()">
+
+                    Send
+
+                </button>
+
+            </div>
 
         </div>
 
@@ -617,10 +862,6 @@ const firebaseConfig = {
 
 };
 
-/* ========================================================= */
-/* INIT */
-/* ========================================================= */
-
 const app =
 initializeApp(firebaseConfig);
 
@@ -634,6 +875,20 @@ const provider =
 new GoogleAuthProvider();
 
 window.currentUser = null;
+
+/* ========================================================= */
+/* SIDEBAR */
+/* ========================================================= */
+
+window.toggleSidebar = function(){
+
+    document.getElementById(
+        "sidebar"
+    ).classList.toggle(
+        "collapsed"
+    );
+
+}
 
 /* ========================================================= */
 /* LOGIN */
@@ -747,7 +1002,7 @@ async function createUserData(){
 }
 
 /* ========================================================= */
-/* LOAD PROFILE */
+/* PROFILE */
 /* ========================================================= */
 
 function loadProfile(){
@@ -1021,7 +1276,7 @@ async function(){
 }
 
 console.log(
-    "NeonChess Firebase Ready"
+    "NeonChess Ultimate Ready"
 );
 
 </script>
