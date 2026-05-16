@@ -8,11 +8,19 @@
 
 <style>
 
+/* ========================================================= */
+/* RESET */
+/* ========================================================= */
+
 *{
+
     margin:0;
     padding:0;
+
     box-sizing:border-box;
-    font-family:Arial,sans-serif;
+
+    font-family:
+    Arial,sans-serif;
 }
 
 body{
@@ -321,7 +329,7 @@ button:hover{
 }
 
 /* ========================================================= */
-/* CHESS BOARD */
+/* CHESS */
 /* ========================================================= */
 
 .chess-card{
@@ -355,13 +363,17 @@ button:hover{
     gap:10px;
 }
 
+/* ========================================================= */
+/* BOARD */
+/* ========================================================= */
+
 .board{
 
-    width:100%;
+    width:min(85vw,720px);
 
-    max-width:720px;
+    height:min(85vw,720px);
 
-    aspect-ratio:1;
+    aspect-ratio:1/1;
 
     margin:auto;
 
@@ -370,18 +382,30 @@ button:hover{
     grid-template-columns:
     repeat(8,1fr);
 
+    grid-template-rows:
+    repeat(8,1fr);
+
     border-radius:24px;
 
     overflow:hidden;
 
     border:
-    4px solid rgba(255,255,255,.08);
+    5px solid rgba(255,255,255,.08);
 
     box-shadow:
-    0 0 50px rgba(0,255,180,.12);
+    0 0 60px rgba(0,255,180,.18);
+
+    background:#222;
 }
 
+/* ========================================================= */
+/* SQUARE */
+/* ========================================================= */
+
 .square{
+
+    width:100%;
+    height:100%;
 
     display:flex;
 
@@ -389,19 +413,50 @@ button:hover{
 
     align-items:center;
 
-    font-size:56px;
-
     cursor:pointer;
 
     user-select:none;
 
     transition:.15s;
+
+    position:relative;
 }
 
 .square:hover{
 
-    filter:brightness(1.1);
+    filter:brightness(1.08);
 }
+
+/* ========================================================= */
+/* PIECES */
+/* ========================================================= */
+
+.piece{
+
+    width:82%;
+    height:82%;
+
+    object-fit:contain;
+
+    pointer-events:none;
+
+    filter:
+    drop-shadow(
+        0 0 4px rgba(0,0,0,.5)
+    );
+
+    transition:.15s;
+}
+
+.square:hover .piece{
+
+    transform:
+    scale(1.08);
+}
+
+/* ========================================================= */
+/* COLORS */
+/* ========================================================= */
 
 .light{
 
@@ -412,6 +467,10 @@ button:hover{
 
     background:#b58863;
 }
+
+/* ========================================================= */
+/* SELECTED */
+/* ========================================================= */
 
 .selected{
 
@@ -633,11 +692,6 @@ button:hover{
         1fr;
     }
 
-    .chess-card{
-
-        grid-row:auto;
-    }
-
 }
 
 @media(max-width:900px){
@@ -652,9 +706,10 @@ button:hover{
         margin-left:110px;
     }
 
-    .square{
+    .board{
 
-        font-size:36px;
+        width:95vw;
+        height:95vw;
     }
 
 }
@@ -892,22 +947,6 @@ class="sidebar">
 
             </div>
 
-            <button
-            class="store-btn"
-            onclick="buyFreeze()">
-
-                Buy Streak Freeze (100 Coin)
-
-            </button>
-
-            <button
-            class="room-btn"
-            onclick="createRoom()">
-
-                Create Multiplayer Room
-
-            </button>
-
         </div>
 
         <!-- LEADERBOARD -->
@@ -920,35 +959,15 @@ class="sidebar">
 
         </div>
 
-        <!-- CHAT -->
-
-        <div class="card">
-
-            <h2>💬 Realtime Chat</h2>
-
-            <div id="chatBox"></div>
-
-            <div class="chat-controls">
-
-                <input
-                id="chatInput"
-                placeholder="Nhắn gì đó...">
-
-                <button onclick="sendChat()">
-
-                    Send
-
-                </button>
-
-            </div>
-
-        </div>
-
     </div>
 
 </div>
 
 <script type="module">
+
+/* ========================================================= */
+/* FIREBASE */
+/* ========================================================= */
 
 import { initializeApp } from
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
@@ -970,16 +989,10 @@ import {
     ref,
     set,
     get,
-    push,
-    onValue,
-    update
+    onValue
 
 } from
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
-
-/* ========================================================= */
-/* FIREBASE */
-/* ========================================================= */
 
 const firebaseConfig = {
 
@@ -1002,10 +1015,7 @@ const firebaseConfig = {
     "784833820179",
 
     appId:
-    "1:784833820179:web:3613d907d2a5b321bff1e6",
-
-    measurementId:
-    "G-LBDENJ65N7"
+    "1:784833820179:web:3613d907d2a5b321bff1e6"
 
 };
 
@@ -1038,24 +1048,24 @@ window.toggleSidebar = function(){
 }
 
 /* ========================================================= */
-/* CHESS */
+/* PIECES */
 /* ========================================================= */
 
 const pieces = {
 
-    r:"♜",
-    n:"♞",
-    b:"♝",
-    q:"♛",
-    k:"♚",
-    p:"♟",
+    r:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/br.png",
+    n:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/bn.png",
+    b:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/bb.png",
+    q:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/bq.png",
+    k:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/bk.png",
+    p:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/bp.png",
 
-    R:"♖",
-    N:"♘",
-    B:"♗",
-    Q:"♕",
-    K:"♔",
-    P:"♙"
+    R:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/wr.png",
+    N:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/wn.png",
+    B:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/wb.png",
+    Q:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/wq.png",
+    K:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/wk.png",
+    P:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/wp.png"
 
 };
 
@@ -1128,8 +1138,27 @@ function drawBoard(){
             const piece =
             renderBoard[y][x];
 
-            square.textContent =
-            pieces[piece] || "";
+            if(piece){
+
+                const img =
+                document.createElement(
+                    "img"
+                );
+
+                img.src =
+                pieces[piece];
+
+                img.className =
+                "piece";
+
+                img.draggable =
+                false;
+
+                square.appendChild(
+                    img
+                );
+
+            }
 
             square.onclick = ()=>{
 
@@ -1137,7 +1166,9 @@ function drawBoard(){
 
             };
 
-            board.appendChild(square);
+            board.appendChild(
+                square
+            );
 
         }
 
@@ -1285,10 +1316,6 @@ async function(){
 
 }
 
-/* ========================================================= */
-/* LOGOUT */
-/* ========================================================= */
-
 window.logoutGoogle =
 async function(){
 
@@ -1336,8 +1363,6 @@ async(user)=>{
 
     loadLeaderboard();
 
-    loadChat();
-
 });
 
 /* ========================================================= */
@@ -1372,9 +1397,7 @@ async function createUserData(){
 
             elo:1200,
 
-            streak:0,
-
-            admin:true
+            streak:0
 
         });
 
@@ -1436,49 +1459,6 @@ function loadProfile(){
 }
 
 /* ========================================================= */
-/* STORE */
-/* ========================================================= */
-
-window.buyFreeze =
-async function(){
-
-    const userRef =
-    ref(
-        db,
-        "users/" + currentUser.uid
-    );
-
-    const snap =
-    await get(userRef);
-
-    const data =
-    snap.val();
-
-    if(data.coin < 100){
-
-        alert(
-            "Không đủ Coin"
-        );
-
-        return;
-    }
-
-    await update(userRef,{
-
-        coin:
-        data.coin - 100,
-
-        streakFreeze:true
-
-    });
-
-    alert(
-        "Đã mua Streak Freeze"
-    );
-
-}
-
-/* ========================================================= */
 /* LEADERBOARD */
 /* ========================================================= */
 
@@ -1535,135 +1515,13 @@ function loadLeaderboard(){
 }
 
 /* ========================================================= */
-/* CHAT */
-/* ========================================================= */
-
-window.sendChat =
-async function(){
-
-    if(!currentUser) return;
-
-    const input =
-    document.getElementById(
-        "chatInput"
-    );
-
-    if(!input.value) return;
-
-    await push(
-        ref(db,"chat"),
-        {
-
-            name:
-            currentUser.displayName,
-
-            avatar:
-            currentUser.photoURL,
-
-            message:
-            input.value,
-
-            time:
-            Date.now()
-
-        }
-    );
-
-    input.value = "";
-
-}
-
-function loadChat(){
-
-    onValue(
-        ref(db,"chat"),
-        (snap)=>{
-
-        const data =
-        snap.val();
-
-        if(!data) return;
-
-        const messages =
-        Object.values(data);
-
-        const box =
-        document.getElementById(
-            "chatBox"
-        );
-
-        box.innerHTML = "";
-
-        messages.forEach(msg=>{
-
-            box.innerHTML += `
-
-            <div class="chat-message">
-
-                <img src="${msg.avatar}">
-
-                <div>
-
-                    <b>
-                        ${msg.name}
-                    </b>
-
-                    <br>
-
-                    ${msg.message}
-
-                </div>
-
-            </div>
-
-            `;
-
-        });
-
-    });
-
-}
-
-/* ========================================================= */
-/* MULTIPLAYER */
-/* ========================================================= */
-
-window.createRoom =
-async function(){
-
-    if(!currentUser) return;
-
-    const roomRef =
-    push(ref(db,"rooms"));
-
-    await set(roomRef,{
-
-        host:
-        currentUser.uid,
-
-        hostName:
-        currentUser.displayName,
-
-        createdAt:
-        Date.now()
-
-    });
-
-    alert(
-        "Room ID: " +
-        roomRef.key
-    );
-
-}
-
-/* ========================================================= */
 /* START */
 /* ========================================================= */
 
 drawBoard();
 
 console.log(
-    "NeonChess Ultimate Ready"
+    "NeonChess Ready"
 );
 
 </script>
