@@ -1,1288 +1,261 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>NeonChess Ultimate</title>
 
-<link
-rel="icon"
-href="https://www.chess.com/bundles/web/images/favicon.7cca8c77.ico">
-
 <style>
 
-/* ========================================================= */
-/* RESET */
-/* ========================================================= */
+/* ========================= RESET ========================= */
 
 *{
-
     margin:0;
     padding:0;
-
     box-sizing:border-box;
-
-    font-family:
-    Arial,sans-serif;
+    font-family:Arial;
 }
 
 body{
-
-    background:
-    linear-gradient(
-        135deg,
-        #020617,
-        #0f172a
-    );
-
+    background:#0b1220;
     color:white;
-
     min-height:100vh;
-
-    overflow-x:hidden;
 }
 
-/* ========================================================= */
-/* PS5 BACKGROUND */
-/* ========================================================= */
-
-body::before{
-
-    content:"";
-
-    position:fixed;
-
-    inset:0;
-
-    background:
-
-    radial-gradient(
-        circle at top left,
-        rgba(0,255,255,.18),
-        transparent 35%
-    ),
-
-    radial-gradient(
-        circle at bottom right,
-        rgba(0,255,174,.14),
-        transparent 35%
-    );
-
-    animation:
-    glowMove 10s linear infinite;
-
-    pointer-events:none;
-}
-
-@keyframes glowMove{
-
-    0%{
-
-        transform:
-        translate(0px,0px);
-
-    }
-
-    50%{
-
-        transform:
-        translate(-20px,20px);
-
-    }
-
-    100%{
-
-        transform:
-        translate(0px,0px);
-
-    }
-
-}
-
-/* ========================================================= */
-/* SIDEBAR */
-/* ========================================================= */
-
-.sidebar{
-
-    position:fixed;
-
-    left:0;
-    top:0;
-
-    width:260px;
-
-    height:100vh;
-
-    background:
-    rgba(15,23,42,.95);
-
-    backdrop-filter:
-    blur(18px);
-
-    border-right:
-    1px solid rgba(255,255,255,.08);
-
-    padding:20px;
-
-    display:flex;
-
-    flex-direction:column;
-
-    justify-content:space-between;
-
-    z-index:999;
-}
-
-.sidebar-logo{
-
-    font-size:34px;
-
-    font-weight:900;
-
-    margin-bottom:30px;
-
-    background:
-    linear-gradient(
-        90deg,
-        #00ffae,
-        #00c3ff
-    );
-
-    -webkit-background-clip:text;
-
-    -webkit-text-fill-color:transparent;
-}
-
-.sidebar-menu{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:12px;
-}
-
-.side-btn{
-
-    width:100%;
-
-    border:none;
-
-    background:
-    rgba(255,255,255,.05);
-
-    color:white;
-
-    padding:16px;
-
-    border-radius:16px;
-
-    text-align:left;
-
-    font-size:17px;
-
-    font-weight:700;
-
-    cursor:pointer;
-
-    transition:.2s;
-}
-
-.side-btn:hover{
-
-    background:
-    linear-gradient(
-        90deg,
-        #00ffae,
-        #00c3ff
-    );
-
-    color:#001b12;
-
-    transform:
-    translateX(6px);
-}
-
-/* ========================================================= */
-/* MAIN */
-/* ========================================================= */
+/* ========================= LAYOUT ========================= */
 
 .main{
-
-    margin-left:280px;
-
+    display:grid;
+    grid-template-columns: 1.2fr .8fr;
+    gap:20px;
     padding:20px;
 }
 
-/* ========================================================= */
-/* TOPBAR */
-/* ========================================================= */
+/* ========================= HERO TIMER MODES ========================= */
 
-.topbar{
-
+.modes{
     display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    margin-bottom:30px;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:15px;
 }
 
-.logo{
-
-    font-size:42px;
-
-    font-weight:900;
-
-    background:
-    linear-gradient(
-        90deg,
-        #00ffae,
-        #00c3ff
-    );
-
-    -webkit-background-clip:text;
-
-    -webkit-text-fill-color:transparent;
-}
-
-.login-btn{
-
-    border:none;
-
-    padding:14px 22px;
-
-    border-radius:16px;
-
-    font-weight:700;
-
-    cursor:pointer;
-
-    background:
-    linear-gradient(
-        90deg,
-        #00ffae,
-        #00c3ff
-    );
-
-    color:#001b12;
-}
-
-/* ========================================================= */
-/* HERO */
-/* ========================================================= */
-
-.hero{
-
-    display:grid;
-
-    grid-template-columns:
-    1.1fr .9fr;
-
-    gap:24px;
-
-    margin-bottom:30px;
-}
-
-.hero-left{
-
-    position:relative;
-
-    overflow:hidden;
-
-    background:
-    linear-gradient(
-        135deg,
-        rgba(0,255,174,.14),
-        rgba(0,195,255,.08)
-    );
-
-    border:
-    1px solid rgba(255,255,255,.08);
-
-    border-radius:32px;
-
-    padding:42px;
-
-    backdrop-filter:
-    blur(22px);
-}
-
-.hero-badge{
-
-    display:inline-block;
-
-    padding:10px 18px;
-
-    border-radius:999px;
-
-    background:
-    rgba(0,255,174,.15);
-
-    color:#00ffae;
-
-    font-weight:700;
-
-    margin-bottom:22px;
-}
-
-.hero h1{
-
-    font-size:68px;
-
-    line-height:1.05;
-
-    margin-bottom:20px;
-
-    font-weight:900;
-}
-
-.hero h1 span{
-
-    background:
-    linear-gradient(
-        90deg,
-        #00ffae,
-        #00c3ff
-    );
-
-    -webkit-background-clip:text;
-
-    -webkit-text-fill-color:transparent;
-}
-
-.hero p{
-
-    color:#cbd5e1;
-
-    font-size:20px;
-
-    line-height:1.7;
-}
-
-.hero-buttons{
-
-    display:flex;
-
-    gap:16px;
-
-    margin-top:30px;
-}
-
-.hero-play,
-.hero-puzzle{
-
-    border:none;
-
-    padding:18px 26px;
-
-    border-radius:18px;
-
-    font-size:18px;
-
-    font-weight:900;
-
+.mode{
+    padding:10px 14px;
+    border-radius:12px;
+    background:#1b2a44;
     cursor:pointer;
 }
 
-.hero-play{
-
-    background:
-    linear-gradient(
-        90deg,
-        #00ffae,
-        #00c3ff
-    );
-
-    color:#001b12;
+.mode.active{
+    background:#00ffae;
+    color:#000;
+    font-weight:bold;
 }
 
-.hero-puzzle{
-
-    background:
-    rgba(255,255,255,.08);
-
-    color:white;
-}
-
-/* ========================================================= */
-/* HERO RIGHT */
-/* ========================================================= */
-
-.hero-right{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:18px;
-}
-
-.game-card{
-
-    background:
-    rgba(255,255,255,.06);
-
-    border:
-    1px solid rgba(255,255,255,.08);
-
-    border-radius:28px;
-
-    padding:30px;
-
-    backdrop-filter:
-    blur(18px);
-
-    transition:.25s;
-
-    cursor:pointer;
-}
-
-.game-card:hover{
-
-    transform:
-    translateY(-4px)
-    scale(1.02);
-
-    box-shadow:
-    0 0 50px rgba(0,255,174,.18);
-}
-
-.game-title{
-
-    font-size:30px;
-
-    font-weight:900;
-
-    margin-bottom:14px;
-}
-
-.game-desc{
-
-    color:#cbd5e1;
-
-    line-height:1.7;
-
-    font-size:17px;
-}
-
-/* ========================================================= */
-/* GRID */
-/* ========================================================= */
-
-.grid{
-
-    display:grid;
-
-    grid-template-columns:
-    1.2fr .8fr;
-
-    gap:20px;
-}
-
-/* ========================================================= */
-/* CARD */
-/* ========================================================= */
-
-.card{
-
-    background:
-    rgba(255,255,255,.06);
-
-    backdrop-filter:
-    blur(24px);
-
-    border:
-    1px solid rgba(255,255,255,.08);
-
-    border-radius:28px;
-
-    padding:24px;
-}
-
-/* ========================================================= */
-/* BOARD */
-/* ========================================================= */
+/* ========================= BOARD ========================= */
 
 .board{
-
-    width:min(85vw,720px);
-
-    height:min(85vw,720px);
-
-    aspect-ratio:1/1;
-
-    margin:auto;
-
+    width:100%;
+    aspect-ratio:1/1; /* FIX MÉO */
     display:grid;
-
-    grid-template-columns:
-    repeat(8,1fr);
-
-    border-radius:24px;
-
-    overflow:hidden;
+    grid-template-columns:repeat(8,1fr);
+    border:4px solid #222;
 }
 
 .square{
-
+    width:100%;
+    aspect-ratio:1/1; /* FIX 100% vuông */
     display:flex;
-
     justify-content:center;
-
     align-items:center;
-
-    position:relative;
 }
 
-.light{
-
-    background:#f0d9b5;
-}
-
-.dark{
-
-    background:#b58863;
-}
-
-.square:hover{
-
-    filter:brightness(1.08);
-}
+.light{background:#f0d9b5;}
+.dark{background:#b58863;}
 
 .piece{
-
-    width:82%;
-    height:82%;
-
-    object-fit:contain;
-
-    cursor:grab;
+    width:80%;
+    height:80%;
 }
 
-.move-dot::after{
+/* ========================= CHAT ========================= */
 
-    content:"";
-
-    width:18px;
-    height:18px;
-
-    border-radius:50%;
-
-    background:
-    rgba(0,255,174,.7);
-
-    position:absolute;
-}
-
-/* ========================================================= */
-/* PROFILE */
-/* ========================================================= */
-
-.profile{
-
+.chat{
+    background:#111a2b;
+    border-radius:12px;
+    padding:10px;
+    height:500px;
     display:flex;
-
-    gap:18px;
-
-    align-items:center;
-
-    margin-bottom:20px;
+    flex-direction:column;
 }
 
-.avatar{
-
-    width:90px;
-    height:90px;
-
-    border-radius:50%;
-
-    border:
-    4px solid #00ffae;
-}
-
-.profile-status{
-
-    margin-top:10px;
-
-    display:inline-flex;
-
-    padding:8px 14px;
-
-    border-radius:999px;
-
-    background:
-    rgba(0,255,174,.15);
-
-    color:#00ffae;
-
-    font-weight:700;
-}
-
-.badge{
-
-    display:inline-block;
-
-    margin-top:10px;
-
-    padding:8px 14px;
-
-    border-radius:999px;
-
-    background:
-    linear-gradient(
-        90deg,
-        #00ffae,
-        #00c3ff
-    );
-
-    color:#001b12;
-
-    font-weight:900;
-}
-
-.stats{
-
-    display:flex;
-
-    gap:12px;
-
-    margin-top:20px;
-}
-
-.stat{
-
+.chat-box{
     flex:1;
-
-    background:
-    rgba(255,255,255,.05);
-
-    border-radius:18px;
-
-    padding:16px;
-
-    text-align:center;
+    overflow:auto;
+    padding:10px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
 }
 
-.stat-value{
-
-    margin-top:8px;
-
-    font-size:30px;
-
-    font-weight:900;
+.msg{
+    background:#1c2b44;
+    padding:8px;
+    border-radius:10px;
+    font-size:14px;
 }
 
-@media(max-width:1100px){
+.time{
+    font-size:10px;
+    opacity:.6;
+    margin-top:3px;
+}
 
-    .hero,
-    .grid{
+.input{
+    display:flex;
+    gap:8px;
+}
 
-        grid-template-columns:
-        1fr;
-    }
+input{
+    flex:1;
+    padding:10px;
+    border-radius:8px;
+    border:none;
+}
 
-    .hero h1{
-
-        font-size:46px;
-    }
-
+button{
+    padding:10px;
+    border:none;
+    background:#00ffae;
+    font-weight:bold;
+    cursor:pointer;
 }
 
 </style>
 </head>
+
 <body>
-
-<!-- ========================================================= -->
-<!-- SIDEBAR -->
-<!-- ========================================================= -->
-
-<div class="sidebar">
-
-    <div>
-
-        <div class="sidebar-logo">
-
-            ♟ NeonChess
-
-        </div>
-
-        <div class="sidebar-menu">
-
-            <button class="side-btn">
-                ▶ Play
-            </button>
-
-            <button class="side-btn">
-                📚 Lesson
-            </button>
-
-            <button class="side-btn">
-                🧩 Trainer
-            </button>
-
-            <button class="side-btn">
-                📺 NeonChess TV
-            </button>
-
-            <button class="side-btn">
-                🔍 Search Player
-            </button>
-
-            <button class="side-btn">
-                👤 Account
-            </button>
-
-            <button class="side-btn">
-                ⚙ Settings
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
-
-<!-- ========================================================= -->
-<!-- MAIN -->
-<!-- ========================================================= -->
 
 <div class="main">
 
-    <!-- ===================================================== -->
-    <!-- TOPBAR -->
-    <!-- ===================================================== -->
+    <!-- ========================= LEFT ========================= -->
+    <div>
 
-    <div class="topbar">
+        <!-- TIMER MODES -->
+        <div class="modes">
 
-        <div class="logo">
-
-            NeonChess
-
-        </div>
-
-        <button
-        class="login-btn"
-        onclick="loginGoogle()">
-
-            🔐 Login Google
-
-        </button>
-
-    </div>
-
-    <!-- ===================================================== -->
-    <!-- HERO -->
-    <!-- ===================================================== -->
-
-    <div class="hero">
-
-        <div class="hero-left">
-
-            <div class="hero-badge">
-
-                🔥 PLAY LIKE A PRO
-
-            </div>
-
-            <h1>
-
-                Welcome to
-                <span>NeonChess</span>
-
-            </h1>
-
-            <p>
-
-                PS5-style chess platform with
-                realtime multiplayer,
-                puzzle rush,
-                ranked matches,
-                neon gaming UI
-                and cloud profiles.
-
-            </p>
-
-            <div class="hero-buttons">
-
-                <button class="hero-play">
-
-                    ▶ Play Now
-
-                </button>
-
-                <button class="hero-puzzle">
-
-                    🧩 Puzzle Rush
-
-                </button>
-
-            </div>
+            <div class="mode active" onclick="setMode(10)">⚡ 10s Bullet</div>
+            <div class="mode" onclick="setMode(30)">🔥 30s Blitz</div>
+            <div class="mode" onclick="setMode(300)">♟ 5m Rapid</div>
+            <div class="mode" onclick="setMode(86400)">📅 Daily</div>
 
         </div>
 
-        <div class="hero-right">
-
-            <div class="game-card">
-
-                <div class="game-title">
-
-                    ⚔ Ranked Match
-
-                </div>
-
-                <div class="game-desc">
-
-                    Compete realtime
-                    with global players.
-
-                </div>
-
-            </div>
-
-            <div class="game-card">
-
-                <div class="game-title">
-
-                    🧩 Puzzle Rush
-
-                </div>
-
-                <div class="game-desc">
-
-                    Solve puzzles fast
-                    and earn NeonCoins.
-
-                </div>
-
-            </div>
-
-            <div class="game-card">
-
-                <div class="game-title">
-
-                    📺 NeonChess TV
-
-                </div>
-
-                <div class="game-desc">
-
-                    Watch top matches
-                    and streamers live.
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    <!-- ===================================================== -->
-    <!-- GRID -->
-    <!-- ===================================================== -->
-
-    <div class="grid">
-
-        <!-- ================================================= -->
         <!-- BOARD -->
-        <!-- ================================================= -->
+        <div id="board" class="board"></div>
 
-        <div class="card">
+    </div>
 
-            <h2>
-                ♟ NeonChess Board
-            </h2>
+    <!-- ========================= CHAT ========================= -->
+    <div class="chat">
 
-            <br>
+        <h3>💬 Realtime Chat</h3>
 
-            <div
-            id="board"
-            class="board"></div>
+        <div id="chatBox" class="chat-box"></div>
 
-        </div>
-
-        <!-- ================================================= -->
-        <!-- PROFILE -->
-        <!-- ================================================= -->
-
-        <div class="card">
-
-            <h2>
-                👤 Profile
-            </h2>
-
-            <div class="profile">
-
-                <img
-                id="avatar"
-                class="avatar"
-                src="https://i.pravatar.cc/150?img=12">
-
-                <div>
-
-                    <h2 id="username">
-                        Guest
-                    </h2>
-
-                    <p id="email">
-                        Not logged in
-                    </p>
-
-                    <div class="profile-status">
-
-                        🟢 Online
-
-                    </div>
-
-                    <div class="badge">
-
-                        ADMIN SITE
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="stats">
-
-                <div class="stat">
-
-                    🪙 Coin
-
-                    <div
-                    id="coin"
-                    class="stat-value">
-
-                        500
-
-                    </div>
-
-                </div>
-
-                <div class="stat">
-
-                    🏆 ELO
-
-                    <div class="stat-value">
-
-                        1200
-
-                    </div>
-
-                </div>
-
-                <div class="stat">
-
-                    🔥 Streak
-
-                    <div class="stat-value">
-
-                        0
-
-                    </div>
-
-                </div>
-
-            </div>
-
+        <div class="input">
+            <input id="msgInput" placeholder="Nhập tin nhắn...">
+            <button onclick="sendMsg()">Send</button>
         </div>
 
     </div>
 
 </div>
 
-<!-- ========================================================= -->
-<!-- SCRIPT -->
-<!-- ========================================================= -->
+<script>
 
-<script type="module">
+/* ========================= TIMER ========================= */
 
-/* ========================================================= */
-/* CHESS */
-/* ========================================================= */
+let timeMode = 10;
+let timeLeft = timeMode;
 
-import { Chess }
-from
-"https://cdn.jsdelivr.net/npm/chess.js@1.0.0-beta.6/+esm";
+function setMode(sec){
 
-/* ========================================================= */
-/* FIREBASE */
-/* ========================================================= */
+    timeMode = sec;
+    timeLeft = sec;
 
-import { initializeApp }
-from
-"https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+    document.querySelectorAll(".mode")
+    .forEach(m=>m.classList.remove("active"));
 
-import {
+    event.target.classList.add("active");
+}
 
-    getAuth,
+/* ========================= CHAT ========================= */
 
-    GoogleAuthProvider,
+function timeNow(){
 
-    signInWithPopup,
+    const d = new Date();
 
-    signOut,
-
-    onAuthStateChanged
+    return d.getHours()+":"+String(d.getMinutes()).padStart(2,"0");
 
 }
-from
-"https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
 
-/* ========================================================= */
-/* FIREBASE CONFIG */
-/* ========================================================= */
+function sendMsg(){
 
-const firebaseConfig = {
+    const input = document.getElementById("msgInput");
 
-    apiKey:
-    "AIzaSyByZbESWCAXypIJKBUNIm6KDmcXWX7SMgk",
+    const text = input.value;
+    if(!text) return;
 
-    authDomain:
-    "neonchess-df7aa.firebaseapp.com",
+    const box = document.getElementById("chatBox");
 
-    databaseURL:
-    "https://neonchess-df7aa-default-rtdb.firebaseio.com",
+    const msg = document.createElement("div");
+    msg.className="msg";
 
-    projectId:
-    "neonchess-df7aa",
+    msg.innerHTML = `
+        ${text}
+        <div class="time">${timeNow()}</div>
+    `;
 
-    storageBucket:
-    "neonchess-df7aa.firebasestorage.app",
+    box.appendChild(msg);
 
-    messagingSenderId:
-    "784833820179",
+    input.value="";
 
-    appId:
-    "1:784833820179:web:3613d907d2a5b321bff1e6",
+    box.scrollTop = box.scrollHeight;
+}
 
-    measurementId:
-    "G-LBDENJ65N7"
+/* ========================= FIX CHESS BOARD ========================= */
 
-};
+const board = document.getElementById("board");
 
-/* ========================================================= */
-/* INIT */
-/* ========================================================= */
+const pieces = ["♜","♞","♝","♛","♚","♝","♞","♜"];
 
-const app =
-initializeApp(
-    firebaseConfig
-);
+function draw(){
 
-const auth =
-getAuth(app);
-
-const provider =
-new GoogleAuthProvider();
-
-/* ========================================================= */
-/* LOGIN */
-/* ========================================================= */
-
-window.loginGoogle =
-async function(){
-
-    try{
-
-        const result =
-        await signInWithPopup(
-            auth,
-            provider
-        );
-
-        console.log(
-            result.user
-        );
-
-    }
-
-    catch(err){
-
-        console.error(err);
-
-        alert(
-            "Login failed 😭"
-        );
-
-    }
-
-};
-
-/* ========================================================= */
-/* LOGOUT */
-/* ========================================================= */
-
-window.logoutGoogle =
-async function(){
-
-    await signOut(auth);
-
-};
-
-/* ========================================================= */
-/* AUTH CHANGE */
-/* ========================================================= */
-
-onAuthStateChanged(
-
-    auth,
-
-    (user)=>{
-
-        const btn =
-        document.querySelector(
-            ".login-btn"
-        );
-
-        if(user){
-
-            document.getElementById(
-                "username"
-            ).textContent =
-            user.displayName;
-
-            document.getElementById(
-                "email"
-            ).textContent =
-            user.email;
-
-            document.getElementById(
-                "avatar"
-            ).src =
-            user.photoURL;
-
-            btn.innerHTML =
-            "🚪 Logout";
-
-            btn.onclick =
-            logoutGoogle;
-
-        }
-
-        else{
-
-            btn.innerHTML =
-            "🔐 Login Google";
-
-            btn.onclick =
-            loginGoogle;
-
-        }
-
-    }
-
-);
-
-/* ========================================================= */
-/* GAME */
-/* ========================================================= */
-
-const game =
-new Chess();
-
-/* ========================================================= */
-/* PIECES */
-/* ========================================================= */
-
-const pieces = {
-
-r:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/br.png",
-n:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/bn.png",
-b:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/bb.png",
-q:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/bq.png",
-k:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/bk.png",
-p:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/bp.png",
-
-R:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wr.png",
-N:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wn.png",
-B:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wb.png",
-Q:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wq.png",
-K:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wk.png",
-P:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wp.png"
-
-};
-
-/* ========================================================= */
-/* DRAW BOARD */
-/* ========================================================= */
-
-function drawBoard(){
-
-    const board =
-    document.getElementById(
-        "board"
-    );
-
-    board.innerHTML = "";
-
-    const currentBoard =
-    game.board();
+    board.innerHTML="";
 
     for(let y=0;y<8;y++){
-
         for(let x=0;x<8;x++){
 
-            const square =
-            document.createElement(
-                "div"
-            );
+            const sq = document.createElement("div");
+            sq.className="square "+((x+y)%2?"dark":"light");
 
-            square.className =
-            "square " +
-            (
-                (x+y)%2===0
-                ? "light"
-                : "dark"
-            );
+            if(y===0) sq.textContent = pieces[x];
+            if(y===1) sq.textContent = "♟";
 
-            const piece =
-            currentBoard[y][x];
+            if(y===6) sq.textContent = "♙";
+            if(y===7) sq.textContent = pieces[x].toLowerCase();
 
-            if(piece){
+            sq.style.fontSize="32px";
 
-                const code =
-                piece.color==="w"
-                ? piece.type.toUpperCase()
-                : piece.type;
-
-                const img =
-                document.createElement(
-                    "img"
-                );
-
-                img.src =
-                pieces[code];
-
-                img.className =
-                "piece";
-
-                square.appendChild(
-                    img
-                );
-
-            }
-
-            board.appendChild(
-                square
-            );
-
+            board.appendChild(sq);
         }
-
     }
-
 }
 
-drawBoard();
+draw();
 
 </script>
 
