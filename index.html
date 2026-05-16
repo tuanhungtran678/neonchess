@@ -1,10 +1,18 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>NeonChess Ultimate</title>
+
+<link
+rel="icon"
+href="https://www.chess.com/bundles/web/images/favicon.7cca8c77.ico">
 
 <!-- ========================================================= -->
 <!-- CHESS JS -->
@@ -485,6 +493,25 @@ button:hover{
 }
 
 /* ========================================================= */
+/* POSSIBLE MOVE */
+/* ========================================================= */
+
+.move-dot::after{
+
+    content:"";
+
+    width:20px;
+    height:20px;
+
+    border-radius:50%;
+
+    background:
+    rgba(0,255,174,.7);
+
+    position:absolute;
+}
+
+/* ========================================================= */
 /* PROFILE */
 /* ========================================================= */
 
@@ -701,8 +728,6 @@ class="sidebar">
 
 <div class="main">
 
-    <!-- TOPBAR -->
-
     <div class="topbar">
 
         <div class="logo">
@@ -714,21 +739,9 @@ class="sidebar">
         <div class="top-buttons">
 
             <button
-            id="loginBtn"
-            class="login-btn"
-            onclick="loginGoogle()">
+            class="login-btn">
 
                 🔐 Login
-
-            </button>
-
-            <button
-            id="logoutBtn"
-            class="logout-btn"
-            onclick="logoutGoogle()"
-            style="display:none;">
-
-                Logout
 
             </button>
 
@@ -736,11 +749,9 @@ class="sidebar">
 
     </div>
 
-    <!-- GRID -->
-
     <div class="grid">
 
-        <!-- CHESS -->
+        <!-- BOARD -->
 
         <div class="card chess-card">
 
@@ -750,7 +761,8 @@ class="sidebar">
 
                     <h2>♟ NeonChess Board</h2>
 
-                    <p class="status">
+                    <p
+                    class="status">
 
                         White to move
 
@@ -760,7 +772,8 @@ class="sidebar">
 
                 <div class="board-buttons">
 
-                    <button onclick="resetBoard()">
+                    <button
+                    onclick="resetBoard()">
 
                         🔄 Reset
 
@@ -785,17 +798,17 @@ class="sidebar">
             <div class="profile">
 
                 <img
-                id="avatar"
-                class="avatar">
+                class="avatar"
+                src="https://images.chesscomfiles.com/uploads/v1/user/194566460.3bc0d9f7.200x200o.2df5f7db0c3d.jpeg">
 
                 <div>
 
-                    <h2 id="name">
-                        Guest
+                    <h2>
+                        HungCHESS_yt
                     </h2>
 
-                    <p id="email">
-                        Chưa đăng nhập
+                    <p>
+                        neonchess@gmail.com
                     </p>
 
                     <div class="badge">
@@ -814,11 +827,9 @@ class="sidebar">
 
                     🪙 Coin
 
-                    <div
-                    id="coin"
-                    class="stat-value">
+                    <div class="stat-value">
 
-                        0
+                        500
 
                     </div>
 
@@ -828,9 +839,7 @@ class="sidebar">
 
                     🏆 ELO
 
-                    <div
-                    id="elo"
-                    class="stat-value">
+                    <div class="stat-value">
 
                         1200
 
@@ -842,9 +851,7 @@ class="sidebar">
 
                     🔥 Streak
 
-                    <div
-                    id="streak"
-                    class="stat-value">
+                    <div class="stat-value">
 
                         0
 
@@ -862,7 +869,33 @@ class="sidebar">
 
             <h2>🏆 Global Leaderboard</h2>
 
-            <div id="leaderboard"></div>
+            <div id="leaderboard">
+
+                <div class="leader-item">
+
+                    <div>
+                        #1 HungCHESS_yt
+                    </div>
+
+                    <div>
+                        1200
+                    </div>
+
+                </div>
+
+                <div class="leader-item">
+
+                    <div>
+                        #2 NeonBot
+                    </div>
+
+                    <div>
+                        1150
+                    </div>
+
+                </div>
+
+            </div>
 
         </div>
 
@@ -870,309 +903,38 @@ class="sidebar">
 
 </div>
 
-<script type="module">
-
-/* ========================================================= */
-/* FIREBASE */
-/* ========================================================= */
-
-import { initializeApp } from
-"https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-
-import {
-
-    getAuth,
-    GoogleAuthProvider,
-    signInWithPopup,
-    onAuthStateChanged,
-    signOut
-
-} from
-"https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
-
-import {
-
-    getDatabase,
-    ref,
-    set,
-    get,
-    onValue
-
-} from
-"https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
-
-const firebaseConfig = {
-
-    apiKey:
-    "AIzaSyByZbESWCAXypIJKBUNIm6KDmcXWX7SMgk",
-
-    authDomain:
-    "neonchess-df7aa.firebaseapp.com",
-
-    databaseURL:
-    "https://neonchess-df7aa-default-rtdb.firebaseio.com",
-
-    projectId:
-    "neonchess-df7aa",
-
-    storageBucket:
-    "neonchess-df7aa.firebasestorage.app",
-
-    messagingSenderId:
-    "784833820179",
-
-    appId:
-    "1:784833820179:web:3613d907d2a5b321bff1e6"
-
-};
-
-const app =
-initializeApp(firebaseConfig);
-
-const auth =
-getAuth(app);
-
-const db =
-getDatabase(app);
-
-const provider =
-new GoogleAuthProvider();
-
-window.currentUser = null;
+<script>
 
 /* ========================================================= */
 /* SIDEBAR */
 /* ========================================================= */
 
-window.toggleSidebar = function(){
+function toggleSidebar(){
 
-    document.getElementById(
+    document
+    .getElementById(
         "sidebar"
-    ).classList.toggle(
+    )
+    .classList
+    .toggle(
         "collapsed"
     );
 
 }
 
 /* ========================================================= */
-/* LOGIN */
+/* CHESS */
 /* ========================================================= */
 
-window.loginGoogle =
-async function(){
+const game =
+new Chess();
 
-    await signInWithPopup(
-        auth,
-        provider
-    );
-
-}
-
-window.logoutGoogle =
-async function(){
-
-    await signOut(auth);
-
-}
+let selectedSquare =
+null;
 
 /* ========================================================= */
-/* AUTO LOGIN */
+/* PIECES */
 /* ========================================================= */
-
-onAuthStateChanged(auth,
-async(user)=>{
-
-    if(!user){
-
-        document.getElementById(
-            "loginBtn"
-        ).style.display =
-        "inline-block";
-
-        document.getElementById(
-            "logoutBtn"
-        ).style.display =
-        "none";
-
-        return;
-    }
-
-    currentUser = user;
-
-    document.getElementById(
-        "loginBtn"
-    ).style.display =
-    "none";
-
-    document.getElementById(
-        "logoutBtn"
-    ).style.display =
-    "inline-block";
-
-    await createUserData();
-
-    loadProfile();
-
-    loadLeaderboard();
-
-});
-
-/* ========================================================= */
-/* CREATE USER */
-/* ========================================================= */
-
-async function createUserData(){
-
-    const userRef =
-    ref(
-        db,
-        "users/" + currentUser.uid
-    );
-
-    const snap =
-    await get(userRef);
-
-    if(!snap.exists()){
-
-        await set(userRef,{
-
-            name:
-            currentUser.displayName,
-
-            email:
-            currentUser.email,
-
-            avatar:
-            currentUser.photoURL,
-
-            coin:500,
-
-            elo:1200,
-
-            streak:0
-
-        });
-
-    }
-
-}
-
-/* ========================================================= */
-/* PROFILE */
-/* ========================================================= */
-
-function loadProfile(){
-
-    const userRef =
-    ref(
-        db,
-        "users/" + currentUser.uid
-    );
-
-    onValue(userRef,(snap)=>{
-
-        const data =
-        snap.val();
-
-        if(!data) return;
-
-        document.getElementById(
-            "avatar"
-        ).src =
-        data.avatar;
-
-        document.getElementById(
-            "name"
-        ).textContent =
-        data.name;
-
-        document.getElementById(
-            "email"
-        ).textContent =
-        data.email;
-
-        document.getElementById(
-            "coin"
-        ).textContent =
-        data.coin;
-
-        document.getElementById(
-            "elo"
-        ).textContent =
-        data.elo;
-
-        document.getElementById(
-            "streak"
-        ).textContent =
-        data.streak;
-
-    });
-
-}
-
-/* ========================================================= */
-/* LEADERBOARD */
-/* ========================================================= */
-
-function loadLeaderboard(){
-
-    onValue(
-        ref(db,"users"),
-        (snap)=>{
-
-        const data =
-        snap.val();
-
-        if(!data) return;
-
-        const players =
-        Object.values(data);
-
-        players.sort(
-            (a,b)=>
-            b.elo - a.elo
-        );
-
-        const board =
-        document.getElementById(
-            "leaderboard"
-        );
-
-        board.innerHTML = "";
-
-        players
-        .slice(0,10)
-        .forEach((p,i)=>{
-
-            board.innerHTML += `
-
-            <div class="leader-item">
-
-                <div>
-                    #${i+1} ${p.name}
-                </div>
-
-                <div>
-                    ${p.elo} ELO
-                </div>
-
-            </div>
-
-            `;
-
-        });
-
-    });
-
-}
-
-/* ========================================================= */
-/* REAL CHESS */
-/* ========================================================= */
-
-const game = new Chess();
-
-let selectedSquare = null;
 
 const pieces = {
 
@@ -1291,6 +1053,8 @@ function drawBoard(){
 
 function clickSquare(square){
 
+    /* SELECT */
+
     if(!selectedSquare){
 
         const piece =
@@ -1304,12 +1068,16 @@ function clickSquare(square){
         selectedSquare =
         square;
 
+        drawBoard();
+
         highlightSquare(square);
 
         showMoves(square);
 
         return;
     }
+
+    /* MOVE */
 
     const move =
     game.move({
@@ -1341,25 +1109,18 @@ function clickSquare(square){
 
 function highlightSquare(squareName){
 
-    const squares =
-    document.querySelectorAll(
-        ".square"
+    const square =
+    document.querySelector(
+        `[data-square="${squareName}"]`
     );
 
-    squares.forEach(s=>{
+    if(square){
 
-        if(
-            s.dataset.square ===
-            squareName
-        ){
+        square.classList.add(
+            "selected"
+        );
 
-            s.classList.add(
-                "selected"
-            );
-
-        }
-
-    });
+    }
 
 }
 
@@ -1387,7 +1148,7 @@ function showMoves(square){
         if(target){
 
             target.classList.add(
-                "selected"
+                "move-dot"
             );
 
         }
@@ -1406,6 +1167,48 @@ function updateStatus(){
     document.querySelector(
         ".status"
     );
+
+    if(game.in_checkmate()){
+
+        if(game.turn()==="w"){
+
+            status.textContent =
+            "Black wins by checkmate";
+
+        }else{
+
+            status.textContent =
+            "White wins by checkmate";
+
+        }
+
+        return;
+    }
+
+    if(game.in_draw()){
+
+        status.textContent =
+        "Draw";
+
+        return;
+    }
+
+    if(game.in_check()){
+
+        if(game.turn()==="w"){
+
+            status.textContent =
+            "White in check";
+
+        }else{
+
+            status.textContent =
+            "Black in check";
+
+        }
+
+        return;
+    }
 
     if(game.turn()==="w"){
 
@@ -1429,25 +1232,25 @@ function checkGameState(){
 
     if(game.in_checkmate()){
 
-        alert(
-            "Checkmate!"
-        );
+        setTimeout(()=>{
+
+            alert(
+                "CHECKMATE!"
+            );
+
+        },100);
 
     }
 
     else if(game.in_draw()){
 
-        alert(
-            "Draw!"
-        );
+        setTimeout(()=>{
 
-    }
+            alert(
+                "DRAW!"
+            );
 
-    else if(game.in_check()){
-
-        alert(
-            "Check!"
-        );
+        },100);
 
     }
 
@@ -1457,11 +1260,12 @@ function checkGameState(){
 /* RESET */
 /* ========================================================= */
 
-window.resetBoard = function(){
+function resetBoard(){
 
     game.reset();
 
-    selectedSquare = null;
+    selectedSquare =
+    null;
 
     drawBoard();
 
