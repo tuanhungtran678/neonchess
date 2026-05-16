@@ -8,7 +8,7 @@
 name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>NeonChess PS5 Edition</title>
+<title>NeonChess Ultimate</title>
 
 <link
 rel="icon"
@@ -21,8 +21,10 @@ href="https://www.chess.com/bundles/web/images/favicon.7cca8c77.ico">
 /* ========================================================= */
 
 *{
+
     margin:0;
     padding:0;
+
     box-sizing:border-box;
 
     font-family:
@@ -80,18 +82,24 @@ body::before{
 @keyframes glowMove{
 
     0%{
+
         transform:
         translate(0px,0px);
+
     }
 
     50%{
+
         transform:
         translate(-20px,20px);
+
     }
 
     100%{
+
         transform:
         translate(0px,0px);
+
     }
 
 }
@@ -201,48 +209,6 @@ body::before{
     translateX(6px);
 }
 
-.collapse-btn{
-
-    width:100%;
-
-    border:none;
-
-    padding:16px;
-
-    border-radius:16px;
-
-    background:
-    rgba(255,255,255,.06);
-
-    color:white;
-
-    font-size:22px;
-
-    cursor:pointer;
-}
-
-.sidebar.collapsed{
-
-    width:90px;
-}
-
-.sidebar.collapsed .side-btn{
-
-    font-size:0;
-
-    text-align:center;
-}
-
-.sidebar.collapsed .side-btn::first-letter{
-
-    font-size:22px;
-}
-
-.sidebar.collapsed .sidebar-logo{
-
-    font-size:22px;
-}
-
 /* ========================================================= */
 /* MAIN */
 /* ========================================================= */
@@ -252,13 +218,6 @@ body::before{
     margin-left:280px;
 
     padding:20px;
-
-    transition:.2s;
-}
-
-.sidebar.collapsed ~ .main{
-
-    margin-left:110px;
 }
 
 /* ========================================================= */
@@ -298,7 +257,7 @@ body::before{
 
     border:none;
 
-    padding:14px 20px;
+    padding:14px 22px;
 
     border-radius:16px;
 
@@ -332,10 +291,6 @@ body::before{
     margin-bottom:30px;
 }
 
-/* ========================================================= */
-/* HERO LEFT */
-/* ========================================================= */
-
 .hero-left{
 
     position:relative;
@@ -358,54 +313,9 @@ body::before{
 
     backdrop-filter:
     blur(22px);
-
-    box-shadow:
-    0 0 80px rgba(0,255,174,.12);
 }
-
-.hero-left::before{
-
-    content:"";
-
-    position:absolute;
-
-    inset:-30%;
-
-    background:
-
-    radial-gradient(
-        circle,
-        rgba(0,255,174,.12),
-        transparent 60%
-    );
-
-    animation:
-    rotateGlow 12s linear infinite;
-}
-
-@keyframes rotateGlow{
-
-    from{
-        transform:
-        rotate(0deg);
-    }
-
-    to{
-        transform:
-        rotate(360deg);
-    }
-
-}
-
-/* ========================================================= */
-/* BADGE */
-/* ========================================================= */
 
 .hero-badge{
-
-    position:relative;
-
-    z-index:2;
 
     display:inline-block;
 
@@ -421,20 +331,9 @@ body::before{
     font-weight:700;
 
     margin-bottom:22px;
-
-    border:
-    1px solid rgba(0,255,174,.25);
 }
 
-/* ========================================================= */
-/* TITLE */
-/* ========================================================= */
-
 .hero h1{
-
-    position:relative;
-
-    z-index:2;
 
     font-size:68px;
 
@@ -459,40 +358,38 @@ body::before{
     -webkit-text-fill-color:transparent;
 }
 
-/* ========================================================= */
-/* DESCRIPTION */
-/* ========================================================= */
-
 .hero p{
-
-    position:relative;
-
-    z-index:2;
 
     color:#cbd5e1;
 
     font-size:20px;
 
     line-height:1.7;
-
-    max-width:700px;
 }
 
-/* ========================================================= */
-/* BUTTONS */
-/* ========================================================= */
-
 .hero-buttons{
-
-    position:relative;
-
-    z-index:2;
 
     display:flex;
 
     gap:16px;
 
     margin-top:30px;
+}
+
+.hero-play,
+.hero-puzzle{
+
+    border:none;
+
+    padding:18px 26px;
+
+    border-radius:18px;
+
+    font-size:18px;
+
+    font-weight:900;
+
+    cursor:pointer;
 }
 
 .hero-play{
@@ -505,18 +402,6 @@ body::before{
     );
 
     color:#001b12;
-
-    border:none;
-
-    padding:18px 26px;
-
-    border-radius:18px;
-
-    font-size:18px;
-
-    font-weight:900;
-
-    cursor:pointer;
 }
 
 .hero-puzzle{
@@ -525,22 +410,10 @@ body::before{
     rgba(255,255,255,.08);
 
     color:white;
-
-    border:none;
-
-    padding:18px 26px;
-
-    border-radius:18px;
-
-    font-size:18px;
-
-    font-weight:900;
-
-    cursor:pointer;
 }
 
 /* ========================================================= */
-/* RIGHT */
+/* HERO RIGHT */
 /* ========================================================= */
 
 .hero-right{
@@ -551,10 +424,6 @@ body::before{
 
     gap:18px;
 }
-
-/* ========================================================= */
-/* GAME CARD */
-/* ========================================================= */
 
 .game-card{
 
@@ -574,10 +443,6 @@ body::before{
     transition:.25s;
 
     cursor:pointer;
-
-    position:relative;
-
-    overflow:hidden;
 }
 
 .game-card:hover{
@@ -640,9 +505,6 @@ body::before{
     border-radius:28px;
 
     padding:24px;
-
-    box-shadow:
-    0 0 50px rgba(0,255,174,.08);
 }
 
 /* ========================================================= */
@@ -664,29 +526,20 @@ body::before{
     grid-template-columns:
     repeat(8,1fr);
 
-    grid-template-rows:
-    repeat(8,1fr);
-
     border-radius:24px;
 
     overflow:hidden;
-
-    border:
-    5px solid rgba(255,255,255,.08);
-
-    box-shadow:
-    0 0 60px rgba(0,255,180,.18);
 }
 
 .square{
-
-    position:relative;
 
     display:flex;
 
     justify-content:center;
 
     align-items:center;
+
+    position:relative;
 }
 
 .light{
@@ -704,10 +557,6 @@ body::before{
     filter:brightness(1.08);
 }
 
-/* ========================================================= */
-/* PIECES */
-/* ========================================================= */
-
 .piece{
 
     width:82%;
@@ -716,28 +565,14 @@ body::before{
     object-fit:contain;
 
     cursor:grab;
-
-    transition:.15s;
-}
-
-.piece:hover{
-
-    transform:
-    scale(1.08);
-}
-
-.selected{
-
-    box-shadow:
-    inset 0 0 0 5px #00ffae;
 }
 
 .move-dot::after{
 
     content:"";
 
-    width:20px;
-    height:20px;
+    width:18px;
+    height:18px;
 
     border-radius:50%;
 
@@ -773,6 +608,24 @@ body::before{
     4px solid #00ffae;
 }
 
+.profile-status{
+
+    margin-top:10px;
+
+    display:inline-flex;
+
+    padding:8px 14px;
+
+    border-radius:999px;
+
+    background:
+    rgba(0,255,174,.15);
+
+    color:#00ffae;
+
+    font-weight:700;
+}
+
 .badge{
 
     display:inline-block;
@@ -794,35 +647,6 @@ body::before{
 
     font-weight:900;
 }
-
-.profile-status{
-
-    margin-top:10px;
-
-    display:inline-flex;
-
-    align-items:center;
-
-    gap:8px;
-
-    padding:8px 14px;
-
-    border-radius:999px;
-
-    background:
-    rgba(0,255,174,.15);
-
-    color:#00ffae;
-
-    font-weight:700;
-
-    border:
-    1px solid rgba(0,255,174,.4);
-}
-
-/* ========================================================= */
-/* STATS */
-/* ========================================================= */
 
 .stats{
 
@@ -856,10 +680,6 @@ body::before{
     font-weight:900;
 }
 
-/* ========================================================= */
-/* MOBILE */
-/* ========================================================= */
-
 @media(max-width:1100px){
 
     .hero,
@@ -884,9 +704,7 @@ body::before{
 <!-- SIDEBAR -->
 <!-- ========================================================= -->
 
-<div
-id="sidebar"
-class="sidebar">
+<div class="sidebar">
 
     <div>
 
@@ -930,14 +748,6 @@ class="sidebar">
 
     </div>
 
-    <button
-    class="collapse-btn"
-    onclick="toggleSidebar()">
-
-        ☰
-
-    </button>
-
 </div>
 
 <!-- ========================================================= -->
@@ -958,9 +768,11 @@ class="sidebar">
 
         </div>
 
-        <button class="login-btn">
+        <button
+        class="login-btn"
+        onclick="loginGoogle()">
 
-            🔐 Login
+            🔐 Login Google
 
         </button>
 
@@ -1110,17 +922,18 @@ class="sidebar">
             <div class="profile">
 
                 <img
+                id="avatar"
                 class="avatar"
                 src="https://i.pravatar.cc/150?img=12">
 
                 <div>
 
-                    <h2>
-                        HungCHESS_yt
+                    <h2 id="username">
+                        Guest
                     </h2>
 
-                    <p>
-                        neonchess@gmail.com
+                    <p id="email">
+                        Not logged in
                     </p>
 
                     <div class="profile-status">
@@ -1145,7 +958,9 @@ class="sidebar">
 
                     🪙 Coin
 
-                    <div class="stat-value">
+                    <div
+                    id="coin"
+                    class="stat-value">
 
                         500
 
@@ -1185,13 +1000,199 @@ class="sidebar">
 
 </div>
 
+<!-- ========================================================= -->
+<!-- SCRIPT -->
+<!-- ========================================================= -->
+
 <script type="module">
 
-import { Chess } from
+/* ========================================================= */
+/* CHESS */
+/* ========================================================= */
+
+import { Chess }
+from
 "https://cdn.jsdelivr.net/npm/chess.js@1.0.0-beta.6/+esm";
+
+/* ========================================================= */
+/* FIREBASE */
+/* ========================================================= */
+
+import { initializeApp }
+from
+"https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+
+import {
+
+    getAuth,
+
+    GoogleAuthProvider,
+
+    signInWithPopup,
+
+    signOut,
+
+    onAuthStateChanged
+
+}
+from
+"https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+
+/* ========================================================= */
+/* FIREBASE CONFIG */
+/* ========================================================= */
+
+const firebaseConfig = {
+
+    apiKey:
+    "AIzaSyByZbESWCAXypIJKBUNIm6KDmcXWX7SMgk",
+
+    authDomain:
+    "neonchess-df7aa.firebaseapp.com",
+
+    databaseURL:
+    "https://neonchess-df7aa-default-rtdb.firebaseio.com",
+
+    projectId:
+    "neonchess-df7aa",
+
+    storageBucket:
+    "neonchess-df7aa.firebasestorage.app",
+
+    messagingSenderId:
+    "784833820179",
+
+    appId:
+    "1:784833820179:web:3613d907d2a5b321bff1e6",
+
+    measurementId:
+    "G-LBDENJ65N7"
+
+};
+
+/* ========================================================= */
+/* INIT */
+/* ========================================================= */
+
+const app =
+initializeApp(
+    firebaseConfig
+);
+
+const auth =
+getAuth(app);
+
+const provider =
+new GoogleAuthProvider();
+
+/* ========================================================= */
+/* LOGIN */
+/* ========================================================= */
+
+window.loginGoogle =
+async function(){
+
+    try{
+
+        const result =
+        await signInWithPopup(
+            auth,
+            provider
+        );
+
+        console.log(
+            result.user
+        );
+
+    }
+
+    catch(err){
+
+        console.error(err);
+
+        alert(
+            "Login failed 😭"
+        );
+
+    }
+
+};
+
+/* ========================================================= */
+/* LOGOUT */
+/* ========================================================= */
+
+window.logoutGoogle =
+async function(){
+
+    await signOut(auth);
+
+};
+
+/* ========================================================= */
+/* AUTH CHANGE */
+/* ========================================================= */
+
+onAuthStateChanged(
+
+    auth,
+
+    (user)=>{
+
+        const btn =
+        document.querySelector(
+            ".login-btn"
+        );
+
+        if(user){
+
+            document.getElementById(
+                "username"
+            ).textContent =
+            user.displayName;
+
+            document.getElementById(
+                "email"
+            ).textContent =
+            user.email;
+
+            document.getElementById(
+                "avatar"
+            ).src =
+            user.photoURL;
+
+            btn.innerHTML =
+            "🚪 Logout";
+
+            btn.onclick =
+            logoutGoogle;
+
+        }
+
+        else{
+
+            btn.innerHTML =
+            "🔐 Login Google";
+
+            btn.onclick =
+            loginGoogle;
+
+        }
+
+    }
+
+);
+
+/* ========================================================= */
+/* GAME */
+/* ========================================================= */
 
 const game =
 new Chess();
+
+/* ========================================================= */
+/* PIECES */
+/* ========================================================= */
 
 const pieces = {
 
@@ -1211,19 +1212,9 @@ P:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wp.png"
 
 };
 
-window.toggleSidebar =
-function(){
-
-    document
-    .getElementById(
-        "sidebar"
-    )
-    .classList
-    .toggle(
-        "collapsed"
-    );
-
-}
+/* ========================================================= */
+/* DRAW BOARD */
+/* ========================================================= */
 
 function drawBoard(){
 
@@ -1253,15 +1244,6 @@ function drawBoard(){
                 ? "light"
                 : "dark"
             );
-
-            const file =
-            "abcdefgh"[x];
-
-            const rank =
-            8-y;
-
-            const squareName =
-            file + rank;
 
             const piece =
             currentBoard[y][x];
