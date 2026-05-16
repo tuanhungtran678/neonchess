@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>NeonChess Login</title>
+<title>NeonChess Login Firebase</title>
 
 <style>
 
@@ -37,8 +37,6 @@ body{
     justify-content:center;
 
     align-items:center;
-
-    overflow:hidden;
 }
 
 /* ========================================================= */
@@ -47,7 +45,7 @@ body{
 
 .card{
 
-    width:420px;
+    width:430px;
 
     background:
     rgba(255,255,255,.06);
@@ -62,10 +60,10 @@ body{
 
     padding:40px;
 
-    box-shadow:
-    0 0 50px rgba(0,255,180,.15);
-
     text-align:center;
+
+    box-shadow:
+    0 0 45px rgba(0,255,180,.15);
 }
 
 /* ========================================================= */
@@ -74,7 +72,7 @@ body{
 
 .logo{
 
-    font-size:52px;
+    font-size:60px;
 
     margin-bottom:10px;
 }
@@ -85,18 +83,18 @@ body{
 
     font-weight:900;
 
+    margin-bottom:12px;
+
     background:
     linear-gradient(
         90deg,
         #00ffae,
-        #4fc3ff
+        #00c3ff
     );
 
     -webkit-background-clip:text;
 
     -webkit-text-fill-color:transparent;
-
-    margin-bottom:10px;
 }
 
 .subtitle{
@@ -104,12 +102,10 @@ body{
     opacity:.7;
 
     margin-bottom:35px;
-
-    font-size:16px;
 }
 
 /* ========================================================= */
-/* BUTTON */
+/* LOGIN BUTTON */
 /* ========================================================= */
 
 .google-btn{
@@ -139,9 +135,6 @@ body{
 
     transform:
     scale(1.03);
-
-    box-shadow:
-    0 0 25px rgba(255,255,255,.3);
 }
 
 /* ========================================================= */
@@ -150,9 +143,9 @@ body{
 
 .profile{
 
-    margin-top:30px;
-
     display:none;
+
+    margin-top:30px;
 }
 
 .avatar{
@@ -163,10 +156,10 @@ body{
     border-radius:50%;
 
     border:
-    5px solid #00ffae;
+    4px solid #00ffae;
 
     box-shadow:
-    0 0 35px rgba(0,255,174,.5);
+    0 0 30px rgba(0,255,174,.4);
 
     margin-bottom:18px;
 }
@@ -177,7 +170,7 @@ body{
 
     font-weight:900;
 
-    margin-bottom:10px;
+    margin-bottom:8px;
 }
 
 .email{
@@ -191,6 +184,10 @@ body{
 
     display:inline-block;
 
+    padding:10px 18px;
+
+    border-radius:999px;
+
     background:
     linear-gradient(
         90deg,
@@ -200,13 +197,9 @@ body{
 
     color:#001b12;
 
-    padding:10px 18px;
-
-    border-radius:999px;
-
     font-weight:900;
 
-    margin-bottom:20px;
+    margin-bottom:25px;
 }
 
 /* ========================================================= */
@@ -217,11 +210,9 @@ body{
 
     display:flex;
 
-    justify-content:center;
+    gap:12px;
 
-    gap:16px;
-
-    margin-top:20px;
+    margin-top:10px;
 }
 
 .stat{
@@ -229,25 +220,25 @@ body{
     flex:1;
 
     background:
-    rgba(255,255,255,.06);
-
-    padding:16px;
+    rgba(255,255,255,.05);
 
     border-radius:18px;
+
+    padding:16px;
 }
 
 .stat-title{
 
     opacity:.6;
 
-    font-size:14px;
+    margin-bottom:8px;
 
-    margin-bottom:6px;
+    font-size:14px;
 }
 
 .stat-value{
 
-    font-size:26px;
+    font-size:28px;
 
     font-weight:900;
 }
@@ -258,7 +249,7 @@ body{
 
 .logout{
 
-    margin-top:25px;
+    margin-top:24px;
 
     border:none;
 
@@ -266,7 +257,7 @@ body{
 
     color:white;
 
-    padding:14px 22px;
+    padding:14px 24px;
 
     border-radius:16px;
 
@@ -277,20 +268,15 @@ body{
     font-weight:700;
 }
 
-.logout:hover{
-
-    filter:brightness(1.1);
-}
-
 /* ========================================================= */
 /* FOOTER */
 /* ========================================================= */
 
 .footer{
 
-    margin-top:30px;
+    margin-top:28px;
 
-    opacity:.5;
+    opacity:.45;
 
     font-size:14px;
 }
@@ -302,22 +288,23 @@ body{
 
 <div class="card">
 
-    <div class="logo">♟</div>
+    <div class="logo">
+        ♟
+    </div>
 
     <div class="title">
         NeonChess
     </div>
 
     <div class="subtitle">
-        Đăng nhập để đồng bộ Coin,
-        ELO, Streak và Profile
+        Firebase Login System
     </div>
 
     <!-- LOGIN -->
 
     <button
-    class="google-btn"
     id="loginBtn"
+    class="google-btn"
     onclick="loginGoogle()">
 
         🔐 Đăng nhập với Google
@@ -331,17 +318,17 @@ body{
     id="profile">
 
         <img
-        class="avatar"
-        id="avatar">
+        id="avatar"
+        class="avatar">
 
         <div
-        class="name"
-        id="name">
+        id="name"
+        class="name">
         </div>
 
         <div
-        class="email"
-        id="email">
+        id="email"
+        class="email">
         </div>
 
         <div class="badge">
@@ -434,14 +421,24 @@ import {
 
 const firebaseConfig = {
 
-    apiKey: "AIzaSyByZbESWCAXypIJKBUNIm6KDmcXWX7SMgk",
-    authDomain: "neonchess-df7aa.firebaseapp.com",
-    databaseURL : "https://neonchess-df7aa-default-rtdb.firebaseio.com"
-    projectId: "neonchess-df7aa",
-    storageBucket: "neonchess-df7aa.firebasestorage.app",
-    messagingSenderId: "784833820179",
-    appId: "1:784833820179:web:3613d907d2a5b321bff1e6"
-    measurementId : "G-LBDENJ65N7"
+    apiKey:
+    "AIzaSyByZbESWCAXypIJKBUNIm6KDmcXWX7SMgk",
+
+    authDomain:
+    "neonchess-df7aa.firebaseapp.com",
+
+    projectId:
+    "neonchess-df7aa",
+
+    storageBucket:
+    "neonchess-df7aa.firebasestorage.app",
+
+    messagingSenderId:
+    "784833820179",
+
+    appId:
+    "1:784833820179:web:3613d907d2a5b321bff1e6"
+
 };
 
 /* ========================================================= */
