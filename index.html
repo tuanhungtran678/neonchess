@@ -14,12 +14,6 @@ content="width=device-width, initial-scale=1.0">
 rel="icon"
 href="https://www.chess.com/bundles/web/images/favicon.7cca8c77.ico">
 
-<!-- ========================================================= -->
-<!-- CHESS JS -->
-<!-- ========================================================= -->
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.13.4/chess.min.js"></script>
-
 <style>
 
 /* ========================================================= */
@@ -412,10 +406,6 @@ button:hover{
     background:#222;
 }
 
-/* ========================================================= */
-/* SQUARE */
-/* ========================================================= */
-
 .square{
 
     width:100%;
@@ -441,10 +431,6 @@ button:hover{
     filter:brightness(1.08);
 }
 
-/* ========================================================= */
-/* PIECES */
-/* ========================================================= */
-
 .piece{
 
     width:82%;
@@ -468,10 +454,6 @@ button:hover{
     scale(1.08);
 }
 
-/* ========================================================= */
-/* COLORS */
-/* ========================================================= */
-
 .light{
 
     background:#f0d9b5;
@@ -482,19 +464,11 @@ button:hover{
     background:#b58863;
 }
 
-/* ========================================================= */
-/* SELECTED */
-/* ========================================================= */
-
 .selected{
 
     box-shadow:
     inset 0 0 0 5px #00ffae;
 }
-
-/* ========================================================= */
-/* POSSIBLE MOVE */
-/* ========================================================= */
 
 .move-dot::after{
 
@@ -739,9 +713,19 @@ class="sidebar">
         <div class="top-buttons">
 
             <button
+            id="loginBtn"
             class="login-btn">
 
                 🔐 Login
+
+            </button>
+
+            <button
+            id="logoutBtn"
+            class="logout-btn"
+            style="display:none;">
+
+                Logout
 
             </button>
 
@@ -798,17 +782,18 @@ class="sidebar">
             <div class="profile">
 
                 <img
+                id="avatar"
                 class="avatar"
-                src="https://images.chesscomfiles.com/uploads/v1/user/194566460.3bc0d9f7.200x200o.2df5f7db0c3d.jpeg">
+                src="https://i.pravatar.cc/150?img=12">
 
                 <div>
 
-                    <h2>
-                        HungCHESS_yt
+                    <h2 id="name">
+                        Guest
                     </h2>
 
-                    <p>
-                        neonchess@gmail.com
+                    <p id="email">
+                        Not logged in
                     </p>
 
                     <div class="badge">
@@ -827,7 +812,9 @@ class="sidebar">
 
                     🪙 Coin
 
-                    <div class="stat-value">
+                    <div
+                    id="coin"
+                    class="stat-value">
 
                         500
 
@@ -839,7 +826,9 @@ class="sidebar">
 
                     🏆 ELO
 
-                    <div class="stat-value">
+                    <div
+                    id="elo"
+                    class="stat-value">
 
                         1200
 
@@ -851,46 +840,12 @@ class="sidebar">
 
                     🔥 Streak
 
-                    <div class="stat-value">
+                    <div
+                    id="streak"
+                    class="stat-value">
 
                         0
 
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <!-- LEADERBOARD -->
-
-        <div class="card">
-
-            <h2>🏆 Global Leaderboard</h2>
-
-            <div id="leaderboard">
-
-                <div class="leader-item">
-
-                    <div>
-                        #1 HungCHESS_yt
-                    </div>
-
-                    <div>
-                        1200
-                    </div>
-
-                </div>
-
-                <div class="leader-item">
-
-                    <div>
-                        #2 NeonBot
-                    </div>
-
-                    <div>
-                        1150
                     </div>
 
                 </div>
@@ -903,13 +858,166 @@ class="sidebar">
 
 </div>
 
-<script>
+<!-- ========================================================= -->
+<!-- SCRIPT -->
+<!-- ========================================================= -->
+
+<script type="module">
+
+/* ========================================================= */
+/* CHESS JS */
+/* ========================================================= */
+
+import { Chess } from
+"https://cdn.jsdelivr.net/npm/chess.js@1.0.0-beta.6/+esm";
+
+/* ========================================================= */
+/* FIREBASE */
+/* ========================================================= */
+
+import { initializeApp } from
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+
+import {
+
+    getAuth,
+    GoogleAuthProvider,
+    signInWithPopup,
+    onAuthStateChanged,
+    signOut
+
+} from
+"https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+
+const firebaseConfig = {
+
+    apiKey:
+    "AIzaSyByZbESWCAXypIJKBUNIm6KDmcXWX7SMgk",
+
+    authDomain:
+    "neonchess-df7aa.firebaseapp.com",
+
+    projectId:
+    "neonchess-df7aa",
+
+    storageBucket:
+    "neonchess-df7aa.firebasestorage.app",
+
+    messagingSenderId:
+    "784833820179",
+
+    appId:
+    "1:784833820179:web:3613d907d2a5b321bff1e6"
+
+};
+
+const app =
+initializeApp(firebaseConfig);
+
+const auth =
+getAuth(app);
+
+const provider =
+new GoogleAuthProvider();
+
+/* ========================================================= */
+/* LOGIN */
+/* ========================================================= */
+
+document
+.getElementById("loginBtn")
+.onclick = async()=>{
+
+    const result =
+    await signInWithPopup(
+        auth,
+        provider
+    );
+
+    console.log(result.user);
+
+};
+
+document
+.getElementById("logoutBtn")
+.onclick = async()=>{
+
+    await signOut(auth);
+
+};
+
+/* ========================================================= */
+/* AUTH */
+/* ========================================================= */
+
+onAuthStateChanged(auth,
+(user)=>{
+
+    if(user){
+
+        document
+        .getElementById(
+            "loginBtn"
+        )
+        .style.display =
+        "none";
+
+        document
+        .getElementById(
+            "logoutBtn"
+        )
+        .style.display =
+        "inline-block";
+
+        document
+        .getElementById(
+            "name"
+        )
+        .textContent =
+        user.displayName;
+
+        document
+        .getElementById(
+            "email"
+        )
+        .textContent =
+        user.email;
+
+        document
+        .getElementById(
+            "avatar"
+        )
+        .src =
+        user.photoURL;
+
+    }
+
+    else{
+
+        document
+        .getElementById(
+            "loginBtn"
+        )
+        .style.display =
+        "inline-block";
+
+        document
+        .getElementById(
+            "logoutBtn"
+        )
+        .style.display =
+        "none";
+
+    }
+
+});
 
 /* ========================================================= */
 /* SIDEBAR */
 /* ========================================================= */
 
-function toggleSidebar(){
+window.toggleSidebar =
+function(){
 
     document
     .getElementById(
@@ -1020,9 +1128,6 @@ function drawBoard(){
                 img.className =
                 "piece";
 
-                img.draggable =
-                false;
-
                 square.appendChild(
                     img
                 );
@@ -1053,8 +1158,6 @@ function drawBoard(){
 
 function clickSquare(square){
 
-    /* SELECT */
-
     if(!selectedSquare){
 
         const piece =
@@ -1077,8 +1180,6 @@ function clickSquare(square){
         return;
     }
 
-    /* MOVE */
-
     const move =
     game.move({
 
@@ -1089,15 +1190,14 @@ function clickSquare(square){
 
     });
 
-    selectedSquare = null;
+    selectedSquare =
+    null;
 
     drawBoard();
 
     if(move){
 
         updateStatus();
-
-        checkGameState();
 
     }
 
@@ -1168,24 +1268,17 @@ function updateStatus(){
         ".status"
     );
 
-    if(game.in_checkmate()){
+    if(game.inCheckmate()){
 
-        if(game.turn()==="w"){
-
-            status.textContent =
-            "Black wins by checkmate";
-
-        }else{
-
-            status.textContent =
-            "White wins by checkmate";
-
-        }
+        status.textContent =
+        game.turn()==="w"
+        ? "Black wins!"
+        : "White wins!";
 
         return;
     }
 
-    if(game.in_draw()){
+    if(game.inDraw()){
 
         status.textContent =
         "Draw";
@@ -1193,66 +1286,20 @@ function updateStatus(){
         return;
     }
 
-    if(game.in_check()){
+    if(game.inCheck()){
 
-        if(game.turn()==="w"){
-
-            status.textContent =
-            "White in check";
-
-        }else{
-
-            status.textContent =
-            "Black in check";
-
-        }
+        status.textContent =
+        game.turn()==="w"
+        ? "White in check"
+        : "Black in check";
 
         return;
     }
 
-    if(game.turn()==="w"){
-
-        status.textContent =
-        "White to move";
-
-    }else{
-
-        status.textContent =
-        "Black to move";
-
-    }
-
-}
-
-/* ========================================================= */
-/* GAME STATE */
-/* ========================================================= */
-
-function checkGameState(){
-
-    if(game.in_checkmate()){
-
-        setTimeout(()=>{
-
-            alert(
-                "CHECKMATE!"
-            );
-
-        },100);
-
-    }
-
-    else if(game.in_draw()){
-
-        setTimeout(()=>{
-
-            alert(
-                "DRAW!"
-            );
-
-        },100);
-
-    }
+    status.textContent =
+    game.turn()==="w"
+    ? "White to move"
+    : "Black to move";
 
 }
 
@@ -1260,7 +1307,8 @@ function checkGameState(){
 /* RESET */
 /* ========================================================= */
 
-function resetBoard(){
+window.resetBoard =
+function(){
 
     game.reset();
 
