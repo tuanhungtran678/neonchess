@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>NeonChess Firebase</title>
 
 <style>
@@ -11,157 +12,392 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Arial;
+    font-family:Arial,sans-serif;
 }
 
 body{
-    background:#0f172a;
+
+    background:
+    linear-gradient(
+        135deg,
+        #0f172a,
+        #020617
+    );
+
     color:white;
+
     min-height:100vh;
+
     padding:20px;
+
+    overflow-x:hidden;
 }
 
+/* ========================================================= */
+/* TOPBAR */
+/* ========================================================= */
+
 .topbar{
+
     display:flex;
+
     justify-content:space-between;
+
     align-items:center;
+
     margin-bottom:30px;
 }
 
-button{
-    border:none;
-    padding:12px 18px;
-    border-radius:12px;
-    cursor:pointer;
-    font-weight:bold;
+.logo{
+
+    font-size:42px;
+
+    font-weight:900;
+
+    background:
+    linear-gradient(
+        90deg,
+        #00ffae,
+        #00c3ff
+    );
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
 }
 
+.top-buttons{
+
+    display:flex;
+
+    gap:12px;
+}
+
+button{
+
+    border:none;
+
+    padding:12px 18px;
+
+    border-radius:14px;
+
+    cursor:pointer;
+
+    font-weight:700;
+
+    transition:.2s;
+}
+
+button:hover{
+
+    transform:
+    scale(1.05);
+}
+
+/* ========================================================= */
+/* BUTTONS */
+/* ========================================================= */
+
 .login-btn{
-    background:#00ffae;
+
+    background:
+    linear-gradient(
+        90deg,
+        #00ffae,
+        #00c3ff
+    );
+
+    color:#001b12;
 }
 
 .logout-btn{
+
     background:#ff4d4d;
+
     color:white;
 }
 
+.store-btn{
+
+    width:100%;
+
+    margin-top:18px;
+
+    background:
+    linear-gradient(
+        90deg,
+        #00c3ff,
+        #0099ff
+    );
+
+    color:white;
+}
+
+.room-btn{
+
+    width:100%;
+
+    margin-top:14px;
+
+    background:
+    linear-gradient(
+        90deg,
+        #8b5cf6,
+        #6366f1
+    );
+
+    color:white;
+}
+
+/* ========================================================= */
+/* GRID */
+/* ========================================================= */
+
 .grid{
+
     display:grid;
-    grid-template-columns:1fr 1fr;
+
+    grid-template-columns:
+    1fr 1fr;
+
     gap:20px;
 }
+
+/* ========================================================= */
+/* CARD */
+/* ========================================================= */
 
 .card{
-    background:rgba(255,255,255,.05);
-    border-radius:20px;
-    padding:20px;
+
+    background:
+    rgba(255,255,255,.06);
+
+    backdrop-filter:
+    blur(18px);
+
+    border:
+    1px solid rgba(255,255,255,.08);
+
+    border-radius:24px;
+
+    padding:24px;
+
+    box-shadow:
+    0 0 40px rgba(0,255,180,.12);
 }
 
+.card h2{
+
+    margin-bottom:18px;
+
+    font-size:28px;
+}
+
+/* ========================================================= */
+/* PROFILE */
+/* ========================================================= */
+
 .profile{
+
     display:flex;
+
     align-items:center;
-    gap:20px;
+
+    gap:18px;
+
     margin-bottom:20px;
 }
 
 .avatar{
+
     width:90px;
     height:90px;
+
     border-radius:50%;
-    border:4px solid #00ffae;
+
+    border:
+    4px solid #00ffae;
+
+    box-shadow:
+    0 0 25px rgba(0,255,174,.4);
 }
 
+.badge{
+
+    display:inline-block;
+
+    margin-top:8px;
+
+    padding:8px 14px;
+
+    border-radius:999px;
+
+    background:
+    linear-gradient(
+        90deg,
+        #00ffae,
+        #00c3ff
+    );
+
+    color:#001b12;
+
+    font-weight:900;
+}
+
+/* ========================================================= */
+/* STATS */
+/* ========================================================= */
+
 .stats{
+
     display:flex;
+
     gap:12px;
+
     margin-top:20px;
 }
 
 .stat{
+
     flex:1;
-    background:rgba(255,255,255,.05);
-    padding:14px;
-    border-radius:16px;
+
+    background:
+    rgba(255,255,255,.05);
+
+    border-radius:18px;
+
+    padding:16px;
+
     text-align:center;
 }
 
 .stat-value{
-    font-size:28px;
-    font-weight:bold;
-    margin-top:6px;
+
+    font-size:30px;
+
+    font-weight:900;
+
+    margin-top:8px;
 }
 
-#leaderboard .leader-item{
+/* ========================================================= */
+/* LEADERBOARD */
+/* ========================================================= */
+
+.leader-item{
+
     display:flex;
+
     justify-content:space-between;
-    padding:12px;
-    background:rgba(255,255,255,.04);
-    border-radius:12px;
-    margin-top:10px;
+
+    align-items:center;
+
+    background:
+    rgba(255,255,255,.05);
+
+    border-radius:14px;
+
+    padding:14px;
+
+    margin-top:12px;
 }
+
+/* ========================================================= */
+/* CHAT */
+/* ========================================================= */
 
 #chatBox{
-    max-height:300px;
+
+    max-height:320px;
+
     overflow:auto;
 }
 
 .chat-message{
+
     display:flex;
+
     gap:12px;
+
     align-items:center;
-    background:rgba(255,255,255,.05);
-    padding:10px;
-    border-radius:12px;
+
+    background:
+    rgba(255,255,255,.05);
+
+    padding:12px;
+
+    border-radius:14px;
+
     margin-top:10px;
 }
 
 .chat-message img{
+
     width:50px;
     height:50px;
+
     border-radius:50%;
 }
 
 .chat-controls{
+
     display:flex;
+
     gap:10px;
-    margin-top:15px;
+
+    margin-top:16px;
 }
 
 .chat-controls input{
+
     flex:1;
+
     padding:12px;
+
     border:none;
-    border-radius:12px;
+
+    border-radius:14px;
+
+    background:white;
 }
 
-.store-btn{
-    width:100%;
-    margin-top:15px;
-    background:#00c3ff;
-}
+/* ========================================================= */
+/* MOBILE */
+/* ========================================================= */
 
-.room-btn{
-    width:100%;
-    margin-top:15px;
-    background:#8b5cf6;
-    color:white;
+@media(max-width:900px){
+
+    .grid{
+
+        grid-template-columns:
+        1fr;
+    }
+
 }
 
 </style>
 </head>
 <body>
 
+<!-- ========================================================= -->
+<!-- TOPBAR -->
+<!-- ========================================================= -->
+
 <div class="topbar">
 
-    <h1>♟ NeonChess Firebase</h1>
+    <div class="logo">
+        ♟ NeonChess
+    </div>
 
-    <div>
+    <div class="top-buttons">
 
         <button
         id="loginBtn"
         class="login-btn"
         onclick="loginGoogle()">
-            Login Google
+
+            🔐 Login
+
         </button>
 
         <button
@@ -169,14 +405,22 @@ button{
         class="logout-btn"
         onclick="logoutGoogle()"
         style="display:none;">
+
             Logout
+
         </button>
 
     </div>
 
 </div>
 
+<!-- ========================================================= -->
+<!-- GRID -->
+<!-- ========================================================= -->
+
 <div class="grid">
+
+    <!-- PROFILE -->
 
     <div class="card">
 
@@ -198,41 +442,58 @@ button{
                     Chưa đăng nhập
                 </p>
 
-                <p>
+                <div class="badge">
                     ADMIN SITE
-                </p>
+                </div>
 
             </div>
 
         </div>
 
+        <!-- STATS -->
+
         <div class="stats">
 
             <div class="stat">
-                Coin
+
+                🪙 Coin
+
                 <div
                 id="coin"
                 class="stat-value">
+
                     0
+
                 </div>
+
             </div>
 
             <div class="stat">
-                ELO
+
+                🏆 ELO
+
                 <div
                 id="elo"
                 class="stat-value">
+
                     1200
+
                 </div>
+
             </div>
 
             <div class="stat">
-                Streak
+
+                🔥 Streak
+
                 <div
                 id="streak"
                 class="stat-value">
+
                     0
+
                 </div>
+
             </div>
 
         </div>
@@ -240,24 +501,32 @@ button{
         <button
         class="store-btn"
         onclick="buyFreeze()">
+
             Buy Streak Freeze (100 Coin)
+
         </button>
 
         <button
         class="room-btn"
         onclick="createRoom()">
+
             Create Multiplayer Room
+
         </button>
 
     </div>
 
+    <!-- LEADERBOARD -->
+
     <div class="card">
 
-        <h2>🏆 Leaderboard</h2>
+        <h2>🏆 Global Leaderboard</h2>
 
         <div id="leaderboard"></div>
 
     </div>
+
+    <!-- CHAT -->
 
     <div class="card">
 
@@ -272,7 +541,9 @@ button{
             placeholder="Nhắn gì đó...">
 
             <button onclick="sendChat()">
+
                 Send
+
             </button>
 
         </div>
@@ -280,6 +551,10 @@ button{
     </div>
 
 </div>
+
+<!-- ========================================================= -->
+<!-- FIREBASE -->
+<!-- ========================================================= -->
 
 <script type="module">
 
@@ -310,38 +585,62 @@ import {
 } from
 "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
 
+/* ========================================================= */
+/* FIREBASE CONFIG */
+/* ========================================================= */
+
 const firebaseConfig = {
 
-  apiKey: "AIzaSyByZbESWCAXypIJKBUNIm6KDmcXWX7SMgk",
+    apiKey:
+    "AIzaSyByZbESWCAXypIJKBUNIm6KDmcXWX7SMgk",
 
-  authDomain: "neonchess-df7aa.firebaseapp.com",
+    authDomain:
+    "neonchess-df7aa.firebaseapp.com",
 
-  databaseURL:
-  "https://neonchess-df7aa-default-rtdb.firebaseio.com",
+    databaseURL:
+    "https://neonchess-df7aa-default-rtdb.firebaseio.com",
 
-  projectId: "neonchess-df7aa",
+    projectId:
+    "neonchess-df7aa",
 
-  storageBucket:
-  "neonchess-df7aa.firebasestorage.app",
+    storageBucket:
+    "neonchess-df7aa.firebasestorage.app",
 
-  messagingSenderId: "784833820179",
+    messagingSenderId:
+    "784833820179",
 
-  appId:
-  "1:784833820179:web:3613d907d2a5b321bff1e6",
+    appId:
+    "1:784833820179:web:3613d907d2a5b321bff1e6",
 
-  measurementId:
-  "G-LBDENJ65N7"
+    measurementId:
+    "G-LBDENJ65N7"
 
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getDatabase(app);
-const provider = new GoogleAuthProvider();
+/* ========================================================= */
+/* INIT */
+/* ========================================================= */
+
+const app =
+initializeApp(firebaseConfig);
+
+const auth =
+getAuth(app);
+
+const db =
+getDatabase(app);
+
+const provider =
+new GoogleAuthProvider();
 
 window.currentUser = null;
 
-window.loginGoogle = async function(){
+/* ========================================================= */
+/* LOGIN */
+/* ========================================================= */
+
+window.loginGoogle =
+async function(){
 
     await signInWithPopup(
         auth,
@@ -350,37 +649,50 @@ window.loginGoogle = async function(){
 
 }
 
-window.logoutGoogle = async function(){
+/* ========================================================= */
+/* LOGOUT */
+/* ========================================================= */
+
+window.logoutGoogle =
+async function(){
 
     await signOut(auth);
 
 }
 
-onAuthStateChanged(auth, async(user)=>{
+/* ========================================================= */
+/* AUTO LOGIN */
+/* ========================================================= */
+
+onAuthStateChanged(auth,
+async(user)=>{
 
     if(!user){
 
         document.getElementById(
             "loginBtn"
-        ).style.display = "inline-block";
+        ).style.display =
+        "inline-block";
 
         document.getElementById(
             "logoutBtn"
-        ).style.display = "none";
+        ).style.display =
+        "none";
 
         return;
-
     }
 
     currentUser = user;
 
     document.getElementById(
         "loginBtn"
-    ).style.display = "none";
+    ).style.display =
+    "none";
 
     document.getElementById(
         "logoutBtn"
-    ).style.display = "inline-block";
+    ).style.display =
+    "inline-block";
 
     await createUserData();
 
@@ -392,10 +704,17 @@ onAuthStateChanged(auth, async(user)=>{
 
 });
 
+/* ========================================================= */
+/* CREATE USER */
+/* ========================================================= */
+
 async function createUserData(){
 
     const userRef =
-    ref(db,"users/" + currentUser.uid);
+    ref(
+        db,
+        "users/" + currentUser.uid
+    );
 
     const snap =
     await get(userRef);
@@ -427,87 +746,122 @@ async function createUserData(){
 
 }
 
+/* ========================================================= */
+/* LOAD PROFILE */
+/* ========================================================= */
+
 function loadProfile(){
 
     const userRef =
-    ref(db,"users/" + currentUser.uid);
+    ref(
+        db,
+        "users/" + currentUser.uid
+    );
 
     onValue(userRef,(snap)=>{
 
-        const data = snap.val();
+        const data =
+        snap.val();
 
         if(!data) return;
 
         document.getElementById(
             "avatar"
-        ).src = data.avatar;
+        ).src =
+        data.avatar;
 
         document.getElementById(
             "name"
-        ).textContent = data.name;
+        ).textContent =
+        data.name;
 
         document.getElementById(
             "email"
-        ).textContent = data.email;
+        ).textContent =
+        data.email;
 
         document.getElementById(
             "coin"
-        ).textContent = data.coin;
+        ).textContent =
+        data.coin;
 
         document.getElementById(
             "elo"
-        ).textContent = data.elo;
+        ).textContent =
+        data.elo;
 
         document.getElementById(
             "streak"
-        ).textContent = data.streak;
+        ).textContent =
+        data.streak;
 
     });
 
 }
 
-window.buyFreeze = async function(){
+/* ========================================================= */
+/* STORE */
+/* ========================================================= */
+
+window.buyFreeze =
+async function(){
 
     const userRef =
-    ref(db,"users/" + currentUser.uid);
+    ref(
+        db,
+        "users/" + currentUser.uid
+    );
 
     const snap =
     await get(userRef);
 
-    const data = snap.val();
+    const data =
+    snap.val();
 
     if(data.coin < 100){
 
-        alert("Không đủ Coin");
+        alert(
+            "Không đủ Coin"
+        );
 
         return;
-
     }
 
     await update(userRef,{
 
-        coin:data.coin - 100,
+        coin:
+        data.coin - 100,
 
         streakFreeze:true
 
     });
 
-    alert("Đã mua Streak Freeze");
+    alert(
+        "Đã mua Streak Freeze"
+    );
 
 }
 
+/* ========================================================= */
+/* LEADERBOARD */
+/* ========================================================= */
+
 function loadLeaderboard(){
 
-    onValue(ref(db,"users"),(snap)=>{
+    onValue(
+        ref(db,"users"),
+        (snap)=>{
 
-        const data = snap.val();
+        const data =
+        snap.val();
 
         if(!data) return;
 
         const players =
         Object.values(data);
 
-        players.sort((a,b)=>
+        players.sort(
+            (a,b)=>
             b.elo - a.elo
         );
 
@@ -518,7 +872,9 @@ function loadLeaderboard(){
 
         board.innerHTML = "";
 
-        players.slice(0,10).forEach((p,i)=>{
+        players
+        .slice(0,10)
+        .forEach((p,i)=>{
 
             board.innerHTML += `
 
@@ -542,7 +898,12 @@ function loadLeaderboard(){
 
 }
 
-window.sendChat = async function(){
+/* ========================================================= */
+/* CHAT */
+/* ========================================================= */
+
+window.sendChat =
+async function(){
 
     if(!currentUser) return;
 
@@ -556,10 +917,19 @@ window.sendChat = async function(){
     await push(
         ref(db,"chat"),
         {
-            name:currentUser.displayName,
-            avatar:currentUser.photoURL,
-            message:input.value,
-            time:Date.now()
+
+            name:
+            currentUser.displayName,
+
+            avatar:
+            currentUser.photoURL,
+
+            message:
+            input.value,
+
+            time:
+            Date.now()
+
         }
     );
 
@@ -569,9 +939,12 @@ window.sendChat = async function(){
 
 function loadChat(){
 
-    onValue(ref(db,"chat"),(snap)=>{
+    onValue(
+        ref(db,"chat"),
+        (snap)=>{
 
-        const data = snap.val();
+        const data =
+        snap.val();
 
         if(!data) return;
 
@@ -594,9 +967,15 @@ function loadChat(){
                 <img src="${msg.avatar}">
 
                 <div>
-                    <b>${msg.name}</b>
+
+                    <b>
+                        ${msg.name}
+                    </b>
+
                     <br>
+
                     ${msg.message}
+
                 </div>
 
             </div>
@@ -609,7 +988,12 @@ function loadChat(){
 
 }
 
-window.createRoom = async function(){
+/* ========================================================= */
+/* MULTIPLAYER */
+/* ========================================================= */
+
+window.createRoom =
+async function(){
 
     if(!currentUser) return;
 
@@ -630,7 +1014,8 @@ window.createRoom = async function(){
     });
 
     alert(
-        "Room ID: " + roomRef.key
+        "Room ID: " +
+        roomRef.key
     );
 
 }
