@@ -1,162 +1,71 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>NeonChess Ultimate</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NeonChess FIXED</title>
 
 <style>
 
-/* ================= RESET ================= */
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
 body{
-background:#0b1020;
-color:white;
-overflow-x:hidden;
-}
-
-/* ================= SIDEBAR ================= */
-.sidebar{
-position:fixed;
-left:0;top:0;
-width:240px;height:100vh;
-background:#0f172a;
-padding:15px;
-border-right:1px solid #1e293b;
-}
-.side-btn{
-width:100%;
-padding:12px;
-margin:6px 0;
-background:#1e293b;
-border:none;
-color:white;
-border-radius:10px;
-cursor:pointer;
-}
-.side-btn:hover{background:#22c55e}
-
-/* ================= MAIN ================= */
-.main{margin-left:260px;padding:15px}
-
-/* ================= TOP ================= */
-.top{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:15px;
-}
-
-.logo{
-font-size:28px;
-font-weight:900;
-color:#22c55e;
-}
-
-.btn{
-padding:10px 15px;
-border:none;
-border-radius:10px;
-cursor:pointer;
-background:#22c55e;
-color:black;
-font-weight:700;
-}
-
-/* ================= LAYOUT ================= */
-.grid{
-display:grid;
-grid-template-columns:1.5fr 1fr;
-gap:15px;
+    margin:0;
+    background:#0b1220;
+    color:white;
+    font-family:Arial;
 }
 
 /* ================= BOARD ================= */
+
 .board{
-width:100%;
-max-width:600px;
-aspect-ratio:1/1;
-display:grid;
-grid-template-columns:repeat(8,1fr);
-border:4px solid #1e293b;
-border-radius:10px;
-overflow:hidden;
+    width:520px;
+    height:520px;
+    margin:20px auto;
+    display:grid;
+    grid-template-columns:repeat(8,1fr);
+    grid-template-rows:repeat(8,1fr);
+    border:4px solid #00ffae;
+    border-radius:10px;
+    overflow:hidden;
 }
 
 .square{
-display:flex;
-align-items:center;
-justify-content:center;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
-.light{background:#f0d9b5}
-.dark{background:#b58863}
+.light{ background:#f0d9b5; }
+.dark{ background:#b58863; }
 
 .piece{
-width:80%;
+    width:80%;
+    height:80%;
+    cursor:pointer;
 }
 
-/* ================= CHAT ================= */
-.chat{
-height:400px;
-display:flex;
-flex-direction:column;
-background:#0f172a;
-border-radius:10px;
-padding:10px;
+/* ================= UI ================= */
+
+.top{
+    display:flex;
+    justify-content:space-between;
+    padding:10px;
 }
 
-.messages{
-flex:1;
-overflow:auto;
-font-size:14px;
+button{
+    padding:10px 14px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
 }
 
-.msg{
-margin:5px 0;
-padding:5px;
-background:#1e293b;
-border-radius:6px;
+.login{
+    background:linear-gradient(90deg,#00ffae,#00c3ff);
+    font-weight:bold;
 }
 
-.time{
-font-size:10px;
-opacity:.7;
-}
-
-.input{
-display:flex;
-margin-top:10px;
-}
-
-.input input{
-flex:1;
-padding:8px;
-border:none;
-border-radius:8px;
-}
-
-.input button{
-margin-left:5px;
-}
-
-/* ================= TIMER ================= */
-.timer{
-display:flex;
-gap:10px;
-margin-bottom:10px;
-}
-
-.timer button{
-padding:8px;
-border:none;
-border-radius:8px;
-background:#1e293b;
-color:white;
-cursor:pointer;
-}
-
-.timer button:hover{
-background:#22c55e;
+.panel{
+    padding:10px;
 }
 
 </style>
@@ -164,164 +73,157 @@ background:#22c55e;
 
 <body>
 
-<!-- SIDEBAR -->
-<div class="sidebar">
-
-<h2 style="color:#22c55e">♟ NeonChess</h2>
-
-<button class="side-btn">Play</button>
-<button class="side-btn">Puzzle</button>
-<button class="side-btn">Profile</button>
-<button class="side-btn">Settings</button>
-
-</div>
-
-<!-- MAIN -->
-<div class="main">
-
 <div class="top">
-<div class="logo">NeonChess</div>
-<button class="btn" onclick="loginGoogle()">Login Google</button>
+
+    <h2>♟ NeonChess FIX</h2>
+
+    <button class="login" id="loginBtn">
+        Login Google
+    </button>
+
 </div>
 
-<!-- TIME CONTROL -->
-<div class="timer">
-<button onclick="setTime(10)">💥 10s Bullet</button>
-<button onclick="setTime(30)">⚡ 30s Blitz</button>
-<button onclick="setTime(300)">⏳ 5m</button>
-<button onclick="setTime(86400)">📅 Daily</button>
+<div class="panel" id="userInfo">
+    Chưa đăng nhập
 </div>
 
-<div class="grid">
-
-<!-- BOARD -->
-<div>
 <div id="board" class="board"></div>
-</div>
-
-<!-- CHAT -->
-<div class="chat">
-
-<div id="messages" class="messages"></div>
-
-<div class="input">
-<input id="text" placeholder="Nhập chat..."/>
-<button onclick="sendMsg()">Send</button>
-</div>
-
-</div>
-
-</div>
-
-</div>
 
 <script type="module">
 
-/* ================= FIREBASE ================= */
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+import { Chess } from "https://cdn.jsdelivr.net/npm/chess.js@1.0.0-beta.6/+esm";
+
 import {
-getAuth,
-GoogleAuthProvider,
-signInWithPopup
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+
+import {
+    getAuth,
+    GoogleAuthProvider,
+    signInWithPopup,
+    signOut,
+    onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
 
-import {
-getDatabase,
-ref,
-push,
-onChildAdded
-} from "https://www.gstatic.com/firebasejs/12.3.0/firebase-database.js";
+/* ================= FIREBASE ================= */
 
-/* CONFIG */
 const firebaseConfig = {
-apiKey: "AIzaSyByZbESWCAXypIJKBUNIm6KDmcXWX7SMgk",
-authDomain: "neonchess-df7aa.firebaseapp.com",
-databaseURL: "https://neonchess-df7aa-default-rtdb.firebaseio.com",
-projectId: "neonchess-df7aa",
-storageBucket: "neonchess-df7aa.firebasestorage.app",
-messagingSenderId: "784833820179",
-appId: "1:784833820179:web:3613d907d2a5b321bff1e6"
+    apiKey: "AIzaSyByZbESWCAXypIJKBUNIm6KDmcXWX7SMgk",
+    authDomain: "neonchess-df7aa.firebaseapp.com",
+    projectId: "neonchess-df7aa",
 };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const db = getDatabase(app);
+const provider = new GoogleAuthProvider();
 
-/* LOGIN */
-window.loginGoogle = async () => {
-await signInWithPopup(auth, new GoogleAuthProvider());
+/* ================= LOGIN ================= */
+
+const loginBtn = document.getElementById("loginBtn");
+
+loginBtn.onclick = async () => {
+    const res = await signInWithPopup(auth, provider);
+    console.log(res.user);
 };
 
-/* ================= CHAT ================= */
-const chatRef = ref(db,"chat");
+/* ================= AUTH UI ================= */
 
-window.sendMsg = function(){
+onAuthStateChanged(auth, (user) => {
 
-const text = document.getElementById("text").value;
+    const info = document.getElementById("userInfo");
 
-push(chatRef,{
-text,
-time: new Date().toLocaleTimeString()
-});
+    if(user){
+        info.innerHTML =
+        "👤 " + user.displayName + "<br>" + user.email;
 
-document.getElementById("text").value="";
-};
+        loginBtn.innerText = "Logout";
 
-onChildAdded(chatRef,(data)=>{
+        loginBtn.onclick = () => signOut(auth);
+    }
+    else{
+        info.innerText = "Chưa đăng nhập";
+        loginBtn.innerText = "Login Google";
 
-const msg = data.val();
-
-const div = document.createElement("div");
-
-div.className="msg";
-
-div.innerHTML = `
-<div>${msg.text}</div>
-<div class="time">${msg.time}</div>
-`;
-
-document.getElementById("messages").appendChild(div);
+        loginBtn.onclick = () =>
+        signInWithPopup(auth, provider);
+    }
 
 });
-
-/* ================= TIMER ================= */
-let time = 300;
-window.setTime = (t)=> time=t;
 
 /* ================= CHESS ================= */
-import { Chess } from "https://cdn.jsdelivr.net/npm/chess.js@1.0.0-beta.6/+esm";
+
 const game = new Chess();
 
+let selected = null;
+
 const pieces = {
-p:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wp.png",
-r:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wr.png",
-n:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wn.png",
-b:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wb.png",
-q:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wq.png",
-k:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wk.png",
+r:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/br.png",
+n:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/bn.png",
+b:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/bb.png",
+q:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/bq.png",
+k:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/bk.png",
+p:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/bp.png",
+R:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wr.png",
+N:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wn.png",
+B:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wb.png",
+Q:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wq.png",
+K:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wk.png",
+P:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wp.png"
 };
 
 function draw(){
 
 const board = document.getElementById("board");
-board.innerHTML="";
+board.innerHTML = "";
 
-const b = game.board();
+const state = game.board();
 
 for(let y=0;y<8;y++){
 for(let x=0;x<8;x++){
 
 const sq = document.createElement("div");
-sq.className="square "+((x+y)%2?"dark":"light");
+sq.className = "square " + ((x+y)%2?"dark":"light");
 
-const piece = b[y][x];
+const file = "abcdefgh"[x];
+const rank = 8-y;
+const name = file+rank;
+
+const piece = state[y][x];
 
 if(piece){
+
+const code = piece.color==="w"
+? piece.type.toUpperCase()
+: piece.type;
+
 const img = document.createElement("img");
-img.src = pieces[piece.type];
-img.className="piece";
+img.src = pieces[code];
+img.className = "piece";
+
 sq.appendChild(img);
 }
+
+sq.onclick = () => {
+
+if(selected){
+
+const move = game.move({
+from:selected,
+to:name,
+promotion:"q"
+});
+
+selected = null;
+draw();
+return;
+}
+
+const p = game.get(name);
+if(p){
+selected = name;
+}
+
+};
 
 board.appendChild(sq);
 
