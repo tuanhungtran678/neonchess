@@ -7,187 +7,156 @@
 
 <style>
 
-/* ========================= RESET ========================= */
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial;
-}
-
+/* ================= RESET ================= */
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
 body{
 background:#0b1020;
 color:white;
-overflow:hidden;
+overflow-x:hidden;
 }
 
-/* ========================= LAYOUT ========================= */
-
-.app{
-display:flex;
-height:100vh;
-}
-
-/* ========================= SIDEBAR ========================= */
-
+/* ================= SIDEBAR ================= */
 .sidebar{
-width:240px;
-background:rgba(255,255,255,0.05);
-backdrop-filter:blur(20px);
-padding:20px;
-display:flex;
-flex-direction:column;
-gap:10px;
+position:fixed;
+left:0;top:0;
+width:240px;height:100vh;
+background:#0f172a;
+padding:15px;
+border-right:1px solid #1e293b;
 }
-
-.btn{
+.side-btn{
+width:100%;
 padding:12px;
+margin:6px 0;
+background:#1e293b;
 border:none;
+color:white;
 border-radius:10px;
 cursor:pointer;
-background:rgba(0,255,180,0.15);
-color:white;
-font-weight:bold;
 }
+.side-btn:hover{background:#22c55e}
 
-.btn:hover{
-background:rgba(0,255,180,0.35);
-}
+/* ================= MAIN ================= */
+.main{margin-left:260px;padding:15px}
 
-/* ========================= MAIN ========================= */
-
-.main{
-flex:1;
-display:flex;
-flex-direction:column;
-}
-
-/* ========================= TOPBAR ========================= */
-
-.topbar{
+/* ================= TOP ================= */
+.top{
 display:flex;
 justify-content:space-between;
-padding:15px;
-background:rgba(255,255,255,0.04);
+align-items:center;
+margin-bottom:15px;
 }
 
 .logo{
-font-size:22px;
+font-size:28px;
 font-weight:900;
-background:linear-gradient(90deg,#00ffae,#00c3ff);
--webkit-background-clip:text;
-color:transparent;
+color:#22c55e;
 }
 
-/* ========================= MENU ========================= */
-
-.menu{
-display:flex;
-gap:10px;
-padding:10px;
-}
-
-.mode{
-padding:8px 12px;
-border-radius:8px;
+.btn{
+padding:10px 15px;
 border:none;
+border-radius:10px;
 cursor:pointer;
-background:rgba(255,255,255,0.1);
-color:white;
+background:#22c55e;
+color:black;
+font-weight:700;
 }
 
-.mode.active{
-background:#00ffae;
-color:#000;
+/* ================= LAYOUT ================= */
+.grid{
+display:grid;
+grid-template-columns:1.5fr 1fr;
+gap:15px;
 }
 
-/* ========================= BOARD ========================= */
-
-.board-wrap{
-display:flex;
-justify-content:center;
-padding:10px;
-}
-
+/* ================= BOARD ================= */
 .board{
-width:520px;
-height:520px;
+width:100%;
+max-width:600px;
+aspect-ratio:1/1;
 display:grid;
 grid-template-columns:repeat(8,1fr);
-grid-template-rows:repeat(8,1fr);
-border-radius:12px;
+border:4px solid #1e293b;
+border-radius:10px;
 overflow:hidden;
 }
 
 .square{
 display:flex;
-justify-content:center;
 align-items:center;
+justify-content:center;
 }
 
-.light{background:#f0d9b5;}
-.dark{background:#b58863;}
+.light{background:#f0d9b5}
+.dark{background:#b58863}
 
 .piece{
-width:90%;
-height:90%;
-object-fit:contain;
+width:80%;
 }
 
-/* ========================= CHAT ========================= */
-
+/* ================= CHAT ================= */
 .chat{
-width:300px;
-background:rgba(255,255,255,0.05);
-backdrop-filter:blur(20px);
+height:400px;
 display:flex;
 flex-direction:column;
+background:#0f172a;
+border-radius:10px;
+padding:10px;
 }
 
 .messages{
 flex:1;
 overflow:auto;
-padding:10px;
-font-size:12px;
+font-size:14px;
 }
 
 .msg{
-margin-bottom:8px;
-padding:6px;
-background:rgba(0,0,0,0.3);
+margin:5px 0;
+padding:5px;
+background:#1e293b;
 border-radius:6px;
 }
 
 .time{
 font-size:10px;
-opacity:0.6;
+opacity:.7;
 }
 
 .input{
 display:flex;
+margin-top:10px;
 }
 
-input{
+.input input{
 flex:1;
-padding:10px;
+padding:8px;
 border:none;
-outline:none;
+border-radius:8px;
 }
 
-.send{
-padding:10px;
+.input button{
+margin-left:5px;
+}
+
+/* ================= TIMER ================= */
+.timer{
+display:flex;
+gap:10px;
+margin-bottom:10px;
+}
+
+.timer button{
+padding:8px;
 border:none;
-background:#00ffae;
+border-radius:8px;
+background:#1e293b;
+color:white;
 cursor:pointer;
 }
 
-/* ========================= LOGIN ========================= */
-
-.login{
-position:absolute;
-top:10px;
-right:10px;
+.timer button:hover{
+background:#22c55e;
 }
 
 </style>
@@ -195,151 +164,168 @@ right:10px;
 
 <body>
 
-<div class="app">
-
-<!-- ================= SIDEBAR ================= -->
+<!-- SIDEBAR -->
 <div class="sidebar">
 
-<button class="btn">Play</button>
-<button class="btn">Puzzle</button>
-<button class="btn">Trainer</button>
-<button class="btn">Profile</button>
-<button class="btn" onclick="login()">Google Login</button>
+<h2 style="color:#22c55e">♟ NeonChess</h2>
+
+<button class="side-btn">Play</button>
+<button class="side-btn">Puzzle</button>
+<button class="side-btn">Profile</button>
+<button class="side-btn">Settings</button>
 
 </div>
 
-<!-- ================= MAIN ================= -->
+<!-- MAIN -->
 <div class="main">
 
-<div class="topbar">
+<div class="top">
 <div class="logo">NeonChess</div>
-
-<div>
-<select id="mode" class="mode">
-<option value="10">Bullet 10s</option>
-<option value="30">Blitz 30s</option>
-<option value="daily">Daily</option>
-</select>
+<button class="btn" onclick="loginGoogle()">Login Google</button>
 </div>
 
+<!-- TIME CONTROL -->
+<div class="timer">
+<button onclick="setTime(10)">💥 10s Bullet</button>
+<button onclick="setTime(30)">⚡ 30s Blitz</button>
+<button onclick="setTime(300)">⏳ 5m</button>
+<button onclick="setTime(86400)">📅 Daily</button>
 </div>
 
-<!-- MENU -->
-<div class="menu">
-<button class="mode active">Home</button>
-<button class="mode">Ranked</button>
-<button class="mode">Live</button>
-</div>
+<div class="grid">
 
 <!-- BOARD -->
-<div class="board-wrap">
+<div>
 <div id="board" class="board"></div>
 </div>
 
-</div>
-
-<!-- ================= CHAT ================= -->
+<!-- CHAT -->
 <div class="chat">
 
 <div id="messages" class="messages"></div>
 
 <div class="input">
-<input id="msgInput" placeholder="chat..."/>
-<button class="send" onclick="sendMsg()">➤</button>
+<input id="text" placeholder="Nhập chat..."/>
+<button onclick="sendMsg()">Send</button>
 </div>
 
 </div>
 
 </div>
 
-<!-- ================= FIREBASE ================= -->
+</div>
+
 <script type="module">
 
+/* ================= FIREBASE ================= */
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
-import {
-getDatabase, ref, push, onValue
-} from "https://www.gstatic.com/firebasejs/12.3.0/firebase-database.js";
-
 import {
 getAuth,
 GoogleAuthProvider,
 signInWithPopup
 } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
 
+import {
+getDatabase,
+ref,
+push,
+onChildAdded
+} from "https://www.gstatic.com/firebasejs/12.3.0/firebase-database.js";
+
+/* CONFIG */
 const firebaseConfig = {
-apiKey:"YOUR_KEY",
-authDomain:"YOUR_DOMAIN",
-databaseURL:"YOUR_DB",
-projectId:"YOUR_ID",
-storageBucket:"YOUR_BUCKET",
-messagingSenderId:"ID",
-appId:"ID"
+apiKey: "AIzaSyByZbESWCAXypIJKBUNIm6KDmcXWX7SMgk",
+authDomain: "neonchess-df7aa.firebaseapp.com",
+databaseURL: "https://neonchess-df7aa-default-rtdb.firebaseio.com",
+projectId: "neonchess-df7aa",
+storageBucket: "neonchess-df7aa.firebasestorage.app",
+messagingSenderId: "784833820179",
+appId: "1:784833820179:web:3613d907d2a5b321bff1e6"
 };
 
 const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
 const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
+const db = getDatabase(app);
 
-/* ================= LOGIN ================= */
-
-window.login = async ()=>{
-await signInWithPopup(auth,provider);
-}
+/* LOGIN */
+window.loginGoogle = async () => {
+await signInWithPopup(auth, new GoogleAuthProvider());
+};
 
 /* ================= CHAT ================= */
+const chatRef = ref(db,"chat");
 
-window.sendMsg = ()=>{
-const input = document.getElementById("msgInput");
+window.sendMsg = function(){
 
-push(ref(db,"chat"),{
-text:input.value,
-time:new Date().toLocaleTimeString()
+const text = document.getElementById("text").value;
+
+push(chatRef,{
+text,
+time: new Date().toLocaleTimeString()
 });
 
-input.value="";
-}
+document.getElementById("text").value="";
+};
 
-onValue(ref(db,"chat"),(snap)=>{
-const box = document.getElementById("messages");
-box.innerHTML="";
+onChildAdded(chatRef,(data)=>{
 
-snap.forEach(c=>{
-const v=c.val();
-box.innerHTML += `
-<div class="msg">
-${v.text}
-<div class="time">${v.time}</div>
-</div>`;
-});
-});
-
-</script>
-
-<!-- ================= CHESS ================= -->
-<script>
-
-const board = document.getElementById("board");
-
-function draw(){
-
-board.innerHTML="";
-
-for(let i=0;i<64;i++){
+const msg = data.val();
 
 const div = document.createElement("div");
 
-div.className="square "+(((Math.floor(i/8)+i)%2)?"dark":"light");
+div.className="msg";
 
-const img=document.createElement("div");
+div.innerHTML = `
+<div>${msg.text}</div>
+<div class="time">${msg.time}</div>
+`;
+
+document.getElementById("messages").appendChild(div);
+
+});
+
+/* ================= TIMER ================= */
+let time = 300;
+window.setTime = (t)=> time=t;
+
+/* ================= CHESS ================= */
+import { Chess } from "https://cdn.jsdelivr.net/npm/chess.js@1.0.0-beta.6/+esm";
+const game = new Chess();
+
+const pieces = {
+p:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wp.png",
+r:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wr.png",
+n:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wn.png",
+b:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wb.png",
+q:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wq.png",
+k:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wk.png",
+};
+
+function draw(){
+
+const board = document.getElementById("board");
+board.innerHTML="";
+
+const b = game.board();
+
+for(let y=0;y<8;y++){
+for(let x=0;x<8;x++){
+
+const sq = document.createElement("div");
+sq.className="square "+((x+y)%2?"dark":"light");
+
+const piece = b[y][x];
+
+if(piece){
+const img = document.createElement("img");
+img.src = pieces[piece.type];
 img.className="piece";
-img.innerHTML="♟";
-
-div.appendChild(img);
-
-board.appendChild(div);
-
+sq.appendChild(img);
 }
+
+board.appendChild(sq);
+
+}}
 
 }
 
