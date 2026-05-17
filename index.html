@@ -749,10 +749,7 @@ body{
 
             </div>
 
-            <!-- ========================================= -->
-            <!-- PROFILE -->
-            <!-- ========================================= -->
-
+            <!-- PROFILE CARD -->
             <div class="card">
 
                 <div class="profile">
@@ -763,55 +760,15 @@ body{
                     src="https://i.pravatar.cc/200">
 
                     <h2 id="username">
-
                         Guest 🇻🇳
-
                     </h2>
 
                     <p id="email">
-
                         Not logged in
-
                     </p>
 
                     <div class="badge">
-
                         ADMIN SITE
-
-                    </div>
-
-                    <div class="stats">
-
-                        <div class="stat">
-
-                            🪙
-
-                            <div class="stat-value">
-                                500
-                            </div>
-
-                        </div>
-
-                        <div class="stat">
-
-                            🏆
-
-                            <div class="stat-value">
-                                1200
-                            </div>
-
-                        </div>
-
-                        <div class="stat">
-
-                            🔥
-
-                            <div class="stat-value">
-                                8
-                            </div>
-
-                        </div>
-
                     </div>
 
                 </div>
@@ -825,10 +782,6 @@ body{
 </div>
 
 <script type="module">
-
-/* ========================================================= */
-/* IMPORTS */
-/* ========================================================= */
 
 import { Chess }
 from
@@ -859,28 +812,28 @@ from
 const firebaseConfig = {
 
 apiKey:
-"AIzaSyByZbESWCAXypIJKBUNIm6KDmcXWX7SMgk",
+"YOUR_API_KEY",
 
 authDomain:
-"neonchess-df7aa.firebaseapp.com",
+"YOUR_AUTH_DOMAIN",
 
 databaseURL:
-"https://neonchess-df7aa-default-rtdb.firebaseio.com",
+"YOUR_DATABASE_URL",
 
 projectId:
-"neonchess-df7aa",
+"YOUR_PROJECT_ID",
 
 storageBucket:
-"neonchess-df7aa.firebasestorage.app",
+"YOUR_STORAGE_BUCKET",
 
 messagingSenderId:
-"784833820179",
+"YOUR_MESSAGING_SENDER_ID",
 
 appId:
-"1:784833820179:web:3613d907d2a5b321bff1e6",
+"YOUR_APP_ID",
 
 measurementId:
-"G-LBDENJ65N7"
+"YOUR_MEASUREMENT_ID"
 
 };
 
@@ -1316,41 +1269,86 @@ fromEl.getBoundingClientRect();
 const toRect =
 toEl.getBoundingClientRect();
 
-const x1 =
+let x1 =
 fromRect.left -
 boardRect.left +
 fromRect.width/2;
 
-const y1 =
+let y1 =
 fromRect.top -
 boardRect.top +
 fromRect.height/2;
 
-const x2 =
+let x2 =
 toRect.left -
 boardRect.left +
 toRect.width/2;
 
-const y2 =
+let y2 =
 toRect.top -
 boardRect.top +
 toRect.height/2;
+
+const dx =
+x2 - x1;
+
+const dy =
+y2 - y1;
+
+const len =
+Math.sqrt(
+dx*dx + dy*dy
+);
+
+const offset =
+34;
+
+x1 +=
+(dx/len) * offset;
+
+y1 +=
+(dy/len) * offset;
+
+x2 -=
+(dx/len) * offset;
+
+y2 -=
+(dy/len) * offset;
 
 svg.innerHTML =
 
 `
 <defs>
 
+<filter id="glow">
+
+<feGaussianBlur
+stdDeviation="4"
+result="blur"/>
+
+<feMerge>
+
+<feMergeNode in="blur"/>
+
+<feMergeNode in="SourceGraphic"/>
+
+</feMerge>
+
+</filter>
+
 <marker
 id="arrowhead"
-markerWidth="10"
-markerHeight="7"
+
+markerWidth="18"
+markerHeight="18"
+
 refX="9"
-refY="3.5"
+refY="9"
+
 orient="auto">
 
 <polygon
-points="0 0, 10 3.5, 0 7"
+points="0 0, 18 9, 0 18"
 fill="#00ffae"/>
 
 </marker>
@@ -1358,18 +1356,25 @@ fill="#00ffae"/>
 </defs>
 
 <line
+
 x1="${x1}"
 y1="${y1}"
+
 x2="${x2}"
 y2="${y2}"
 
 stroke="#00ffae"
-stroke-width="12"
+
+stroke-width="14"
+
 stroke-linecap="round"
 
 marker-end="url(#arrowhead)"
 
-opacity="0.85"
+filter="url(#glow)"
+
+opacity="0.82"
+
 />
 
 `;
