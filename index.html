@@ -8,7 +8,7 @@
 name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>NeonChess Ultimate</title>
+<title>NeonChess FIXED BOARD</title>
 
 <style>
 
@@ -42,7 +42,7 @@ body{
 
     min-height:100vh;
 
-    overflow:hidden;
+    overflow-x:hidden;
 }
 
 /* ========================================================= */
@@ -55,9 +55,9 @@ body{
 
     inset:0;
 
-    overflow:hidden;
-
     z-index:-1;
+
+    overflow:hidden;
 }
 
 .glow{
@@ -71,42 +71,23 @@ body{
 
     filter:blur(120px);
 
-    opacity:.22;
-
-    animation:
-    moveGlow 12s infinite alternate;
+    opacity:.18;
 }
 
 .glow1{
 
     background:#00ffae;
 
-    top:-120px;
-    left:-120px;
+    top:-100px;
+    left:-100px;
 }
 
 .glow2{
 
     background:#00c3ff;
 
-    right:-120px;
-    bottom:-120px;
-}
-
-@keyframes moveGlow{
-
-    from{
-
-        transform:
-        translate(0,0);
-    }
-
-    to{
-
-        transform:
-        translate(60px,40px);
-    }
-
+    right:-100px;
+    bottom:-100px;
 }
 
 /* ========================================================= */
@@ -118,9 +99,9 @@ body{
     display:grid;
 
     grid-template-columns:
-    280px 1fr;
+    270px 1fr;
 
-    height:100vh;
+    min-height:100vh;
 }
 
 /* ========================================================= */
@@ -216,8 +197,6 @@ body{
 .main{
 
     padding:24px;
-
-    overflow:auto;
 }
 
 /* ========================================================= */
@@ -232,12 +211,12 @@ body{
 
     align-items:center;
 
-    margin-bottom:26px;
+    margin-bottom:24px;
 }
 
-.top-title{
+.title{
 
-    font-size:42px;
+    font-size:44px;
 
     font-weight:900;
 }
@@ -245,6 +224,10 @@ body{
 .login-btn{
 
     border:none;
+
+    padding:14px 20px;
+
+    border-radius:18px;
 
     background:
     linear-gradient(
@@ -257,13 +240,7 @@ body{
 
     font-weight:900;
 
-    padding:14px 20px;
-
-    border-radius:18px;
-
     cursor:pointer;
-
-    font-size:15px;
 }
 
 /* ========================================================= */
@@ -275,7 +252,7 @@ body{
     background:
     linear-gradient(
         135deg,
-        rgba(0,255,174,.15),
+        rgba(0,255,174,.12),
         rgba(0,195,255,.08)
     );
 
@@ -284,7 +261,7 @@ body{
 
     border-radius:32px;
 
-    padding:36px;
+    padding:34px;
 
     margin-bottom:24px;
 
@@ -298,10 +275,10 @@ body{
 
     line-height:1.05;
 
-    margin-bottom:18px;
+    margin-bottom:16px;
 }
 
-.hero h1 span{
+.hero span{
 
     background:
     linear-gradient(
@@ -319,11 +296,9 @@ body{
 
     color:#cbd5e1;
 
-    font-size:19px;
-
     line-height:1.7;
 
-    max-width:700px;
+    font-size:19px;
 }
 
 /* ========================================================= */
@@ -335,7 +310,7 @@ body{
     display:grid;
 
     grid-template-columns:
-    1fr 360px;
+    1fr 340px;
 
     gap:22px;
 }
@@ -366,18 +341,16 @@ body{
 
 .board{
 
-    width:100%;
-
-    max-width:760px;
+    width:min(82vw,720px);
 
     aspect-ratio:1/1;
-
-    margin:auto;
 
     display:grid;
 
     grid-template-columns:
     repeat(8,1fr);
+
+    margin:auto;
 
     border-radius:22px;
 
@@ -388,6 +361,8 @@ body{
 }
 
 .square{
+
+    aspect-ratio:1/1;
 
     position:relative;
 
@@ -410,7 +385,7 @@ body{
 
 .square:hover{
 
-    filter:brightness(1.08);
+    filter:brightness(1.05);
 }
 
 .selected{
@@ -429,21 +404,26 @@ body{
     border-radius:50%;
 
     background:
-    rgba(0,255,174,.7);
+    rgba(0,255,174,.72);
 
     position:absolute;
 }
 
 .piece{
 
-    width:82%;
-    height:82%;
+    width:78%;
+
+    height:78%;
 
     object-fit:contain;
 
     cursor:pointer;
 
-    transition:.15s;
+    user-select:none;
+
+    -webkit-user-drag:none;
+
+    transition:.12s;
 }
 
 .piece:hover{
@@ -505,7 +485,7 @@ body{
 
     gap:12px;
 
-    margin-top:20px;
+    margin-top:22px;
 }
 
 .stat{
@@ -520,12 +500,16 @@ body{
 
 .stat-value{
 
+    margin-top:8px;
+
     font-size:28px;
 
     font-weight:900;
-
-    margin-top:8px;
 }
+
+/* ========================================================= */
+/* MOBILE */
+/* ========================================================= */
 
 @media(max-width:1100px){
 
@@ -605,7 +589,7 @@ body{
 
         <div class="topbar">
 
-            <div class="top-title">
+            <div class="title">
 
                 NeonChess
 
@@ -621,10 +605,6 @@ body{
 
         </div>
 
-        <!-- ================================================= -->
-        <!-- HERO -->
-        <!-- ================================================= -->
-
         <div class="hero">
 
             <h1>
@@ -636,26 +616,21 @@ body{
 
             <p>
 
-                NeonChess combines
-                realtime multiplayer,
-                puzzle rush,
+                Realtime multiplayer,
+                Puzzle Rush,
                 cloud profiles,
-                global leaderboard
-                and ultra neon gaming UI.
+                leaderboard
+                and neon gaming UI.
 
             </p>
 
         </div>
 
-        <!-- ================================================= -->
-        <!-- CONTENT -->
-        <!-- ================================================= -->
-
         <div class="content">
 
-            <!-- ============================================= -->
+            <!-- ================================================= -->
             <!-- BOARD -->
-            <!-- ============================================= -->
+            <!-- ================================================= -->
 
             <div class="card">
 
@@ -665,9 +640,9 @@ body{
 
             </div>
 
-            <!-- ============================================= -->
+            <!-- ================================================= -->
             <!-- PROFILE -->
-            <!-- ============================================= -->
+            <!-- ================================================= -->
 
             <div class="card">
 
@@ -702,8 +677,7 @@ body{
 
                             🪙
 
-                            <div
-                            class="stat-value">
+                            <div class="stat-value">
 
                                 500
 
@@ -715,8 +689,7 @@ body{
 
                             🏆
 
-                            <div
-                            class="stat-value">
+                            <div class="stat-value">
 
                                 1200
 
@@ -728,8 +701,7 @@ body{
 
                             🔥
 
-                            <div
-                            class="stat-value">
+                            <div class="stat-value">
 
                                 0
 
@@ -1017,7 +989,6 @@ sq.onclick =
 
 if(selected){
 
-const move =
 game.move({
 
 from:selected,
@@ -1045,13 +1016,9 @@ name;
 
 drawBoard();
 
-highlight(
-name
-);
+highlight(name);
 
-showMoves(
-name
-);
+showMoves(name);
 
 }
 
