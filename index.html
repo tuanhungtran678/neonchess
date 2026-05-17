@@ -746,9 +746,9 @@ body{
 
                 Multiplayer,
                 AI,
-                Puzzle Rush,
                 realtime chess,
-                futuristic gaming UI.
+                Puzzle Rush,
+                futuristic UI.
 
             </p>
 
@@ -1043,12 +1043,30 @@ let dragFrom =
 null;
 
 /* ========================================================= */
-/* STOCKFISH */
+/* STOCKFISH 18 */
 /* ========================================================= */
 
 const stockfish =
 new Worker(
-"./stockfish.js"
+
+"./stockfish.js",
+
+{
+type:"module"
+}
+
+);
+
+stockfish.postMessage(
+"uci"
+);
+
+stockfish.postMessage(
+"isready"
+);
+
+stockfish.postMessage(
+"ucinewgame"
 );
 
 stockfish.onmessage =
@@ -1404,7 +1422,7 @@ stockfish.postMessage(
 );
 
 stockfish.postMessage(
-"go depth 12"
+"go depth 15"
 );
 
 };
