@@ -1,198 +1,193 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NeonChess TBM</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NeonChess Ultimate</title>
 
 <style>
 
-/* ========================= */
-/* RESET */
-/* ========================= */
+/* ========================= RESET ========================= */
 
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial;
 }
 
 body{
-    background:#0b1020;
-    color:white;
-    overflow:hidden;
+background:#0b1020;
+color:white;
+overflow:hidden;
 }
 
-/* ========================= */
-/* LAYOUT */
-/* ========================= */
+/* ========================= LAYOUT ========================= */
 
 .app{
-    display:flex;
-    height:100vh;
+display:flex;
+height:100vh;
 }
 
-/* ========================= */
-/* SIDEBAR */
-/* ========================= */
+/* ========================= SIDEBAR ========================= */
 
 .sidebar{
-    width:220px;
-    background:#0f172a;
-    padding:15px;
-    display:flex;
-    flex-direction:column;
-    gap:10px;
+width:240px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(20px);
+padding:20px;
+display:flex;
+flex-direction:column;
+gap:10px;
 }
 
 .btn{
-    padding:12px;
-    background:#1e293b;
-    border:none;
-    color:white;
-    border-radius:10px;
-    cursor:pointer;
+padding:12px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+background:rgba(0,255,180,0.15);
+color:white;
+font-weight:bold;
 }
 
 .btn:hover{
-    background:#00ffae;
-    color:black;
+background:rgba(0,255,180,0.35);
 }
 
-/* ========================= */
-/* MAIN */
-/* ========================= */
+/* ========================= MAIN ========================= */
 
 .main{
-    flex:1;
-    display:flex;
-    flex-direction:column;
+flex:1;
+display:flex;
+flex-direction:column;
 }
 
-/* ========================= */
-/* TOPBAR */
-/* ========================= */
+/* ========================= TOPBAR ========================= */
 
 .topbar{
-    height:60px;
-    background:#0f172a;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:0 15px;
+display:flex;
+justify-content:space-between;
+padding:15px;
+background:rgba(255,255,255,0.04);
 }
 
 .logo{
-    font-weight:900;
-    color:#00ffae;
+font-size:22px;
+font-weight:900;
+background:linear-gradient(90deg,#00ffae,#00c3ff);
+-webkit-background-clip:text;
+color:transparent;
 }
 
-.login{
-    background:linear-gradient(90deg,#00ffae,#00c3ff);
-    border:none;
-    padding:10px 14px;
-    border-radius:10px;
-    cursor:pointer;
+/* ========================= MENU ========================= */
+
+.menu{
+display:flex;
+gap:10px;
+padding:10px;
 }
 
-/* ========================= */
-/* CONTENT */
-/* ========================= */
-
-.content{
-    display:flex;
-    flex:1;
+.mode{
+padding:8px 12px;
+border-radius:8px;
+border:none;
+cursor:pointer;
+background:rgba(255,255,255,0.1);
+color:white;
 }
 
-/* ========================= */
-/* BOARD */
-/* ========================= */
+.mode.active{
+background:#00ffae;
+color:#000;
+}
+
+/* ========================= BOARD ========================= */
+
+.board-wrap{
+display:flex;
+justify-content:center;
+padding:10px;
+}
 
 .board{
-    width:520px;
-    height:520px;
-    margin:auto;
-    display:grid;
-    grid-template-columns:repeat(8,1fr);
-    grid-template-rows:repeat(8,1fr);
-    border:4px solid #00ffae;
+width:520px;
+height:520px;
+display:grid;
+grid-template-columns:repeat(8,1fr);
+grid-template-rows:repeat(8,1fr);
+border-radius:12px;
+overflow:hidden;
 }
 
 .square{
-    width:100%;
-    height:100%;
+display:flex;
+justify-content:center;
+align-items:center;
 }
 
 .light{background:#f0d9b5;}
 .dark{background:#b58863;}
 
 .piece{
-    width:100%;
-    height:100%;
+width:90%;
+height:90%;
+object-fit:contain;
 }
 
-/* ========================= */
-/* RIGHT PANEL */
-/* ========================= */
-
-.panel{
-    width:320px;
-    background:#0f172a;
-    padding:10px;
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-}
-
-/* ========================= */
-/* CHAT */
-/* ========================= */
+/* ========================= CHAT ========================= */
 
 .chat{
-    flex:1;
-    overflow:auto;
-    background:#111827;
-    padding:10px;
-    border-radius:10px;
+width:300px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(20px);
+display:flex;
+flex-direction:column;
+}
+
+.messages{
+flex:1;
+overflow:auto;
+padding:10px;
+font-size:12px;
 }
 
 .msg{
-    margin-bottom:8px;
-    font-size:13px;
-    color:#cbd5e1;
+margin-bottom:8px;
+padding:6px;
+background:rgba(0,0,0,0.3);
+border-radius:6px;
 }
 
 .time{
-    color:#00ffae;
-    font-size:11px;
+font-size:10px;
+opacity:0.6;
 }
 
-/* ========================= */
-/* TIMER MODES */
-/* ========================= */
-
-.modes button{
-    width:100%;
-    margin-bottom:5px;
+.input{
+display:flex;
 }
-
-/* ========================= */
-/* INPUT */
-/* ========================= */
 
 input{
-    padding:10px;
-    border:none;
-    border-radius:10px;
+flex:1;
+padding:10px;
+border:none;
+outline:none;
 }
 
 .send{
-    background:#00ffae;
-    border:none;
-    padding:10px;
-    border-radius:10px;
-    cursor:pointer;
+padding:10px;
+border:none;
+background:#00ffae;
+cursor:pointer;
+}
+
+/* ========================= LOGIN ========================= */
+
+.login{
+position:absolute;
+top:10px;
+right:10px;
 }
 
 </style>
@@ -205,172 +200,150 @@ input{
 <!-- ================= SIDEBAR ================= -->
 <div class="sidebar">
 
-    <button class="btn">Home</button>
-    <button class="btn">Play</button>
-    <button class="btn">Puzzle</button>
-    <button class="btn">Profile</button>
+<button class="btn">Play</button>
+<button class="btn">Puzzle</button>
+<button class="btn">Trainer</button>
+<button class="btn">Profile</button>
+<button class="btn" onclick="login()">Google Login</button>
 
 </div>
 
 <!-- ================= MAIN ================= -->
 <div class="main">
 
-    <!-- TOP -->
-    <div class="topbar">
+<div class="topbar">
+<div class="logo">NeonChess</div>
 
-        <div class="logo">NEONCHESS</div>
-
-        <button class="login" onclick="login()">
-            Login Google
-        </button>
-
-    </div>
-
-    <!-- CONTENT -->
-    <div class="content">
-
-        <!-- BOARD -->
-        <div id="board" class="board"></div>
-
-        <!-- RIGHT -->
-        <div class="panel">
-
-            <!-- MODES -->
-            <div class="modes">
-
-                <button class="btn" onclick="setTime(10)">⚡ 10s Bullet</button>
-                <button class="btn" onclick="setTime(30)">⚡ 30s Blitz</button>
-                <button class="btn" onclick="setTime(86400)">📅 Daily</button>
-
-            </div>
-
-            <!-- CHAT -->
-            <div id="chat" class="chat"></div>
-
-            <input id="msg" placeholder="Chat...">
-            <button class="send" onclick="sendMsg()">Send</button>
-
-        </div>
-
-    </div>
-
+<div>
+<select id="mode" class="mode">
+<option value="10">Bullet 10s</option>
+<option value="30">Blitz 30s</option>
+<option value="daily">Daily</option>
+</select>
 </div>
 
 </div>
 
+<!-- MENU -->
+<div class="menu">
+<button class="mode active">Home</button>
+<button class="mode">Ranked</button>
+<button class="mode">Live</button>
+</div>
+
+<!-- BOARD -->
+<div class="board-wrap">
+<div id="board" class="board"></div>
+</div>
+
+</div>
+
+<!-- ================= CHAT ================= -->
+<div class="chat">
+
+<div id="messages" class="messages"></div>
+
+<div class="input">
+<input id="msgInput" placeholder="chat..."/>
+<button class="send" onclick="sendMsg()">➤</button>
+</div>
+
+</div>
+
+</div>
+
+<!-- ================= FIREBASE ================= -->
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
 import {
-getAuth, GoogleAuthProvider, signInWithPopup
-} from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
-
-import {
-getDatabase, ref, push, onChildAdded
+getDatabase, ref, push, onValue
 } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-database.js";
 
-/* ================= FIREBASE ================= */
+import {
+getAuth,
+GoogleAuthProvider,
+signInWithPopup
+} from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
 
 const firebaseConfig = {
-apiKey:"AIzaSy...",
-authDomain:"neonchess-df7aa.firebaseapp.com",
-databaseURL:"https://neonchess-df7aa-default-rtdb.firebaseio.com",
-projectId:"neonchess-df7aa"
+apiKey:"YOUR_KEY",
+authDomain:"YOUR_DOMAIN",
+databaseURL:"YOUR_DB",
+projectId:"YOUR_ID",
+storageBucket:"YOUR_BUCKET",
+messagingSenderId:"ID",
+appId:"ID"
 };
 
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
 const db = getDatabase(app);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
 
 /* ================= LOGIN ================= */
 
 window.login = async ()=>{
-    const provider = new GoogleAuthProvider();
-    await signInWithPopup(auth, provider);
-};
+await signInWithPopup(auth,provider);
+}
 
 /* ================= CHAT ================= */
 
 window.sendMsg = ()=>{
-    const text = document.getElementById("msg").value;
+const input = document.getElementById("msgInput");
 
-    push(ref(db,"chat"),{
-        text,
-        time:new Date().toLocaleTimeString()
-    });
-
-    document.getElementById("msg").value="";
-};
-
-onChildAdded(ref(db,"chat"), snap=>{
-    const data = snap.val();
-
-    const div = document.createElement("div");
-    div.className="msg";
-    div.innerHTML = `
-        <span class="time">[${data.time}]</span> ${data.text}
-    `;
-
-    document.getElementById("chat").appendChild(div);
+push(ref(db,"chat"),{
+text:input.value,
+time:new Date().toLocaleTimeString()
 });
 
-/* ================= TIMER MODE ================= */
+input.value="";
+}
 
-window.setTime = (t)=>{
-    alert("Mode set: " + t + " seconds");
-};
+onValue(ref(db,"chat"),(snap)=>{
+const box = document.getElementById("messages");
+box.innerHTML="";
 
-/* ================= CHESS (FIX BOARD) ================= */
+snap.forEach(c=>{
+const v=c.val();
+box.innerHTML += `
+<div class="msg">
+${v.text}
+<div class="time">${v.time}</div>
+</div>`;
+});
+});
 
-const pieces = {
-r:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/br.png",
-n:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/bn.png",
-b:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/bb.png",
-q:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/bq.png",
-k:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/bk.png",
-p:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/bp.png",
+</script>
 
-R:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wr.png",
-N:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wn.png",
-B:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wb.png",
-Q:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wq.png",
-K:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wk.png",
-P:"https://images.chesscomfiles.com/chess-themes/pieces/classic/150/wp.png
-"
-};
-
-const start=[
-"rnbqkbnr",
-"pppppppp",
-"........",
-"........",
-"........",
-"........",
-"PPPPPPPP",
-"RNBQKBNR"
-];
+<!-- ================= CHESS ================= -->
+<script>
 
 const board = document.getElementById("board");
 
-start.forEach((row,y)=>{
-for(let x=0;x<8;x++){
+function draw(){
 
-const sq=document.createElement("div");
-sq.className="square "+((x+y)%2?"dark":"light");
+board.innerHTML="";
 
-const c=row[x];
+for(let i=0;i<64;i++){
 
-if(c!=="." ){
-const img=document.createElement("img");
-img.src=pieces[c];
+const div = document.createElement("div");
+
+div.className="square "+(((Math.floor(i/8)+i)%2)?"dark":"light");
+
+const img=document.createElement("div");
 img.className="piece";
-sq.appendChild(img);
+img.innerHTML="♟";
+
+div.appendChild(img);
+
+board.appendChild(div);
+
 }
 
-board.appendChild(sq);
-
 }
-});
+
+draw();
 
 </script>
 
