@@ -137,8 +137,6 @@ body{
     margin-bottom:36px;
 
     color:white;
-
-    letter-spacing:1px;
 }
 
 .menu{
@@ -348,8 +346,6 @@ body{
     font-size:19px;
 
     line-height:1.7;
-
-    max-width:900px;
 }
 
 /* ========================================================= */
@@ -394,55 +390,6 @@ body{
 }
 
 /* ========================================================= */
-/* BOARD AREA */
-/* ========================================================= */
-
-.board-wrap{
-
-    display:flex;
-
-    gap:18px;
-
-    justify-content:center;
-
-    align-items:center;
-}
-
-/* ========================================================= */
-/* EVAL BAR */
-/* ========================================================= */
-
-.eval-bar{
-
-    width:18px;
-
-    height:min(82vw,720px);
-
-    background:#111;
-
-    border-radius:999px;
-
-    overflow:hidden;
-
-    position:relative;
-}
-
-.eval-fill{
-
-    position:absolute;
-
-    bottom:0;
-
-    width:100%;
-
-    height:50%;
-
-    background:white;
-
-    transition:.3s;
-}
-
-/* ========================================================= */
 /* BOARD */
 /* ========================================================= */
 
@@ -463,6 +410,8 @@ body{
 
     box-shadow:
     0 0 50px rgba(0,255,174,.18);
+
+    margin:auto;
 }
 
 .square{
@@ -476,8 +425,6 @@ body{
     justify-content:center;
 
     align-items:center;
-
-    transition:.12s;
 }
 
 .light{
@@ -488,11 +435,6 @@ body{
 .dark{
 
     background:#b58863;
-}
-
-.square:hover{
-
-    filter:brightness(1.06);
 }
 
 .selected{
@@ -516,18 +458,6 @@ body{
     position:absolute;
 }
 
-.last-move{
-
-    box-shadow:
-    inset 0 0 0 5px rgba(255,255,0,.4);
-}
-
-.check{
-
-    background:
-    #ff4d4d !important;
-}
-
 .piece{
 
     width:78%;
@@ -542,14 +472,12 @@ body{
 
     -webkit-user-drag:none;
 
-    transition:
-    transform .12s;
+    transition:.12s;
 }
 
 .piece:hover{
 
-    transform:
-    scale(1.08);
+    transform:scale(1.08);
 }
 
 /* ========================================================= */
@@ -560,9 +488,9 @@ body{
 
     display:flex;
 
-    flex-wrap:wrap;
-
     gap:12px;
+
+    flex-wrap:wrap;
 
     margin-top:22px;
 }
@@ -603,10 +531,6 @@ body{
     border-radius:18px;
 
     padding:16px;
-
-    max-height:180px;
-
-    overflow:auto;
 }
 
 /* ========================================================= */
@@ -682,36 +606,6 @@ body{
     font-weight:900;
 
     margin-top:8px;
-}
-
-/* ========================================================= */
-/* MOBILE */
-/* ========================================================= */
-
-@media(max-width:1100px){
-
-    .container{
-
-        grid-template-columns:
-        1fr;
-    }
-
-    .sidebar{
-
-        display:none;
-    }
-
-    .content{
-
-        grid-template-columns:
-        1fr;
-    }
-
-    .hero h1{
-
-        font-size:42px;
-    }
-
 }
 
 </style>
@@ -824,30 +718,14 @@ body{
 
             <div class="card">
 
-                <div class="board-wrap">
-
-                    <div class="eval-bar">
-
-                        <div
-                        id="evalFill"
-                        class="eval-fill"></div>
-
-                    </div>
-
-                    <div
-                    id="board"
-                    class="board"></div>
-
-                </div>
+                <div
+                id="board"
+                class="board"></div>
 
                 <div class="god-buttons">
 
                     <button onclick="newGame()">
                         ♻ New Game
-                    </button>
-
-                    <button onclick="toggleFlip()">
-                        🔄 Flip
                     </button>
 
                     <button onclick="analyzeGame()">
@@ -963,9 +841,181 @@ body{
 
 <script type="module">
 
+/* ========================================================= */
+/* CHESS */
+/* ========================================================= */
+
 import { Chess }
 from
 "https://cdn.jsdelivr.net/npm/chess.js@1.0.0-beta.6/+esm";
+
+/* ========================================================= */
+/* FIREBASE */
+/* ========================================================= */
+
+import {
+initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+
+import {
+
+getAuth,
+GoogleAuthProvider,
+signInWithPopup,
+signOut,
+onAuthStateChanged
+
+}
+from
+"https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+
+/* ========================================================= */
+/* FIREBASE CONFIG */
+/* ========================================================= */
+
+const firebaseConfig = {
+
+apiKey:
+"AIzaSyByZbESWCAXypIJKBUNIm6KDmcXWX7SMgk",
+
+authDomain:
+"neonchess-df7aa.firebaseapp.com",
+
+databaseURL:
+"https://neonchess-df7aa-default-rtdb.firebaseio.com",
+
+projectId:
+"neonchess-df7aa",
+
+storageBucket:
+"neonchess-df7aa.firebasestorage.app",
+
+messagingSenderId:
+"784833820179",
+
+appId:
+"1:784833820179:web:3613d907d2a5b321bff1e6",
+
+measurementId:
+"G-LBDENJ65N7"
+
+};
+
+const app =
+initializeApp(
+firebaseConfig
+);
+
+const auth =
+getAuth(app);
+
+const provider =
+new GoogleAuthProvider();
+
+/* ========================================================= */
+/* LOGIN */
+/* ========================================================= */
+
+const loginBtn =
+document.getElementById(
+"loginBtn"
+);
+
+loginBtn.onclick =
+()=>{
+
+signInWithPopup(
+auth,
+provider
+);
+
+};
+
+onAuthStateChanged(
+
+auth,
+
+(user)=>{
+
+if(user){
+
+document.getElementById(
+"username"
+).childNodes[0].textContent =
+user.displayName + " ";
+
+document.getElementById(
+"email"
+).textContent =
+user.email;
+
+document.getElementById(
+"avatar"
+).src =
+user.photoURL;
+
+loginBtn.innerHTML =
+"🚪 Logout";
+
+loginBtn.onclick =
+()=>{
+
+signOut(auth);
+
+};
+
+}
+
+else{
+
+document.getElementById(
+"username"
+).childNodes[0].textContent =
+"Guest ";
+
+document.getElementById(
+"email"
+).textContent =
+"Not logged in";
+
+loginBtn.innerHTML =
+"🔐 Login Google";
+
+}
+
+}
+
+/* ========================================================= */
+/* STOCKFISH */
+/* ========================================================= */
+
+let stockfish =
+null;
+
+try{
+
+stockfish =
+new Worker(
+"https://cdn.jsdelivr.net/npm/stockfish@16.0.0/src/stockfish-nnue-16-single.js"
+);
+
+console.log(
+"Stockfish loaded"
+);
+
+}catch(e){
+
+console.log(
+"Stockfish failed"
+);
+
+}
+
+/* ========================================================= */
+/* GAME */
+/* ========================================================= */
 
 const game =
 new Chess();
@@ -977,6 +1027,13 @@ document.getElementById(
 
 let selected =
 null;
+
+let dragFrom =
+null;
+
+/* ========================================================= */
+/* PIECES */
+/* ========================================================= */
 
 const pieces = {
 
@@ -995,6 +1052,10 @@ K:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/wk.png",
 P:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/wp.png"
 
 };
+
+/* ========================================================= */
+/* DRAW BOARD */
+/* ========================================================= */
 
 function drawBoard(){
 
@@ -1054,11 +1115,38 @@ pieces[code];
 img.className =
 "piece";
 
+img.draggable =
+true;
+
+/* ===================================================== */
+/* DRAG */
+/* ===================================================== */
+
+img.addEventListener(
+
+"dragstart",
+
+()=>{
+
+dragFrom =
+name;
+
+selected =
+name;
+
+}
+
+);
+
 square.appendChild(
 img
 );
 
 }
+
+/* ===================================================== */
+/* CLICK */
+/* ===================================================== */
 
 square.onclick =
 ()=>{
@@ -1118,6 +1206,57 @@ showMoves(name);
 
 };
 
+/* ===================================================== */
+/* DROP */
+/* ===================================================== */
+
+square.addEventListener(
+
+"dragover",
+
+(e)=>{
+
+e.preventDefault();
+
+}
+
+);
+
+square.addEventListener(
+
+"drop",
+
+()=>{
+
+if(!dragFrom)return;
+
+const move =
+game.move({
+
+from:dragFrom,
+to:name,
+promotion:"q"
+
+});
+
+if(move){
+
+drawBoard();
+
+updateHistory();
+
+}
+
+selected =
+null;
+
+dragFrom =
+null;
+
+}
+
+);
+
 board.appendChild(
 square
 );
@@ -1127,6 +1266,10 @@ square
 }
 
 }
+
+/* ========================================================= */
+/* HIGHLIGHT */
+/* ========================================================= */
 
 function highlight(name){
 
@@ -1144,6 +1287,10 @@ sq.classList.add(
 }
 
 }
+
+/* ========================================================= */
+/* SHOW MOVES */
+/* ========================================================= */
 
 function showMoves(square){
 
@@ -1174,6 +1321,10 @@ sq.classList.add(
 
 }
 
+/* ========================================================= */
+/* HISTORY */
+/* ========================================================= */
+
 function updateHistory(){
 
 document.getElementById(
@@ -1182,6 +1333,10 @@ document.getElementById(
 game.history().join(" ");
 
 }
+
+/* ========================================================= */
+/* BUTTONS */
+/* ========================================================= */
 
 window.newGame =
 ()=>{
@@ -1194,20 +1349,29 @@ updateHistory();
 
 };
 
-window.toggleFlip =
-()=>{
-
-alert(
-"🔄 Flip coming soon"
-);
-
-};
-
 window.analyzeGame =
 ()=>{
 
+if(!stockfish){
+
 alert(
-"🧠 Analysis coming soon"
+"❌ Stockfish failed"
+);
+
+return;
+
+}
+
+stockfish.postMessage(
+"position fen " + game.fen()
+);
+
+stockfish.postMessage(
+"go depth 12"
+);
+
+alert(
+"🧠 Analysis started"
 );
 
 };
@@ -1216,7 +1380,7 @@ window.playVsAI =
 ()=>{
 
 alert(
-"🤖 AI coming soon"
+"🤖 AI mode coming soon"
 );
 
 };
@@ -1267,6 +1431,10 @@ alert(
 );
 
 };
+
+/* ========================================================= */
+/* START */
+/* ========================================================= */
 
 drawBoard();
 
