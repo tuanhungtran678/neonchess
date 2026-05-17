@@ -33,8 +33,8 @@ body{
     background:
     linear-gradient(
         135deg,
-        #020617,
-        #0f172a,
+        #050816,
+        #0b1120,
         #111827
     );
 
@@ -53,17 +53,14 @@ body{
 
     inset:0;
 
-    z-index:-1;
-
     overflow:hidden;
+
+    z-index:-1;
 }
 
 .glow{
 
     position:absolute;
-
-    width:500px;
-    height:500px;
 
     border-radius:50%;
 
@@ -74,18 +71,24 @@ body{
 
 .glow1{
 
+    width:500px;
+    height:500px;
+
     background:#00ffae;
 
-    top:-100px;
-    left:-100px;
+    top:-120px;
+    left:-120px;
 }
 
 .glow2{
 
+    width:500px;
+    height:500px;
+
     background:#00c3ff;
 
-    right:-100px;
-    bottom:-100px;
+    right:-120px;
+    bottom:-120px;
 }
 
 /* ========================================================= */
@@ -97,7 +100,7 @@ body{
     display:grid;
 
     grid-template-columns:
-    260px 1fr;
+    280px 1fr;
 
     min-height:100vh;
 }
@@ -109,35 +112,33 @@ body{
 .sidebar{
 
     background:
-    rgba(255,255,255,.05);
+    linear-gradient(
+        180deg,
+        #111827,
+        #0b1120
+    );
 
     border-right:
-    1px solid rgba(255,255,255,.08);
+    1px solid rgba(255,255,255,.06);
 
-    backdrop-filter:
-    blur(20px);
+    padding:26px;
 
-    padding:22px;
+    display:flex;
+
+    flex-direction:column;
 }
 
 .logo{
 
-    font-size:34px;
+    font-size:40px;
 
     font-weight:900;
 
-    margin-bottom:30px;
+    margin-bottom:36px;
 
-    background:
-    linear-gradient(
-        90deg,
-        #00ffae,
-        #00c3ff
-    );
+    color:white;
 
-    -webkit-background-clip:text;
-
-    -webkit-text-fill-color:transparent;
+    letter-spacing:1px;
 }
 
 .menu{
@@ -146,7 +147,7 @@ body{
 
     flex-direction:column;
 
-    gap:12px;
+    gap:14px;
 }
 
 .menu button{
@@ -154,38 +155,68 @@ body{
     border:none;
 
     background:
-    rgba(255,255,255,.06);
+    rgba(255,255,255,.04);
 
     color:white;
 
-    padding:16px;
+    padding:18px;
 
-    border-radius:18px;
+    border-radius:22px;
 
     text-align:left;
 
-    font-size:16px;
+    font-size:17px;
 
-    font-weight:700;
+    font-weight:800;
 
     cursor:pointer;
 
-    transition:.2s;
+    transition:.22s;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    position:relative;
+
+    overflow:hidden;
 }
 
-.menu button:hover{
+.menu button::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
 
     background:
     linear-gradient(
         90deg,
-        #00ffae,
-        #00c3ff
+        rgba(0,255,174,.16),
+        rgba(0,195,255,.16)
     );
 
-    color:#001b12;
+    opacity:0;
+
+    transition:.25s;
+}
+
+.menu button:hover::before{
+
+    opacity:1;
+}
+
+.menu button:hover{
 
     transform:
-    translateX(6px);
+    translateX(8px)
+    scale(1.02);
+
+    box-shadow:
+    0 0 24px rgba(0,255,174,.15);
 }
 
 /* ========================================================= */
@@ -194,7 +225,7 @@ body{
 
 .main{
 
-    padding:24px;
+    padding:26px;
 }
 
 /* ========================================================= */
@@ -223,9 +254,13 @@ body{
 
     border:none;
 
-    padding:14px 20px;
+    padding:14px 22px;
 
     border-radius:18px;
+
+    font-weight:900;
+
+    cursor:pointer;
 
     background:
     linear-gradient(
@@ -235,10 +270,6 @@ body{
     );
 
     color:#001b12;
-
-    font-weight:900;
-
-    cursor:pointer;
 }
 
 /* ========================================================= */
@@ -247,29 +278,49 @@ body{
 
 .hero{
 
+    position:relative;
+
+    overflow:hidden;
+
     background:
     linear-gradient(
         135deg,
-        rgba(0,255,174,.12),
-        rgba(0,195,255,.08)
+        rgba(255,255,255,.05),
+        rgba(255,255,255,.02)
     );
 
     border:
     1px solid rgba(255,255,255,.08);
 
-    border-radius:32px;
+    border-radius:38px;
 
-    padding:34px;
+    padding:42px;
 
-    margin-bottom:24px;
+    margin-bottom:26px;
+}
 
-    backdrop-filter:
-    blur(24px);
+.hero::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:420px;
+    height:420px;
+
+    background:
+    radial-gradient(
+        rgba(0,255,174,.22),
+        transparent 70%
+    );
+
+    top:-180px;
+    right:-100px;
 }
 
 .hero h1{
 
-    font-size:62px;
+    font-size:64px;
 
     line-height:1.05;
 
@@ -294,9 +345,11 @@ body{
 
     color:#cbd5e1;
 
+    font-size:19px;
+
     line-height:1.7;
 
-    font-size:19px;
+    max-width:900px;
 }
 
 /* ========================================================= */
@@ -320,17 +373,24 @@ body{
 .card{
 
     background:
-    rgba(255,255,255,.05);
+    linear-gradient(
+        180deg,
+        rgba(255,255,255,.05),
+        rgba(255,255,255,.03)
+    );
 
     border:
     1px solid rgba(255,255,255,.08);
 
-    border-radius:28px;
+    border-radius:34px;
 
     padding:24px;
 
     backdrop-filter:
     blur(24px);
+
+    box-shadow:
+    0 10px 40px rgba(0,0,0,.25);
 }
 
 /* ========================================================= */
@@ -347,6 +407,10 @@ body{
 
     align-items:center;
 }
+
+/* ========================================================= */
+/* EVAL BAR */
+/* ========================================================= */
 
 .eval-bar{
 
@@ -393,25 +457,25 @@ body{
     grid-template-columns:
     repeat(8,1fr);
 
-    border-radius:22px;
+    border-radius:24px;
 
     overflow:hidden;
 
     box-shadow:
-    0 0 40px rgba(0,255,174,.18);
+    0 0 50px rgba(0,255,174,.18);
 }
 
 .square{
 
     aspect-ratio:1/1;
 
+    position:relative;
+
     display:flex;
 
     justify-content:center;
 
     align-items:center;
-
-    position:relative;
 
     transition:.12s;
 }
@@ -428,7 +492,7 @@ body{
 
 .square:hover{
 
-    filter:brightness(1.05);
+    filter:brightness(1.06);
 }
 
 .selected{
@@ -455,7 +519,7 @@ body{
 .last-move{
 
     box-shadow:
-    inset 0 0 0 5px rgba(255,255,0,.45);
+    inset 0 0 0 5px rgba(255,255,0,.4);
 }
 
 .check{
@@ -496,9 +560,9 @@ body{
 
     display:flex;
 
-    gap:12px;
-
     flex-wrap:wrap;
+
+    gap:12px;
 
     margin-top:22px;
 }
@@ -742,11 +806,11 @@ body{
             <p>
 
                 Neon gaming UI,
-                AI engine,
-                realtime multiplayer,
+                realtime chess,
                 Puzzle Rush,
-                cloud profiles
-                and advanced analysis.
+                AI engine,
+                multiplayer
+                and cloud profiles.
 
             </p>
 
@@ -827,7 +891,6 @@ body{
                         Guest
 
                         <img
-                        id="flag"
                         src="https://flagcdn.com/w40/vn.png"
                         style="
                         width:32px;
@@ -898,202 +961,22 @@ body{
 
 </div>
 
-<!-- ===================================================== -->
-<!-- AUDIO -->
-<!-- ===================================================== -->
-
-<audio
-id="moveSound"
-src="https://images.chesscomfiles.com/chess-themes/sounds/_MP3_/default/move-self.mp3">
-</audio>
-
-<audio
-id="captureSound"
-src="https://images.chesscomfiles.com/chess-themes/sounds/_MP3_/default/capture.mp3">
-</audio>
-
-<audio
-id="checkSound"
-src="https://images.chesscomfiles.com/chess-themes/sounds/_MP3_/default/move-check.mp3">
-</audio>
-
 <script type="module">
-
-/* ========================================================= */
-/* CHESS */
-/* ========================================================= */
 
 import { Chess }
 from
 "https://cdn.jsdelivr.net/npm/chess.js@1.0.0-beta.6/+esm";
 
-/* ========================================================= */
-/* FIREBASE */
-/* ========================================================= */
-
-import {
-initializeApp
-}
-from
-"https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
-
-import {
-
-getAuth,
-GoogleAuthProvider,
-signInWithPopup,
-signOut,
-onAuthStateChanged
-
-}
-from
-"https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
-
-/* ========================================================= */
-/* FIREBASE CONFIG */
-/* ========================================================= */
-
-const firebaseConfig = {
-
-apiKey:
-"AIzaSyByZbESWCAXypIJKBUNIm6KDmcXWX7SMgk",
-
-authDomain:
-"neonchess-df7aa.firebaseapp.com",
-
-databaseURL:
-"https://neonchess-df7aa-default-rtdb.firebaseio.com",
-
-projectId:
-"neonchess-df7aa",
-
-storageBucket:
-"neonchess-df7aa.firebasestorage.app",
-
-messagingSenderId:
-"784833820179",
-
-appId:
-"1:784833820179:web:3613d907d2a5b321bff1e6",
-
-measurementId:
-"G-LBDENJ65N7"
-
-};
-
-const app =
-initializeApp(
-firebaseConfig
-);
-
-const auth =
-getAuth(app);
-
-const provider =
-new GoogleAuthProvider();
-
-/* ========================================================= */
-/* LOGIN */
-/* ========================================================= */
-
-const loginBtn =
-document.getElementById(
-"loginBtn"
-);
-
-loginBtn.onclick =
-()=>{
-
-signInWithPopup(
-auth,
-provider
-);
-
-};
-
-onAuthStateChanged(
-
-auth,
-
-(user)=>{
-
-if(user){
-
-document.getElementById(
-"username"
-).childNodes[0].textContent =
-user.displayName + " ";
-
-document.getElementById(
-"email"
-).textContent =
-user.email;
-
-document.getElementById(
-"avatar"
-).src =
-user.photoURL;
-
-loginBtn.innerHTML =
-"🚪 Logout";
-
-loginBtn.onclick =
-()=>signOut(auth);
-
-}
-
-else{
-
-loginBtn.innerHTML =
-"🔐 Login Google";
-
-loginBtn.onclick =
-()=>{
-
-signInWithPopup(
-auth,
-provider
-);
-
-};
-
-}
-
-}
-
-);
-
-/* ========================================================= */
-/* GAME */
-/* ========================================================= */
-
 const game =
 new Chess();
 
-let selected =
-null;
-
-let flipped =
-false;
-
-let aiMode =
-false;
-
-let lastMove =
-null;
-
-/* ========================================================= */
-/* STOCKFISH */
-/* ========================================================= */
-
-const stockfish =
-new Worker(
-"https://cdn.jsdelivr.net/npm/stockfish@16.0.0/src/stockfish-nnue-16-single.js"
+const board =
+document.getElementById(
+"board"
 );
 
-/* ========================================================= */
-/* PIECES */
-/* ========================================================= */
+let selected =
+null;
 
 const pieces = {
 
@@ -1113,16 +996,7 @@ P:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/wp.png"
 
 };
 
-/* ========================================================= */
-/* DRAW */
-/* ========================================================= */
-
 function drawBoard(){
-
-const board =
-document.getElementById(
-"board"
-);
 
 board.innerHTML =
 "";
@@ -1130,34 +1004,16 @@ board.innerHTML =
 const current =
 game.board();
 
-for(
-let yy=0;
-yy<8;
-yy++
-){
+for(let y=0;y<8;y++){
 
-const y =
-flipped
-? 7-yy
-: yy;
+for(let x=0;x<8;x++){
 
-for(
-let xx=0;
-xx<8;
-xx++
-){
-
-const x =
-flipped
-? 7-xx
-: xx;
-
-const sq =
+const square =
 document.createElement(
 "div"
 );
 
-sq.className =
+square.className =
 "square " +
 (
 (x+y)%2===0
@@ -1174,22 +1030,8 @@ const rank =
 const name =
 file + rank;
 
-sq.dataset.square =
+square.dataset.square =
 name;
-
-if(
-lastMove &&
-(
-name===lastMove.from ||
-name===lastMove.to
-)
-){
-
-sq.classList.add(
-"last-move"
-);
-
-}
 
 const piece =
 current[y][x];
@@ -1212,30 +1054,13 @@ pieces[code];
 img.className =
 "piece";
 
-img.draggable =
-true;
-
-img.addEventListener(
-"dragstart",
-()=>{
-
-selected =
-name;
-
-}
-);
-
-sq.appendChild(
+square.appendChild(
 img
 );
 
 }
 
-/* ===================================================== */
-/* CLICK */
-/* ===================================================== */
-
-sq.onclick =
+square.onclick =
 ()=>{
 
 if(selected===name){
@@ -1262,37 +1087,12 @@ promotion:"q"
 
 if(move){
 
-lastMove =
-move;
-
-if(move.captured){
-
-document.getElementById(
-"captureSound"
-).play();
-
-}
-else{
-
-document.getElementById(
-"moveSound"
-).play();
-
-}
-
 selected =
 null;
 
 drawBoard();
 
 updateHistory();
-
-highlightCheck();
-
-setTimeout(
-aiMove,
-250
-);
 
 return;
 
@@ -1318,62 +1118,8 @@ showMoves(name);
 
 };
 
-sq.addEventListener(
-
-"dragover",
-
-(e)=>{
-
-e.preventDefault();
-
-}
-
-);
-
-sq.addEventListener(
-
-"drop",
-
-()=>{
-
-if(!selected)return;
-
-const move =
-game.move({
-
-from:selected,
-to:name,
-promotion:"q"
-
-});
-
-if(move){
-
-lastMove =
-move;
-
-drawBoard();
-
-updateHistory();
-
-highlightCheck();
-
-setTimeout(
-aiMove,
-250
-);
-
-}
-
-selected =
-null;
-
-}
-
-);
-
 board.appendChild(
-sq
+square
 );
 
 }
@@ -1381,10 +1127,6 @@ sq
 }
 
 }
-
-/* ========================================================= */
-/* HIGHLIGHT */
-/* ========================================================= */
 
 function highlight(name){
 
@@ -1402,10 +1144,6 @@ sq.classList.add(
 }
 
 }
-
-/* ========================================================= */
-/* SHOW MOVES */
-/* ========================================================= */
 
 function showMoves(square){
 
@@ -1436,79 +1174,6 @@ sq.classList.add(
 
 }
 
-/* ========================================================= */
-/* CHECK */
-/* ========================================================= */
-
-function highlightCheck(){
-
-document
-.querySelectorAll(
-".check"
-)
-.forEach(el=>{
-
-el.classList.remove(
-"check"
-);
-
-});
-
-if(game.inCheck()){
-
-document.getElementById(
-"checkSound"
-).play();
-
-const turn =
-game.turn();
-
-const board =
-game.board();
-
-for(let y=0;y<8;y++){
-
-for(let x=0;x<8;x++){
-
-const p =
-board[y][x];
-
-if(
-p &&
-p.type==="k" &&
-p.color===turn
-){
-
-const sq =
-"abcdefgh"[x] + (8-y);
-
-const el =
-document.querySelector(
-`[data-square="${sq}"]`
-);
-
-if(el){
-
-el.classList.add(
-"check"
-);
-
-}
-
-}
-
-}
-
-}
-
-}
-
-}
-
-/* ========================================================= */
-/* HISTORY */
-/* ========================================================= */
-
 function updateHistory(){
 
 document.getElementById(
@@ -1517,121 +1182,6 @@ document.getElementById(
 game.history().join(" ");
 
 }
-
-/* ========================================================= */
-/* AI */
-/* ========================================================= */
-
-window.playVsAI =
-()=>{
-
-aiMode =
-true;
-
-alert(
-"🤖 AI enabled"
-);
-
-};
-
-function aiMove(){
-
-if(!aiMode)return;
-
-stockfish.postMessage(
-"position fen " + game.fen()
-);
-
-stockfish.postMessage(
-"go depth 10"
-);
-
-}
-
-stockfish.onmessage =
-(event)=>{
-
-const line =
-event.data;
-
-if(
-line.includes("score cp")
-){
-
-const match =
-line.match(
-/score cp (-?\d+)/
-);
-
-if(match){
-
-let val =
-parseInt(
-match[1]
-);
-
-val =
-Math.max(
--1000,
-Math.min(
-1000,
-val
-)
-);
-
-const percent =
-50 + val/20;
-
-document.getElementById(
-"evalFill"
-).style.height =
-percent + "%";
-
-}
-
-}
-
-if(
-line.startsWith(
-"bestmove"
-)
-){
-
-const move =
-line.split(" ")[1];
-
-if(
-move &&
-move!=="(none)"
-){
-
-game.move({
-
-from:move.slice(0,2),
-to:move.slice(2,4),
-promotion:"q"
-
-});
-
-document.getElementById(
-"moveSound"
-).play();
-
-drawBoard();
-
-updateHistory();
-
-highlightCheck();
-
-}
-
-}
-
-};
-
-/* ========================================================= */
-/* BUTTONS */
-/* ========================================================= */
 
 window.newGame =
 ()=>{
@@ -1647,23 +1197,38 @@ updateHistory();
 window.toggleFlip =
 ()=>{
 
-flipped =
-!flipped;
-
-drawBoard();
+alert(
+"🔄 Flip coming soon"
+);
 
 };
 
 window.analyzeGame =
 ()=>{
 
-stockfish.postMessage(
-"position fen " + game.fen()
+alert(
+"🧠 Analysis coming soon"
 );
 
-stockfish.postMessage(
-"go depth 12"
+};
+
+window.playVsAI =
+()=>{
+
+alert(
+"🤖 AI coming soon"
 );
+
+};
+
+window.startPuzzle =
+()=>{
+
+game.load(
+"8/8/8/8/4k3/8/3Q4/4K3 w - - 0 1"
+);
+
+drawBoard();
 
 };
 
@@ -1702,21 +1267,6 @@ alert(
 );
 
 };
-
-window.startPuzzle =
-()=>{
-
-game.load(
-"8/8/8/8/4k3/8/3Q4/4K3 w - - 0 1"
-);
-
-drawBoard();
-
-};
-
-/* ========================================================= */
-/* START */
-/* ========================================================= */
 
 drawBoard();
 
