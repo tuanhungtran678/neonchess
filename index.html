@@ -21,12 +21,9 @@ href="https://www.chess.com/bundles/web/images/icons/favicon.ico">
 /* ========================================================= */
 
 *{
-
     margin:0;
     padding:0;
-
     box-sizing:border-box;
-
     font-family:
     "Segoe UI",
     sans-serif;
@@ -48,7 +45,7 @@ body{
 }
 
 /* ========================================================= */
-/* BACKGROUND */
+/* BG */
 /* ========================================================= */
 
 .bg{
@@ -57,9 +54,9 @@ body{
 
     inset:0;
 
-    overflow:hidden;
-
     z-index:-1;
+
+    overflow:hidden;
 }
 
 .glow{
@@ -184,36 +181,6 @@ body{
         rgba(0,255,174,.18),
         rgba(0,195,255,.18)
     );
-}
-
-.sidebar-footer{
-
-    margin-top:auto;
-}
-
-.online{
-
-    padding:18px;
-
-    border-radius:22px;
-
-    background:
-    rgba(255,255,255,.04);
-}
-
-.online-dot{
-
-    width:12px;
-    height:12px;
-
-    border-radius:50%;
-
-    background:#00ffae;
-
-    margin-bottom:10px;
-
-    box-shadow:
-    0 0 18px #00ffae;
 }
 
 /* ========================================================= */
@@ -341,15 +308,6 @@ body{
     -webkit-text-fill-color:transparent;
 }
 
-.hero p{
-
-    color:#cbd5e1;
-
-    font-size:20px;
-
-    line-height:1.7;
-}
-
 /* ========================================================= */
 /* CONTENT */
 /* ========================================================= */
@@ -388,9 +346,32 @@ body{
 /* BOARD */
 /* ========================================================= */
 
-.board{
+.board-wrapper{
+
+    position:relative;
 
     width:min(82vw,720px);
+
+    margin:auto;
+}
+
+#arrowLayer{
+
+    position:absolute;
+
+    inset:0;
+
+    width:100%;
+    height:100%;
+
+    pointer-events:none;
+
+    z-index:5;
+}
+
+.board{
+
+    width:100%;
 
     aspect-ratio:1/1;
 
@@ -402,8 +383,6 @@ body{
     overflow:hidden;
 
     border-radius:22px;
-
-    margin:auto;
 
     box-shadow:
     0 0 40px rgba(0,255,174,.18);
@@ -423,12 +402,10 @@ body{
 }
 
 .light{
-
     background:#f0d9b5;
 }
 
 .dark{
-
     background:#b58863;
 }
 
@@ -448,7 +425,7 @@ body{
     border-radius:50%;
 
     background:
-    rgba(0,255,174,.7);
+    rgba(0,255,174,.75);
 
     position:absolute;
 }
@@ -456,7 +433,6 @@ body{
 .piece{
 
     width:78%;
-
     height:78%;
 
     object-fit:contain;
@@ -468,6 +444,8 @@ body{
     user-select:none;
 
     -webkit-user-drag:none;
+
+    z-index:2;
 }
 
 .piece:hover{
@@ -647,9 +625,7 @@ body{
     <div class="sidebar">
 
         <div class="logo">
-
             ♟ NeonChess
-
         </div>
 
         <div class="menu">
@@ -688,18 +664,6 @@ body{
 
         </div>
 
-        <div class="sidebar-footer">
-
-            <div class="online">
-
-                <div class="online-dot"></div>
-
-                ONLINE
-
-            </div>
-
-        </div>
-
     </div>
 
     <!-- ================================================= -->
@@ -713,15 +677,11 @@ body{
             <div>
 
                 <div class="title">
-
                     NeonChess
-
                 </div>
 
                 <div class="subtitle">
-
                     PS5 Style Chess Experience
-
                 </div>
 
             </div>
@@ -746,16 +706,6 @@ body{
 
             </h1>
 
-            <p>
-
-                Multiplayer,
-                AI,
-                realtime chess,
-                Puzzle Rush,
-                futuristic gaming UI.
-
-            </p>
-
         </div>
 
         <div class="content">
@@ -766,9 +716,16 @@ body{
 
             <div class="card">
 
-                <div
-                id="board"
-                class="board"></div>
+                <div class="board-wrapper">
+
+                    <svg
+                    id="arrowLayer"></svg>
+
+                    <div
+                    id="board"
+                    class="board"></div>
+
+                </div>
 
                 <div class="actions">
 
@@ -776,12 +733,8 @@ body{
                         ♻ New Game
                     </button>
 
-                    <button onclick="aiMove()">
-                        🤖 AI Move
-                    </button>
-
-                    <button onclick="playVsAI()">
-                        🎮 Play vs AI
+                    <button onclick="showBestMove()">
+                        🤖 Best Move
                     </button>
 
                 </div>
@@ -834,9 +787,7 @@ body{
                             🪙
 
                             <div class="stat-value">
-
                                 500
-
                             </div>
 
                         </div>
@@ -846,9 +797,7 @@ body{
                             🏆
 
                             <div class="stat-value">
-
                                 1200
-
                             </div>
 
                         </div>
@@ -858,9 +807,7 @@ body{
                             🔥
 
                             <div class="stat-value">
-
                                 8
-
                             </div>
 
                         </div>
@@ -1002,28 +949,6 @@ signOut(auth);
 
 }
 
-else{
-
-document.getElementById(
-"username"
-).textContent =
-"Guest 🇻🇳";
-
-document.getElementById(
-"email"
-).textContent =
-"Not logged in";
-
-document.getElementById(
-"avatar"
-).src =
-"https://i.pravatar.cc/200";
-
-loginBtn.innerHTML =
-"🔐 Login Google";
-
-}
-
 }
 
 );
@@ -1047,7 +972,7 @@ let dragFrom =
 null;
 
 /* ========================================================= */
-/* STOCKFISH 18 LITE SINGLE */
+/* STOCKFISH */
 /* ========================================================= */
 
 const stockfish =
@@ -1066,53 +991,6 @@ stockfish.postMessage(
 stockfish.postMessage(
 "ucinewgame"
 );
-
-stockfish.onmessage =
-(event)=>{
-
-const text =
-event.data;
-
-console.log(
-"SF:",
-text
-);
-
-if(
-text.startsWith(
-"bestmove"
-)
-){
-
-const move =
-text.split(" ")[1];
-
-if(
-move &&
-move !== "(none)"
-){
-
-game.move({
-
-from:
-move.substring(0,2),
-
-to:
-move.substring(2,4),
-
-promotion:"q"
-
-});
-
-drawBoard();
-
-updateHistory();
-
-}
-
-}
-
-};
 
 /* ========================================================= */
 /* PIECES */
@@ -1398,21 +1276,111 @@ game.history().join(" ");
 }
 
 /* ========================================================= */
-/* BUTTONS */
+/* DRAW ARROW */
 /* ========================================================= */
 
-window.newGame =
-()=>{
+function drawArrow(
+from,
+to
+){
 
-game.reset();
+const svg =
+document.getElementById(
+"arrowLayer"
+);
 
-drawBoard();
+svg.innerHTML =
+"";
 
-updateHistory();
+const fromEl =
+document.querySelector(
+`[data-square="${from}"]`
+);
 
-};
+const toEl =
+document.querySelector(
+`[data-square="${to}"]`
+);
 
-window.aiMove =
+if(
+!fromEl ||
+!toEl
+)return;
+
+const boardRect =
+board.getBoundingClientRect();
+
+const fromRect =
+fromEl.getBoundingClientRect();
+
+const toRect =
+toEl.getBoundingClientRect();
+
+const x1 =
+fromRect.left -
+boardRect.left +
+fromRect.width/2;
+
+const y1 =
+fromRect.top -
+boardRect.top +
+fromRect.height/2;
+
+const x2 =
+toRect.left -
+boardRect.left +
+toRect.width/2;
+
+const y2 =
+toRect.top -
+boardRect.top +
+toRect.height/2;
+
+svg.innerHTML =
+
+`
+<defs>
+
+<marker
+id="arrowhead"
+markerWidth="10"
+markerHeight="7"
+refX="9"
+refY="3.5"
+orient="auto">
+
+<polygon
+points="0 0, 10 3.5, 0 7"
+fill="#00ffae"/>
+
+</marker>
+
+</defs>
+
+<line
+x1="${x1}"
+y1="${y1}"
+x2="${x2}"
+y2="${y2}"
+
+stroke="#00ffae"
+stroke-width="12"
+stroke-linecap="round"
+
+marker-end="url(#arrowhead)"
+
+opacity="0.85"
+/>
+
+`;
+
+}
+
+/* ========================================================= */
+/* BEST MOVE */
+/* ========================================================= */
+
+window.showBestMove =
 ()=>{
 
 stockfish.postMessage(
@@ -1425,11 +1393,70 @@ stockfish.postMessage(
 
 };
 
+stockfish.onmessage =
+(event)=>{
+
+const text =
+event.data;
+
+console.log(
+"SF:",
+text
+);
+
+if(
+text.startsWith(
+"bestmove"
+)
+){
+
+const move =
+text.split(" ")[1];
+
+if(
+move &&
+move !== "(none)"
+){
+
+drawArrow(
+
+move.substring(0,2),
+
+move.substring(2,4)
+
+);
+
+}
+
+}
+
+};
+
+/* ========================================================= */
+/* BUTTONS */
+/* ========================================================= */
+
+window.newGame =
+()=>{
+
+game.reset();
+
+drawBoard();
+
+updateHistory();
+
+document.getElementById(
+"arrowLayer"
+).innerHTML =
+"";
+
+};
+
 window.playVsAI =
 ()=>{
 
 alert(
-"🎮 AI Match Mode"
+"🎮 AI Mode"
 );
 
 };
