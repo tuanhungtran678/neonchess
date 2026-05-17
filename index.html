@@ -3,11 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NeonChess TBM</title>
+
+<title>NeonChess Ultra</title>
 
 <style>
 
-/* ================= RESET ================= */
+/* ========================= */
+/* BASE */
+/* ========================= */
 
 *{
     margin:0;
@@ -17,196 +20,258 @@
 }
 
 body{
-    background:#0b1020;
+    background:#070b1a;
     color:white;
-    overflow-x:hidden;
+    overflow:hidden;
 }
 
-/* ================= LAYOUT ================= */
+/* ========================= */
+/* NEON BACKGROUND */
+/* ========================= */
 
-.hidden{display:none;}
-
-.app{
-    display:flex;
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:
+    radial-gradient(circle at top,#00ffae33,transparent 40%),
+    radial-gradient(circle at bottom,#00c3ff33,transparent 40%);
+    animation:move 8s linear infinite;
 }
 
-/* ================= SIDEBAR ================= */
+@keyframes move{
+    0%{transform:translate(0,0)}
+    50%{transform:translate(-20px,20px)}
+    100%{transform:translate(0,0)}
+}
+
+/* ========================= */
+/* SIDEBAR */
+/* ========================= */
 
 .sidebar{
+    position:fixed;
+    left:0;
+    top:0;
     width:240px;
     height:100vh;
-    background:#111a33;
+    background:#0b1025ee;
     padding:20px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    border-right:1px solid #ffffff10;
 }
 
-.sidebar button{
-    width:100%;
-    margin:10px 0;
+.side-btn{
     padding:12px;
     border:none;
-    border-radius:10px;
-    background:#1c2a55;
+    background:#ffffff10;
     color:white;
+    border-radius:12px;
     cursor:pointer;
 }
 
-/* ================= MAIN ================= */
+.side-btn:hover{
+    background:#00ffae33;
+}
+
+/* ========================= */
+/* MAIN */
+/* ========================= */
 
 .main{
-    flex:1;
-    padding:20px;
+    margin-left:260px;
+    height:100vh;
+    display:grid;
+    grid-template-rows:70px 1fr;
 }
 
-/* ================= HOME ================= */
+/* ========================= */
+/* TOPBAR */
+/* ========================= */
 
-.hero{
-    padding:20px;
-    background:#16244a;
-    border-radius:20px;
-    margin-bottom:20px;
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:10px 20px;
+    background:#0b1025aa;
+    border-bottom:1px solid #ffffff10;
 }
 
-/* ================= BOARD ================= */
+.logo{
+    font-size:22px;
+    font-weight:bold;
+    color:#00ffae;
+}
+
+.btn{
+    padding:10px 14px;
+    border:none;
+    border-radius:10px;
+    background:linear-gradient(90deg,#00ffae,#00c3ff);
+    cursor:pointer;
+}
+
+/* ========================= */
+/* LAYOUT */
+/* ========================= */
+
+.content{
+    display:grid;
+    grid-template-columns:1.4fr 1fr 1fr;
+    gap:10px;
+    padding:10px;
+}
+
+/* ========================= */
+/* CARD */
+/* ========================= */
+
+.card{
+    background:#0f1733aa;
+    border:1px solid #ffffff10;
+    border-radius:16px;
+    padding:10px;
+    backdrop-filter:blur(10px);
+}
+
+/* ========================= */
+/* BOARD */
+/* ========================= */
 
 .board{
-    width:480px;
-    height:480px;
+    width:100%;
+    aspect-ratio:1/1;
     display:grid;
     grid-template-columns:repeat(8,1fr);
-    grid-template-rows:repeat(8,1fr);
-    border-radius:12px;
-    overflow:hidden;
 }
 
 .square{
     width:100%;
     height:100%;
     display:flex;
-    justify-content:center;
     align-items:center;
+    justify-content:center;
 }
 
-.light{background:#f0d9b5;}
-.dark{background:#b58863;}
+.light{background:#f0d9b5}
+.dark{background:#b58863}
 
 .piece{
-    width:90%;
-    height:90%;
+    width:80%;
+    cursor:grab;
 }
 
-/* FIX KHÔNG MÉO */
-.board *{
-    aspect-ratio:1/1;
-}
-
-/* ================= CHAT ================= */
-
-.chat{
-    margin-top:20px;
-    background:#121a30;
-    padding:10px;
-    border-radius:10px;
-}
+/* ========================= */
+/* CHAT */
+/* ========================= */
 
 .chat-box{
-    height:200px;
+    height:300px;
     overflow:auto;
-    margin-bottom:10px;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
 }
 
 .msg{
-    margin:5px 0;
-    font-size:14px;
-    opacity:0.9;
+    padding:6px;
+    background:#ffffff10;
+    border-radius:8px;
+    font-size:12px;
 }
 
-/* ================= MENU ================= */
-
-.menu{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:15px;
+.time{
+    font-size:10px;
+    opacity:.6;
 }
 
-.card{
-    background:#1a2550;
-    padding:20px;
-    border-radius:15px;
+/* ========================= */
+/* TIMER */
+/* ========================= */
+
+.timer-btn{
+    padding:6px;
+    margin:3px;
+    border:none;
+    border-radius:8px;
+    background:#ffffff10;
+    color:white;
     cursor:pointer;
-    text-align:center;
 }
 
 </style>
 </head>
-
 <body>
 
-<!-- ================= MENU ================= -->
+<!-- ================= SIDEBAR ================= -->
 
-<div id="menu">
-
-    <h1 style="padding:20px;">♟ NeonChess Menu</h1>
-
-    <div class="menu">
-
-        <div class="card" onclick="startGame(10)">⚡ 10s Bullet</div>
-        <div class="card" onclick="startGame(30)">🔥 30s Blitz</div>
-        <div class="card" onclick="startGame(0)">📅 Daily</div>
-        <div class="card" onclick="showBoard()">▶ Play</div>
-
-    </div>
-
+<div class="sidebar">
+    <button class="side-btn">Home</button>
+    <button class="side-btn">Play</button>
+    <button class="side-btn">Puzzle</button>
+    <button class="side-btn">Chat</button>
 </div>
 
-<!-- ================= APP ================= -->
+<!-- ================= MAIN ================= -->
 
-<div id="app" class="app hidden">
+<div class="main">
 
-    <!-- SIDEBAR -->
-    <div class="sidebar">
+<!-- TOP -->
+<div class="topbar">
+    <div class="logo">NeonChess</div>
+    <button class="btn" id="loginBtn">Login Google</button>
+</div>
 
-        <button onclick="backMenu()">🏠 Menu</button>
-        <button onclick="showBoard()">♟ Board</button>
-        <button onclick="toggleChat()">💬 Chat</button>
+<!-- CONTENT -->
+<div class="content">
 
+<!-- BOARD -->
+<div class="card">
+    <h3>Board</h3>
+    <div class="board" id="board"></div>
+
+    <div>
+        <button class="timer-btn" onclick="setTime(10)">10s</button>
+        <button class="timer-btn" onclick="setTime(30)">30s</button>
+        <button class="timer-btn" onclick="setTime(86400)">Daily</button>
     </div>
 
-    <!-- MAIN -->
-    <div class="main">
+    <div id="timer">--</div>
+</div>
 
-        <!-- BOARD -->
-        <div id="boardWrap" class="hidden">
+<!-- CHAT -->
+<div class="card">
+    <h3>Chat</h3>
 
-            <h2>Chess Board</h2>
+    <div class="chat-box" id="chat"></div>
 
-            <div id="board" class="board"></div>
+    <input id="msg" placeholder="Message...">
+    <button onclick="sendMsg()">Send</button>
+</div>
 
-        </div>
-
-        <!-- CHAT -->
-        <div id="chatWrap" class="chat hidden">
-
-            <div id="chatBox" class="chat-box"></div>
-
-            <input id="msg" placeholder="chat..." />
-            <button onclick="sendMsg()">Send</button>
-
-        </div>
-
-    </div>
+<!-- PROFILE -->
+<div class="card">
+    <h3>Profile</h3>
+    <div id="user">Guest</div>
+    <div>Coin: <span id="coin">0</span></div>
+    <div>ELO: 1200</div>
+</div>
 
 </div>
+</div>
+
+<!-- ================= FIREBASE ================= -->
 
 <script type="module">
-
-/* ================= FIREBASE ================= */
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
 import {
 getAuth,
 GoogleAuthProvider,
-signInWithPopup,
-onAuthStateChanged
+signInWithPopup
 } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
 
 import {
@@ -217,78 +282,86 @@ onValue
 } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-database.js";
 
 const firebaseConfig = {
-apiKey:"AIzaSy...",
-authDomain:"neonchess-df7aa.firebaseapp.com",
-databaseURL:"https://neonchess-df7aa-default-rtdb.firebaseio.com",
-projectId:"neonchess-df7aa"
+apiKey:"xxx",
+authDomain:"xxx",
+databaseURL:"xxx",
+projectId:"xxx"
 };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase(app);
-
-/* ================= LOGIN ================= */
-
-window.loginGoogle = async ()=>{
 const provider = new GoogleAuthProvider();
-await signInWithPopup(auth, provider);
+
+/* LOGIN */
+
+document.getElementById("loginBtn").onclick = async ()=>{
+await signInWithPopup(auth,provider);
+document.getElementById("loginBtn").innerText="Logged";
 };
 
-/* ================= AUTH ================= */
+/* CHAT */
 
-onAuthStateChanged(auth,(user)=>{
-if(user){
-console.log("LOGGED:",user.email);
-}
-});
+window.sendMsg = function(){
 
-/* ================= NAV ================= */
+const msg = document.getElementById("msg").value;
 
-window.showBoard = ()=>{
-document.getElementById("menu").classList.add("hidden");
-document.getElementById("app").classList.remove("hidden");
-document.getElementById("boardWrap").classList.remove("hidden");
-};
-
-window.backMenu = ()=>{
-document.getElementById("menu").classList.remove("hidden");
-document.getElementById("app").classList.add("hidden");
-};
-
-/* ================= GAME MODE ================= */
-
-window.startGame = (time)=>{
-alert("Game time: " + time + "s");
-showBoard();
-};
-
-/* ================= CHAT ================= */
-
-window.toggleChat = ()=>{
-document.getElementById("chatWrap").classList.toggle("hidden");
-};
-
-window.sendMsg = ()=>{
-const input = document.getElementById("msg");
 push(ref(db,"chat"),{
-text:input.value,
+text:msg,
 time:Date.now()
 });
-input.value="";
+
+document.getElementById("msg").value="";
 };
 
-const chatBox = document.getElementById("chatBox");
+onValue(ref(db,"chat"),snap=>{
 
-onValue(ref(db,"chat"),(snap)=>{
-chatBox.innerHTML="";
-snap.forEach(m=>{
-const v=m.val();
-const d=new Date(v.time).toLocaleTimeString();
-chatBox.innerHTML+=`
-<div class="msg">[${d}] ${v.text}</div>
-`;
+const box = document.getElementById("chat");
+box.innerHTML="";
+
+snap.forEach(d=>{
+
+const v = d.val();
+
+box.innerHTML += `
+<div class="msg">
+${v.text}
+<div class="time">${new Date(v.time).toLocaleTimeString()}</div>
+</div>`;
+
 });
+
 });
+
+/* TIMER */
+
+let time = 0;
+let interval;
+
+window.setTime = (t)=>{
+time = t;
+clearInterval(interval);
+
+interval = setInterval(()=>{
+time--;
+document.getElementById("timer").innerText=time;
+
+if(time<=0) clearInterval(interval);
+
+},1000);
+};
+
+/* SIMPLE BOARD */
+
+const board = document.getElementById("board");
+
+for(let i=0;i<64;i++){
+
+const sq = document.createElement("div");
+sq.className = "square " + ((Math.floor(i/8)+i)%2?"dark":"light");
+board.appendChild(sq);
+
+}
 
 </script>
 
