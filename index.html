@@ -8,7 +8,7 @@
 name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>NeonChess FIXED BOARD</title>
+<title>NeonChess</title>
 
 <style>
 
@@ -39,8 +39,6 @@ body{
     );
 
     color:white;
-
-    min-height:100vh;
 
     overflow-x:hidden;
 }
@@ -99,7 +97,7 @@ body{
     display:grid;
 
     grid-template-columns:
-    270px 1fr;
+    260px 1fr;
 
     min-height:100vh;
 }
@@ -117,7 +115,7 @@ body{
     1px solid rgba(255,255,255,.08);
 
     backdrop-filter:
-    blur(25px);
+    blur(20px);
 
     padding:22px;
 }
@@ -216,7 +214,7 @@ body{
 
 .title{
 
-    font-size:44px;
+    font-size:46px;
 
     font-weight:900;
 }
@@ -336,6 +334,51 @@ body{
 }
 
 /* ========================================================= */
+/* BOARD AREA */
+/* ========================================================= */
+
+.board-wrap{
+
+    display:flex;
+
+    gap:18px;
+
+    justify-content:center;
+
+    align-items:center;
+}
+
+.eval-bar{
+
+    width:18px;
+
+    height:min(82vw,720px);
+
+    background:#111;
+
+    border-radius:999px;
+
+    overflow:hidden;
+
+    position:relative;
+}
+
+.eval-fill{
+
+    position:absolute;
+
+    bottom:0;
+
+    width:100%;
+
+    height:50%;
+
+    background:white;
+
+    transition:.3s;
+}
+
+/* ========================================================= */
 /* BOARD */
 /* ========================================================= */
 
@@ -350,8 +393,6 @@ body{
     grid-template-columns:
     repeat(8,1fr);
 
-    margin:auto;
-
     border-radius:22px;
 
     overflow:hidden;
@@ -364,13 +405,15 @@ body{
 
     aspect-ratio:1/1;
 
-    position:relative;
-
     display:flex;
+
+    justify-content:center;
 
     align-items:center;
 
-    justify-content:center;
+    position:relative;
+
+    transition:.12s;
 }
 
 .light{
@@ -409,6 +452,18 @@ body{
     position:absolute;
 }
 
+.last-move{
+
+    box-shadow:
+    inset 0 0 0 5px rgba(255,255,0,.45);
+}
+
+.check{
+
+    background:
+    #ff4d4d !important;
+}
+
 .piece{
 
     width:78%;
@@ -417,19 +472,77 @@ body{
 
     object-fit:contain;
 
-    cursor:pointer;
+    cursor:grab;
 
     user-select:none;
 
     -webkit-user-drag:none;
 
-    transition:.12s;
+    transition:
+    transform .12s;
 }
 
 .piece:hover{
 
     transform:
     scale(1.08);
+}
+
+/* ========================================================= */
+/* BUTTONS */
+/* ========================================================= */
+
+.god-buttons{
+
+    display:flex;
+
+    gap:12px;
+
+    flex-wrap:wrap;
+
+    margin-top:22px;
+}
+
+.god-buttons button{
+
+    border:none;
+
+    padding:14px 18px;
+
+    border-radius:16px;
+
+    font-weight:900;
+
+    cursor:pointer;
+
+    background:
+    linear-gradient(
+        90deg,
+        #00ffae,
+        #00c3ff
+    );
+
+    color:#001b12;
+}
+
+/* ========================================================= */
+/* HISTORY */
+/* ========================================================= */
+
+.history{
+
+    margin-top:22px;
+
+    background:
+    rgba(255,255,255,.05);
+
+    border-radius:18px;
+
+    padding:16px;
+
+    max-height:180px;
+
+    overflow:auto;
 }
 
 /* ========================================================= */
@@ -500,11 +613,11 @@ body{
 
 .stat-value{
 
-    margin-top:8px;
-
     font-size:28px;
 
     font-weight:900;
+
+    margin-top:8px;
 }
 
 /* ========================================================= */
@@ -565,17 +678,29 @@ body{
 
         <div class="menu">
 
-            <button>▶ Play</button>
+            <button onclick="startBullet()">
+                ⚡ Bullet
+            </button>
 
-            <button>🧩 Puzzle Rush</button>
+            <button onclick="startBlitz()">
+                🔥 Blitz
+            </button>
 
-            <button>🏆 Ranked</button>
+            <button onclick="startRapid()">
+                🧠 Rapid
+            </button>
 
-            <button>📺 Neon TV</button>
+            <button onclick="startMultiplayer()">
+                🌍 Multiplayer
+            </button>
 
-            <button>👤 Profile</button>
+            <button onclick="startPuzzle()">
+                🧩 Puzzle Rush
+            </button>
 
-            <button>⚙ Settings</button>
+            <button onclick="playVsAI()">
+                🤖 Play vs AI
+            </button>
 
         </div>
 
@@ -616,11 +741,12 @@ body{
 
             <p>
 
-                Realtime multiplayer,
+                Neon gaming UI,
+                AI engine,
+                realtime multiplayer,
                 Puzzle Rush,
-                cloud profiles,
-                leaderboard
-                and neon gaming UI.
+                cloud profiles
+                and advanced analysis.
 
             </p>
 
@@ -634,9 +760,45 @@ body{
 
             <div class="card">
 
-                <div
-                id="board"
-                class="board"></div>
+                <div class="board-wrap">
+
+                    <div class="eval-bar">
+
+                        <div
+                        id="evalFill"
+                        class="eval-fill"></div>
+
+                    </div>
+
+                    <div
+                    id="board"
+                    class="board"></div>
+
+                </div>
+
+                <div class="god-buttons">
+
+                    <button onclick="newGame()">
+                        ♻ New Game
+                    </button>
+
+                    <button onclick="toggleFlip()">
+                        🔄 Flip
+                    </button>
+
+                    <button onclick="analyzeGame()">
+                        🧠 Analyze
+                    </button>
+
+                </div>
+
+                <div class="history">
+
+                    <b>📜 Move History</b>
+
+                    <div id="moves"></div>
+
+                </div>
 
             </div>
 
@@ -653,9 +815,24 @@ body{
                     class="avatar"
                     src="https://i.pravatar.cc/200">
 
-                    <h2 id="username">
+                    <h2
+                    id="username"
+                    style="
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    gap:10px;
+                    ">
 
                         Guest
+
+                        <img
+                        id="flag"
+                        src="https://flagcdn.com/w40/vn.png"
+                        style="
+                        width:32px;
+                        border-radius:4px;
+                        ">
 
                     </h2>
 
@@ -721,6 +898,25 @@ body{
 
 </div>
 
+<!-- ===================================================== -->
+<!-- AUDIO -->
+<!-- ===================================================== -->
+
+<audio
+id="moveSound"
+src="https://images.chesscomfiles.com/chess-themes/sounds/_MP3_/default/move-self.mp3">
+</audio>
+
+<audio
+id="captureSound"
+src="https://images.chesscomfiles.com/chess-themes/sounds/_MP3_/default/capture.mp3">
+</audio>
+
+<audio
+id="checkSound"
+src="https://images.chesscomfiles.com/chess-themes/sounds/_MP3_/default/move-check.mp3">
+</audio>
+
 <script type="module">
 
 /* ========================================================= */
@@ -785,10 +981,6 @@ measurementId:
 
 };
 
-/* ========================================================= */
-/* INIT */
-/* ========================================================= */
-
 const app =
 initializeApp(
 firebaseConfig
@@ -819,10 +1011,6 @@ provider
 
 };
 
-/* ========================================================= */
-/* AUTH */
-/* ========================================================= */
-
 onAuthStateChanged(
 
 auth,
@@ -833,8 +1021,8 @@ if(user){
 
 document.getElementById(
 "username"
-).textContent =
-user.displayName;
+).childNodes[0].textContent =
+user.displayName + " ";
 
 document.getElementById(
 "email"
@@ -885,6 +1073,24 @@ new Chess();
 let selected =
 null;
 
+let flipped =
+false;
+
+let aiMode =
+false;
+
+let lastMove =
+null;
+
+/* ========================================================= */
+/* STOCKFISH */
+/* ========================================================= */
+
+const stockfish =
+new Worker(
+"https://cdn.jsdelivr.net/npm/stockfish@16.0.0/src/stockfish-nnue-16-single.js"
+);
+
 /* ========================================================= */
 /* PIECES */
 /* ========================================================= */
@@ -924,9 +1130,27 @@ board.innerHTML =
 const current =
 game.board();
 
-for(let y=0;y<8;y++){
+for(
+let yy=0;
+yy<8;
+yy++
+){
 
-for(let x=0;x<8;x++){
+const y =
+flipped
+? 7-yy
+: yy;
+
+for(
+let xx=0;
+xx<8;
+xx++
+){
+
+const x =
+flipped
+? 7-xx
+: xx;
 
 const sq =
 document.createElement(
@@ -953,6 +1177,20 @@ file + rank;
 sq.dataset.square =
 name;
 
+if(
+lastMove &&
+(
+name===lastMove.from ||
+name===lastMove.to
+)
+){
+
+sq.classList.add(
+"last-move"
+);
+
+}
+
 const piece =
 current[y][x];
 
@@ -974,6 +1212,19 @@ pieces[code];
 img.className =
 "piece";
 
+img.draggable =
+true;
+
+img.addEventListener(
+"dragstart",
+()=>{
+
+selected =
+name;
+
+}
+);
+
 sq.appendChild(
 img
 );
@@ -987,8 +1238,20 @@ img
 sq.onclick =
 ()=>{
 
+if(selected===name){
+
+selected =
+null;
+
+drawBoard();
+
+return;
+
+}
+
 if(selected){
 
+const move =
 game.move({
 
 from:selected,
@@ -997,12 +1260,43 @@ promotion:"q"
 
 });
 
+if(move){
+
+lastMove =
+move;
+
+if(move.captured){
+
+document.getElementById(
+"captureSound"
+).play();
+
+}
+else{
+
+document.getElementById(
+"moveSound"
+).play();
+
+}
+
 selected =
 null;
 
 drawBoard();
 
+updateHistory();
+
+highlightCheck();
+
+setTimeout(
+aiMove,
+250
+);
+
 return;
+
+}
 
 }
 
@@ -1023,6 +1317,60 @@ showMoves(name);
 }
 
 };
+
+sq.addEventListener(
+
+"dragover",
+
+(e)=>{
+
+e.preventDefault();
+
+}
+
+);
+
+sq.addEventListener(
+
+"drop",
+
+()=>{
+
+if(!selected)return;
+
+const move =
+game.move({
+
+from:selected,
+to:name,
+promotion:"q"
+
+});
+
+if(move){
+
+lastMove =
+move;
+
+drawBoard();
+
+updateHistory();
+
+highlightCheck();
+
+setTimeout(
+aiMove,
+250
+);
+
+}
+
+selected =
+null;
+
+}
+
+);
 
 board.appendChild(
 sq
@@ -1056,7 +1404,7 @@ sq.classList.add(
 }
 
 /* ========================================================= */
-/* MOVES */
+/* SHOW MOVES */
 /* ========================================================= */
 
 function showMoves(square){
@@ -1087,6 +1435,284 @@ sq.classList.add(
 });
 
 }
+
+/* ========================================================= */
+/* CHECK */
+/* ========================================================= */
+
+function highlightCheck(){
+
+document
+.querySelectorAll(
+".check"
+)
+.forEach(el=>{
+
+el.classList.remove(
+"check"
+);
+
+});
+
+if(game.inCheck()){
+
+document.getElementById(
+"checkSound"
+).play();
+
+const turn =
+game.turn();
+
+const board =
+game.board();
+
+for(let y=0;y<8;y++){
+
+for(let x=0;x<8;x++){
+
+const p =
+board[y][x];
+
+if(
+p &&
+p.type==="k" &&
+p.color===turn
+){
+
+const sq =
+"abcdefgh"[x] + (8-y);
+
+const el =
+document.querySelector(
+`[data-square="${sq}"]`
+);
+
+if(el){
+
+el.classList.add(
+"check"
+);
+
+}
+
+}
+
+}
+
+}
+
+}
+
+}
+
+/* ========================================================= */
+/* HISTORY */
+/* ========================================================= */
+
+function updateHistory(){
+
+document.getElementById(
+"moves"
+).innerHTML =
+game.history().join(" ");
+
+}
+
+/* ========================================================= */
+/* AI */
+/* ========================================================= */
+
+window.playVsAI =
+()=>{
+
+aiMode =
+true;
+
+alert(
+"🤖 AI enabled"
+);
+
+};
+
+function aiMove(){
+
+if(!aiMode)return;
+
+stockfish.postMessage(
+"position fen " + game.fen()
+);
+
+stockfish.postMessage(
+"go depth 10"
+);
+
+}
+
+stockfish.onmessage =
+(event)=>{
+
+const line =
+event.data;
+
+if(
+line.includes("score cp")
+){
+
+const match =
+line.match(
+/score cp (-?\d+)/
+);
+
+if(match){
+
+let val =
+parseInt(
+match[1]
+);
+
+val =
+Math.max(
+-1000,
+Math.min(
+1000,
+val
+)
+);
+
+const percent =
+50 + val/20;
+
+document.getElementById(
+"evalFill"
+).style.height =
+percent + "%";
+
+}
+
+}
+
+if(
+line.startsWith(
+"bestmove"
+)
+){
+
+const move =
+line.split(" ")[1];
+
+if(
+move &&
+move!=="(none)"
+){
+
+game.move({
+
+from:move.slice(0,2),
+to:move.slice(2,4),
+promotion:"q"
+
+});
+
+document.getElementById(
+"moveSound"
+).play();
+
+drawBoard();
+
+updateHistory();
+
+highlightCheck();
+
+}
+
+}
+
+};
+
+/* ========================================================= */
+/* BUTTONS */
+/* ========================================================= */
+
+window.newGame =
+()=>{
+
+game.reset();
+
+drawBoard();
+
+updateHistory();
+
+};
+
+window.toggleFlip =
+()=>{
+
+flipped =
+!flipped;
+
+drawBoard();
+
+};
+
+window.analyzeGame =
+()=>{
+
+stockfish.postMessage(
+"position fen " + game.fen()
+);
+
+stockfish.postMessage(
+"go depth 12"
+);
+
+};
+
+window.startBullet =
+()=>{
+
+alert(
+"⚡ Bullet 1+0"
+);
+
+};
+
+window.startBlitz =
+()=>{
+
+alert(
+"🔥 Blitz 3+2"
+);
+
+};
+
+window.startRapid =
+()=>{
+
+alert(
+"🧠 Rapid 10m"
+);
+
+};
+
+window.startMultiplayer =
+()=>{
+
+alert(
+"🌍 Multiplayer coming soon"
+);
+
+};
+
+window.startPuzzle =
+()=>{
+
+game.load(
+"8/8/8/8/4k3/8/3Q4/4K3 w - - 0 1"
+);
+
+drawBoard();
+
+};
 
 /* ========================================================= */
 /* START */
