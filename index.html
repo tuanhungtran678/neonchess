@@ -44,7 +44,7 @@ body{
 }
 
 /* ========================================================= */
-/* BG */
+/* BACKGROUND */
 /* ========================================================= */
 
 .bg{
@@ -66,29 +66,29 @@ body{
 
     filter:blur(120px);
 
-    opacity:.2;
+    opacity:.22;
 }
 
 .glow1{
 
-    width:500px;
-    height:500px;
+    width:520px;
+    height:520px;
 
     background:#00ffae;
 
-    top:-120px;
-    left:-120px;
+    top:-150px;
+    left:-150px;
 }
 
 .glow2{
 
-    width:500px;
-    height:500px;
+    width:520px;
+    height:520px;
 
     background:#00c3ff;
 
-    right:-120px;
-    bottom:-120px;
+    right:-150px;
+    bottom:-150px;
 }
 
 /* ========================================================= */
@@ -591,6 +591,10 @@ body{
 
     background:
     rgba(255,255,255,.05);
+
+    max-height:220px;
+
+    overflow:auto;
 }
 
 /* ========================================================= */
@@ -742,10 +746,9 @@ body{
 
                 Multiplayer,
                 AI,
-                realtime chess,
                 Puzzle Rush,
-                cloud profiles,
-                neon gaming UI.
+                realtime chess,
+                futuristic gaming UI.
 
             </p>
 
@@ -769,12 +772,12 @@ body{
                         ♻ New Game
                     </button>
 
-                    <button onclick="playVsAI()">
-                        🤖 AI
+                    <button onclick="aiMove()">
+                        🤖 AI Move
                     </button>
 
-                    <button onclick="analyzeGame()">
-                        🧠 Analyze
+                    <button onclick="playVsAI()">
+                        🎮 Play vs AI
                     </button>
 
                 </div>
@@ -871,6 +874,10 @@ body{
 </div>
 
 <script type="module">
+
+/* ========================================================= */
+/* IMPORTS */
+/* ========================================================= */
 
 import { Chess }
 from
@@ -1003,6 +1010,11 @@ document.getElementById(
 ).textContent =
 "Not logged in";
 
+document.getElementById(
+"avatar"
+).src =
+"https://i.pravatar.cc/200";
+
 loginBtn.innerHTML =
 "🔐 Login Google";
 
@@ -1013,7 +1025,7 @@ loginBtn.innerHTML =
 );
 
 /* ========================================================= */
-/* GAME */
+/* CHESS */
 /* ========================================================= */
 
 const game =
@@ -1029,6 +1041,62 @@ null;
 
 let dragFrom =
 null;
+
+/* ========================================================= */
+/* STOCKFISH */
+/* ========================================================= */
+
+const stockfish =
+new Worker(
+"./stockfish.js"
+);
+
+stockfish.onmessage =
+(event)=>{
+
+const text =
+event.data;
+
+console.log(
+"SF:",
+text
+);
+
+if(
+text.startsWith(
+"bestmove"
+)
+){
+
+const move =
+text.split(" ")[1];
+
+if(
+move &&
+move !== "(none)"
+){
+
+game.move({
+
+from:
+move.substring(0,2),
+
+to:
+move.substring(2,4),
+
+promotion:"q"
+
+});
+
+drawBoard();
+
+updateHistory();
+
+}
+
+}
+
+};
 
 /* ========================================================= */
 /* PIECES */
@@ -1053,7 +1121,7 @@ P:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/wp.png"
 };
 
 /* ========================================================= */
-/* DRAW */
+/* DRAW BOARD */
 /* ========================================================= */
 
 function drawBoard(){
@@ -1328,20 +1396,24 @@ updateHistory();
 
 };
 
-window.playVsAI =
+window.aiMove =
 ()=>{
 
-alert(
-"🤖 AI mode coming soon"
+stockfish.postMessage(
+"position fen " + game.fen()
+);
+
+stockfish.postMessage(
+"go depth 12"
 );
 
 };
 
-window.analyzeGame =
+window.playVsAI =
 ()=>{
 
 alert(
-"🧠 Analysis coming soon"
+"🎮 AI Match Mode"
 );
 
 };
