@@ -10,6 +10,10 @@ content="width=device-width, initial-scale=1.0">
 
 <title>NeonChess</title>
 
+<link
+rel="icon"
+href="https://www.chess.com/bundles/web/images/icons/favicon.ico">
+
 <style>
 
 /* ========================================================= */
@@ -748,7 +752,7 @@ body{
                 AI,
                 realtime chess,
                 Puzzle Rush,
-                futuristic UI.
+                futuristic gaming UI.
 
             </p>
 
@@ -1043,18 +1047,12 @@ let dragFrom =
 null;
 
 /* ========================================================= */
-/* STOCKFISH 18 */
+/* STOCKFISH 18 LITE SINGLE */
 /* ========================================================= */
 
 const stockfish =
 new Worker(
-
-"./stockfish.js",
-
-{
-type:"module"
-}
-
+"./stockfish-18-lite-single.js"
 );
 
 stockfish.postMessage(
