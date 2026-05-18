@@ -1,5 +1,7 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
@@ -12,739 +14,35 @@ content="width=device-width, initial-scale=1.0">
 
 <link
 rel="icon"
-href="https://www.chess.com/bundles/web/images/icons/favicon.ico">
+href="assets/icons/logo.png">
 
-<style>
+<!-- ============================== -->
+<!-- CSS -->
+<!-- ============================== -->
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:"Segoe UI",sans-serif;
-}
+<link
+rel="stylesheet"
+href="css/style.css">
 
-body{
+<link
+rel="stylesheet"
+href="css/board.css">
 
-background:
-linear-gradient(
-135deg,
-#030712,
-#0b1120,
-#111827
-);
+<link
+rel="stylesheet"
+href="css/editor.css">
 
-color:white;
+<link
+rel="stylesheet"
+href="css/animations.css">
 
-overflow:hidden;
-
-}
-
-/* ===================================================== */
-/* BACKGROUND */
-/* ===================================================== */
-
-.bg{
-
-position:fixed;
-
-inset:0;
-
-z-index:-1;
-
-overflow:hidden;
-
-}
-
-.glow{
-
-position:absolute;
-
-border-radius:50%;
-
-filter:blur(120px);
-
-opacity:.25;
-
-}
-
-.glow1{
-
-width:520px;
-height:520px;
-
-background:#00ffae;
-
-top:-160px;
-left:-160px;
-
-}
-
-.glow2{
-
-width:520px;
-height:520px;
-
-background:#00c3ff;
-
-right:-160px;
-bottom:-160px;
-
-}
-
-/* ===================================================== */
-/* LAYOUT */
-/* ===================================================== */
-
-.container{
-
-display:grid;
-
-grid-template-columns:
-280px 1fr;
-
-height:100vh;
-
-}
-
-/* ===================================================== */
-/* SIDEBAR */
-/* ===================================================== */
-
-.sidebar{
-
-background:
-rgba(255,255,255,.04);
-
-border-right:
-1px solid rgba(255,255,255,.08);
-
-backdrop-filter:
-blur(24px);
-
-padding:24px;
-
-display:flex;
-
-flex-direction:column;
-
-}
-
-.logo{
-
-font-size:44px;
-
-font-weight:900;
-
-margin-bottom:40px;
-
-}
-
-.menu{
-
-display:flex;
-
-flex-direction:column;
-
-gap:14px;
-
-}
-
-.menu button{
-
-border:none;
-
-padding:18px;
-
-border-radius:22px;
-
-background:
-rgba(255,255,255,.05);
-
-color:white;
-
-font-size:17px;
-
-font-weight:800;
-
-text-align:left;
-
-cursor:pointer;
-
-transition:.2s;
-
-}
-
-.menu button:hover{
-
-transform:
-translateX(8px);
-
-background:
-linear-gradient(
-90deg,
-rgba(0,255,174,.18),
-rgba(0,195,255,.18)
-);
-
-}
-
-/* ===================================================== */
-/* MAIN */
-/* ===================================================== */
-
-.main{
-
-padding:24px;
-
-overflow:auto;
-
-}
-
-.topbar{
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-margin-bottom:24px;
-
-}
-
-.title{
-
-font-size:58px;
-
-font-weight:900;
-
-}
-
-.subtitle{
-
-color:#9ca3af;
-
-}
-
-.login-btn{
-
-border:none;
-
-padding:16px 24px;
-
-border-radius:18px;
-
-font-weight:900;
-
-cursor:pointer;
-
-background:
-linear-gradient(
-90deg,
-#00ffae,
-#00c3ff
-);
-
-color:#001b12;
-
-}
-
-/* ===================================================== */
-/* HERO */
-/* ===================================================== */
-
-.hero{
-
-padding:44px;
-
-border-radius:34px;
-
-margin-bottom:24px;
-
-background:
-linear-gradient(
-135deg,
-rgba(255,255,255,.05),
-rgba(255,255,255,.02)
-);
-
-border:
-1px solid rgba(255,255,255,.08);
-
-position:relative;
-
-overflow:hidden;
-
-}
-
-.hero::before{
-
-content:"";
-
-position:absolute;
-
-width:520px;
-height:520px;
-
-border-radius:50%;
-
-background:
-radial-gradient(
-rgba(0,255,174,.22),
-transparent 70%
-);
-
-top:-240px;
-right:-240px;
-
-}
-
-.hero h1{
-
-font-size:74px;
-
-line-height:1.05;
-
-margin-bottom:18px;
-
-}
-
-.hero span{
-
-background:
-linear-gradient(
-90deg,
-#00ffae,
-#00c3ff
-);
-
--webkit-background-clip:text;
-
--webkit-text-fill-color:transparent;
-
-}
-
-/* ===================================================== */
-/* CONTENT */
-/* ===================================================== */
-
-.content{
-
-display:grid;
-
-grid-template-columns:
-1fr 340px;
-
-gap:24px;
-
-}
-
-.card{
-
-background:
-linear-gradient(
-180deg,
-rgba(255,255,255,.05),
-rgba(255,255,255,.03)
-);
-
-border:
-1px solid rgba(255,255,255,.08);
-
-border-radius:34px;
-
-padding:24px;
-
-backdrop-filter:
-blur(20px);
-
-}
-
-/* ===================================================== */
-/* BOARD */
-/* ===================================================== */
-
-.board-wrapper{
-
-position:relative;
-
-width:min(82vw,720px);
-
-margin:auto;
-
-}
-
-.board{
-
-width:100%;
-
-aspect-ratio:1/1;
-
-display:grid;
-
-grid-template-columns:
-repeat(8,1fr);
-
-overflow:hidden;
-
-border-radius:24px;
-
-box-shadow:
-0 0 40px rgba(0,255,174,.2);
-
-}
-
-.square{
-
-aspect-ratio:1/1;
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-position:relative;
-
-}
-
-.light{
-background:#f0d9b5;
-}
-
-.dark{
-background:#b58863;
-}
-
-.selected{
-
-box-shadow:
-inset 0 0 0 5px #00ffae;
-
-}
-
-.move::after{
-
-content:"";
-
-width:18px;
-height:18px;
-
-border-radius:50%;
-
-background:
-rgba(0,255,174,.8);
-
-position:absolute;
-
-}
-
-.piece{
-
-width:78%;
-height:78%;
-
-object-fit:contain;
-
-cursor:grab;
-
-user-select:none;
-
--webkit-user-drag:none;
-
-transition:.12s;
-
-}
-
-.piece:hover{
-
-transform:scale(1.08);
-
-}
-
-/* ===================================================== */
-/* ACTIONS */
-/* ===================================================== */
-
-.actions{
-
-display:flex;
-
-gap:12px;
-
-flex-wrap:wrap;
-
-margin-top:24px;
-
-}
-
-.actions button{
-
-border:none;
-
-padding:14px 18px;
-
-border-radius:16px;
-
-font-weight:900;
-
-cursor:pointer;
-
-background:
-linear-gradient(
-90deg,
-#00ffae,
-#00c3ff
-);
-
-color:#001b12;
-
-}
-
-/* ===================================================== */
-/* PROFILE */
-/* ===================================================== */
-
-.profile{
-
-text-align:center;
-
-}
-
-.avatar{
-
-width:120px;
-height:120px;
-
-border-radius:50%;
-
-border:
-4px solid #00ffae;
-
-margin-bottom:18px;
-
-}
-
-.badge{
-
-display:inline-block;
-
-margin-top:14px;
-
-padding:8px 14px;
-
-border-radius:999px;
-
-background:
-linear-gradient(
-90deg,
-#00ffae,
-#00c3ff
-);
-
-color:#001b12;
-
-font-weight:900;
-
-}
-
-.history{
-
-margin-top:24px;
-
-padding:16px;
-
-border-radius:18px;
-
-background:
-rgba(255,255,255,.05);
-
-max-height:220px;
-
-overflow:auto;
-
-}
-
-/* ===================================================== */
-/* VIDEO EDITOR */
-/* ===================================================== */
-
-#editorModal{
-
-display:none;
-
-position:fixed;
-
-inset:0;
-
-background:rgba(0,0,0,.86);
-
-backdrop-filter:blur(20px);
-
-z-index:9999;
-
-justify-content:center;
-
-align-items:center;
-
-padding:30px;
-
-}
-
-.editor{
-
-width:95%;
-height:92%;
-
-background:#0b1220;
-
-border-radius:30px;
-
-overflow:hidden;
-
-display:grid;
-
-grid-template-columns:
-1fr 320px;
-
-grid-template-rows:
-1fr 220px;
-
-gap:2px;
-
-}
-
-.preview{
-
-background:#111827;
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-position:relative;
-
-}
-
-.layers{
-
-background:#0f172a;
-
-padding:20px;
-
-overflow:auto;
-
-}
-
-.layer{
-
-padding:16px;
-
-border-radius:18px;
-
-margin-bottom:14px;
-
-background:
-rgba(255,255,255,.05);
-
-font-weight:800;
-
-cursor:pointer;
-
-transition:.2s;
-
-}
-
-.layer:hover{
-
-transform:
-translateX(6px);
-
-background:
-rgba(0,255,174,.16);
-
-}
-
-.timeline{
-
-grid-column:1/3;
-
-background:#111827;
-
-padding:20px;
-
-}
-
-.timeline-bar{
-
-height:90px;
-
-background:#1f2937;
-
-border-radius:18px;
-
-position:relative;
-
-overflow:hidden;
-
-}
-
-.editorBtn{
-
-border:none;
-
-padding:10px 14px;
-
-border-radius:12px;
-
-font-weight:800;
-
-cursor:pointer;
-
-background:
-linear-gradient(
-90deg,
-#00ffae,
-#00c3ff
-);
-
-color:#001b12;
-
-}
-
-/* ===================================================== */
-/* MOBILE */
-/* ===================================================== */
-
-@media(max-width:1100px){
-
-.container{
-
-grid-template-columns:
-1fr;
-
-}
-
-.sidebar{
-
-display:none;
-
-}
-
-.content{
-
-grid-template-columns:
-1fr;
-
-}
-
-}
-
-</style>
 </head>
+
 <body>
+
+<!-- ============================== -->
+<!-- BACKGROUND -->
+<!-- ============================== -->
 
 <div class="bg">
 
@@ -754,72 +52,86 @@ grid-template-columns:
 
 </div>
 
+<!-- ============================== -->
+<!-- MAIN CONTAINER -->
+<!-- ============================== -->
+
 <div class="container">
 
-<!-- ===================================================== -->
+<!-- ============================== -->
 <!-- SIDEBAR -->
-<!-- ===================================================== -->
+<!-- ============================== -->
 
-<div class="sidebar">
+<aside class="sidebar">
 
 <div class="logo">
+
 ♟ NeonChess
+
 </div>
 
 <div class="menu">
 
-<button onclick="startBullet()">
+<button id="bulletBtn">
 ⚡ Bullet
 </button>
 
-<button onclick="startBlitz()">
+<button id="blitzBtn">
 🔥 Blitz
 </button>
 
-<button onclick="startRapid()">
+<button id="rapidBtn">
 🧠 Rapid
 </button>
 
-<button onclick="startMultiplayer()">
+<button id="multiBtn">
 🌍 Multiplayer
 </button>
 
-<button onclick="startPuzzle()">
+<button id="puzzleBtn">
 🧩 Puzzle
 </button>
 
-<button onclick="playVsAI()">
+<button id="aiBtn">
 🤖 Play vs AI
 </button>
 
-<button onclick="openTrainer()">
+<button id="trainerBtn">
 🎯 Trainer
 </button>
 
-<button onclick="openEditor()">
+<button id="editorBtn">
 🎬 Edit Video
 </button>
 
 </div>
 
-</div>
+</aside>
 
-<!-- ===================================================== -->
+<!-- ============================== -->
 <!-- MAIN -->
-<!-- ===================================================== -->
+<!-- ============================== -->
 
-<div class="main">
+<main class="main">
+
+<!-- ============================== -->
+<!-- TOPBAR -->
+<!-- ============================== -->
 
 <div class="topbar">
 
 <div>
 
 <div class="title">
+
 NeonChess
+
 </div>
 
 <div class="subtitle">
+
 PS5 Style Chess Experience
+
 </div>
 
 </div>
@@ -834,7 +146,11 @@ id="loginBtn">
 
 </div>
 
-<div class="hero">
+<!-- ============================== -->
+<!-- HERO -->
+<!-- ============================== -->
+
+<section class="hero">
 
 <h1>
 
@@ -844,15 +160,19 @@ Like a
 
 </h1>
 
-</div>
+</section>
+
+<!-- ============================== -->
+<!-- CONTENT -->
+<!-- ============================== -->
 
 <div class="content">
 
-<!-- ================================================= -->
-<!-- BOARD -->
-<!-- ================================================= -->
+<!-- ============================== -->
+<!-- BOARD CARD -->
+<!-- ============================== -->
 
-<div class="card">
+<section class="card">
 
 <div class="board-wrapper">
 
@@ -864,144 +184,97 @@ class="board"></div>
 
 <div class="actions">
 
-<button onclick="newGame()">
+<button id="newGameBtn">
+
 ♻ New Game
+
 </button>
 
-<button onclick="showBestMove()">
+<button id="bestMoveBtn">
+
 🤖 Best Move
+
 </button>
 
 </div>
 
 <div class="history">
 
-<b>📜 Match History</b>
+<h3>
+
+📜 Match History
+
+</h3>
 
 <div id="moves"></div>
 
 </div>
 
-</div>
+</section>
 
-<!-- ================================================= -->
+<!-- ============================== -->
 <!-- PROFILE -->
-<!-- ================================================= -->
+<!-- ============================== -->
 
-<div class="card">
+<section class="card">
 
 <div class="profile">
 
 <img
 id="avatar"
 class="avatar"
-src="https://i.pravatar.cc/200">
+src="assets/images/default-avatar.png">
 
 <h2 id="username">
+
 Guest 🇻🇳
+
 </h2>
 
 <p id="email">
+
 Not logged in
+
 </p>
 
 <div class="badge">
+
 ADMIN SITE
-</div>
 
 </div>
 
 </div>
 
-</div>
+</section>
 
 </div>
 
+</main>
+
 </div>
 
-<!-- ===================================================== -->
+<!-- ============================== -->
 <!-- VIDEO EDITOR -->
-<!-- ===================================================== -->
+<!-- ============================== -->
 
 <div id="editorModal">
 
 <div class="editor">
 
+<!-- ============================== -->
+<!-- PREVIEW -->
+<!-- ============================== -->
+
 <div class="preview">
 
-<div
-
-style="
-position:relative;
-width:420px;
-height:420px;
-"
-
->
-
-<div
-id="miniBoard"
-
-style="
-width:100%;
-height:100%;
-display:grid;
-grid-template-columns:repeat(8,1fr);
-border-radius:20px;
-overflow:hidden;
-box-shadow:0 0 30px rgba(0,255,174,.2);
-"
-
-></div>
-
-<div
-
-style="
-position:absolute;
-bottom:12px;
-left:12px;
-right:12px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-background:rgba(0,0,0,.5);
-padding:10px 14px;
-border-radius:14px;
-backdrop-filter:blur(10px);
-"
-
->
-
-<div>
-🎬 NeonChess Edit
-</div>
-
-<div>
-00:12 / 02:34
-</div>
-
-</div>
-
-</div>
+<video
+id="videoPreview"
+class="video-preview"
+controls>
+</video>
 
 <button
-
-onclick="closeEditor()"
-
-style="
-position:absolute;
-top:20px;
-right:20px;
-border:none;
-padding:12px 18px;
-border-radius:14px;
-background:#ef4444;
-color:white;
-font-weight:900;
-cursor:pointer;
-"
-
->
+id="closeEditorBtn">
 
 ✕ Close
 
@@ -1009,166 +282,119 @@ cursor:pointer;
 
 </div>
 
-<!-- ===================================================== -->
+<!-- ============================== -->
 <!-- LAYERS -->
-<!-- ===================================================== -->
+<!-- ============================== -->
 
 <div class="layers">
 
-<h2
-style="
-margin-bottom:18px;
-">
+<h2>
 
 🎬 Layers & Assets
 
 </h2>
 
-<div
-
-style="
-display:flex;
-gap:10px;
-margin-bottom:18px;
-flex-wrap:wrap;
-"
-
->
+<div class="editor-toolbar">
 
 <button class="editorBtn">
+
 ➕ Video
+
 </button>
 
 <button class="editorBtn">
+
 🎵 Audio
+
 </button>
 
 <button class="editorBtn">
+
 🖼 Image
+
 </button>
 
 <button class="editorBtn">
+
 📝 Text
+
 </button>
 
 </div>
 
+<input
+type="file"
+id="videoUpload"
+accept="video/*">
+
+<input
+type="file"
+id="audioUpload"
+accept="audio/*">
+
 <div class="layer">
+
 🎵 Audio Track
+
 </div>
 
 <div class="layer">
+
 🖼 Overlay Image
+
 </div>
 
 <div class="layer">
+
 ♟ Chess Board
+
 </div>
 
 <div class="layer">
+
 ✨ Neon Effect
+
 </div>
 
 <div class="layer">
+
 📝 Subtitle
-</div>
 
 </div>
 
-<!-- ===================================================== -->
+</div>
+
+<!-- ============================== -->
 <!-- TIMELINE -->
-<!-- ===================================================== -->
+<!-- ============================== -->
 
 <div class="timeline">
 
-<div
-
-style="
-margin-bottom:16px;
-font-weight:900;
-"
-
->
+<h3>
 
 ⏱ Timeline
 
-</div>
+</h3>
 
 <div class="timeline-bar">
 
 <div
-
+class="clip clip-video"
 style="
-position:absolute;
-left:0;
+left:0%;
+width:60%;
 top:18px;
-height:24px;
-width:65%;
-background:linear-gradient(
-90deg,
-#00ffae,
-#00c3ff
-);
-border-radius:12px;
-"
-
-></div>
+"></div>
 
 <div
-
+class="clip clip-audio"
 style="
-position:absolute;
-left:0;
-bottom:18px;
-height:24px;
+left:10%;
 width:40%;
-background:#8b5cf6;
-border-radius:12px;
-"
-
-></div>
-
-<div
-
-style="
-position:absolute;
-top:18px;
-left:70%;
-width:18%;
-height:24px;
-background:#f59e0b;
-border-radius:12px;
-"
-
-></div>
-
-<div
-
-style="
-position:absolute;
 bottom:18px;
-left:48%;
-width:26%;
-height:24px;
-background:#ef4444;
-border-radius:12px;
-"
+"></div>
 
-></div>
-
-<div
-
-style="
-position:absolute;
-left:58%;
-top:0;
-width:4px;
-height:100%;
-background:white;
-box-shadow:0 0 12px white;
-"
-
-></div>
+<div class="playhead"></div>
 
 </div>
 
@@ -1178,484 +404,27 @@ box-shadow:0 0 12px white;
 
 </div>
 
-<!-- ===================================================== -->
+<!-- ============================== -->
 <!-- AUDIO -->
-<!-- ===================================================== -->
+<!-- ============================== -->
 
 <audio
-id="moveSound"
-src="https://images.chesscomfiles.com/chess-themes/sounds/_MP3_/default/move-self.mp3">
+id="moveSound">
 </audio>
 
 <audio
-id="captureSound"
-src="https://images.chesscomfiles.com/chess-themes/sounds/_MP3_/default/capture.mp3">
+id="captureSound">
 </audio>
 
-<script type="module">
-
-import { Chess }
-from
-"https://cdn.jsdelivr.net/npm/chess.js@1.0.0-beta.6/+esm";
-
-const game =
-new Chess();
-
-const board =
-document.getElementById(
-"board"
-);
-
-const movesDiv =
-document.getElementById(
-"moves"
-);
-
-let selected =
-null;
-
-/* ===================================================== */
-/* PIECES */
-/* ===================================================== */
-
-const pieces = {
-
-wp:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/wp.png",
-wr:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/wr.png",
-wn:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/wn.png",
-wb:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/wb.png",
-wq:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/wq.png",
-wk:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/wk.png",
-
-bp:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/bp.png",
-br:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/br.png",
-bn:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/bn.png",
-bb:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/bb.png",
-bq:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/bq.png",
-bk:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/bk.png"
-
-};
-
-/* ===================================================== */
-/* DRAW BOARD */
-/* ===================================================== */
-
-function drawBoard(){
-
-board.innerHTML =
-"";
-
-const state =
-game.board();
-
-for(let y=0;y<8;y++){
-
-for(let x=0;x<8;x++){
-
-const square =
-document.createElement(
-"div"
-);
-
-const file =
-String.fromCharCode(
-97+x
-);
-
-const rank =
-8-y;
-
-const pos =
-file + rank;
-
-square.className =
-"square " +
-(
-(x+y)%2===0
-? "light"
-: "dark"
-);
-
-square.dataset.square =
-pos;
-
-square.onclick =
-()=>clickSquare(
-pos
-);
-
-square.addEventListener(
-
-"dragover",
-
-e=>{
-
-e.preventDefault();
-
-}
-
-);
-
-square.addEventListener(
-
-"drop",
-
-e=>{
-
-e.preventDefault();
-
-const from =
-e.dataTransfer.getData(
-"text/plain"
-);
-
-movePiece(
-from,
-pos
-);
-
-}
-
-);
-
-const piece =
-state[y][x];
-
-if(piece){
-
-const img =
-document.createElement(
-"img"
-);
-
-img.className =
-"piece";
-
-img.draggable =
-true;
-
-img.src =
-pieces[
-piece.color +
-piece.type
-];
-
-img.addEventListener(
-
-"dragstart",
-
-e=>{
-
-e.dataTransfer.setData(
-"text/plain",
-pos
-);
-
-}
-
-);
-
-square.appendChild(
-img
-);
-
-}
-
-board.appendChild(
-square
-);
-
-}
-
-}
-
-updateMoves();
-
-}
-
-/* ===================================================== */
-/* MOVE PIECE */
-/* ===================================================== */
-
-function movePiece(
-from,
-to
-){
-
-clearHighlights();
-
-const target =
-game.get(to);
-
-const move =
-game.move({
-
-from:from,
-to:to,
-promotion:"q"
-
-});
-
-if(move){
-
-if(target){
-
-document.getElementById(
-"captureSound"
-).play();
-
-}else{
-
-document.getElementById(
-"moveSound"
-).play();
-
-}
-
-selected =
-null;
-
-drawBoard();
-
-}
-
-}
-
-/* ===================================================== */
-/* CLICK */
-/* ===================================================== */
-
-function clickSquare(pos){
-
-clearHighlights();
-
-if(selected === pos){
-
-selected =
-null;
-
-return;
-
-}
-
-if(selected){
-
-movePiece(
-selected,
-pos
-);
-
-return;
-
-}
-
-const piece =
-game.get(pos);
-
-if(
-piece &&
-piece.color === game.turn()
-){
-
-selected =
-pos;
-
-highlight(pos);
-
-}
-
-}
-
-/* ===================================================== */
-/* HIGHLIGHT */
-/* ===================================================== */
-
-function highlight(pos){
-
-const moves =
-game.moves({
-
-square:pos,
-verbose:true
-
-});
-
-moves.forEach(m=>{
-
-const sq =
-document.querySelector(
-'[data-square="' +
-m.to +
-'"]'
-);
-
-if(sq){
-
-sq.classList.add(
-"move"
-);
-
-}
-
-});
-
-const selectedSq =
-document.querySelector(
-'[data-square="' +
-pos +
-'"]'
-);
-
-if(selectedSq){
-
-selectedSq.classList.add(
-"selected"
-);
-
-}
-
-}
-
-function clearHighlights(){
-
-document
-.querySelectorAll(
-".square"
-)
-.forEach(s=>{
-
-s.classList.remove(
-"move"
-);
-
-s.classList.remove(
-"selected"
-);
-
-});
-
-}
-
-/* ===================================================== */
-/* UPDATE MOVES */
-/* ===================================================== */
-
-function updateMoves(){
-
-movesDiv.innerHTML =
-game.history().join(
-"<br>"
-);
-
-}
-
-/* ===================================================== */
-/* BUTTONS */
-/* ===================================================== */
-
-window.newGame =
-()=>{
-
-game.reset();
-
-drawBoard();
-
-};
-
-window.showBestMove =
-()=>{
-
-alert(
-"🤖 Stockfish ready!"
-);
-
-};
-
-window.startBullet =
-()=>alert("⚡ Bullet");
-
-window.startBlitz =
-()=>alert("🔥 Blitz");
-
-window.startRapid =
-()=>alert("🧠 Rapid");
-
-window.startPuzzle =
-()=>alert("🧩 Puzzle");
-
-window.startMultiplayer =
-()=>alert("🌍 Multiplayer");
-
-window.playVsAI =
-()=>alert("🤖 Play vs AI");
-
-window.openTrainer =
-()=>alert("🎯 Trainer");
-
-/* ===================================================== */
-/* VIDEO EDITOR */
-/* ===================================================== */
-
-window.openEditor =
-()=>{
-
-document.getElementById(
-"editorModal"
-).style.display =
-"flex";
-
-};
-
-window.closeEditor =
-()=>{
-
-document.getElementById(
-"editorModal"
-).style.display =
-"none";
-
-};
-
-/* ===================================================== */
-/* MINI BOARD */
-/* ===================================================== */
-
-function drawMiniBoard(){
-
-const mini =
-document.getElementById(
-"miniBoard"
-);
-
-for(let y=0;y<8;y++){
-
-for(let x=0;x<8;x++){
-
-const sq =
-document.createElement(
-"div"
-);
-
-sq.style.background =
-(x+y)%2===0
-? "#f0d9b5"
-: "#b58863";
-
-mini.appendChild(
-sq
-);
-
-}
-
-}
-
-}
-
-drawMiniBoard();
-
-drawBoard();
-
+<!-- ============================== -->
+<!-- JS -->
+<!-- ============================== -->
+
+<script
+type="module"
+src="js/app.js">
 </script>
 
 </body>
 </html>
+```
