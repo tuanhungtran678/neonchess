@@ -16,593 +16,725 @@ href="https://www.chess.com/bundles/web/images/icons/favicon.ico">
 
 <style>
 
-/* ========================================================= */
-/* RESET */
-/* ========================================================= */
-
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:
-    "Segoe UI",
-    sans-serif;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:"Segoe UI",sans-serif;
 }
 
 body{
 
-    background:
-    linear-gradient(
-        135deg,
-        #030712,
-        #0b1120,
-        #111827
-    );
+background:
+linear-gradient(
+135deg,
+#030712,
+#0b1120,
+#111827
+);
 
-    color:white;
+color:white;
 
-    overflow-x:hidden;
+overflow:hidden;
+
 }
 
-/* ========================================================= */
+/* ===================================================== */
 /* BACKGROUND */
-/* ========================================================= */
+/* ===================================================== */
 
 .bg{
 
-    position:fixed;
+position:fixed;
 
-    inset:0;
+inset:0;
 
-    z-index:-1;
+z-index:-1;
 
-    overflow:hidden;
+overflow:hidden;
+
 }
 
 .glow{
 
-    position:absolute;
+position:absolute;
 
-    border-radius:50%;
+border-radius:50%;
 
-    filter:blur(120px);
+filter:blur(120px);
 
-    opacity:.22;
+opacity:.22;
+
 }
 
 .glow1{
 
-    width:520px;
-    height:520px;
+width:520px;
+height:520px;
 
-    background:#00ffae;
+background:#00ffae;
 
-    top:-150px;
-    left:-150px;
+top:-150px;
+left:-150px;
+
 }
 
 .glow2{
 
-    width:520px;
-    height:520px;
+width:520px;
+height:520px;
 
-    background:#00c3ff;
+background:#00c3ff;
 
-    right:-150px;
-    bottom:-150px;
+right:-150px;
+bottom:-150px;
+
 }
 
-/* ========================================================= */
+/* ===================================================== */
 /* LAYOUT */
-/* ========================================================= */
+/* ===================================================== */
 
 .container{
 
-    display:grid;
+display:grid;
 
-    grid-template-columns:
-    290px 1fr;
+grid-template-columns:
+280px 1fr;
 
-    min-height:100vh;
+height:100vh;
+
 }
 
-/* ========================================================= */
+/* ===================================================== */
 /* SIDEBAR */
-/* ========================================================= */
+/* ===================================================== */
 
 .sidebar{
 
-    background:
-    rgba(255,255,255,.03);
+background:
+rgba(255,255,255,.03);
 
-    border-right:
-    1px solid rgba(255,255,255,.06);
+border-right:
+1px solid rgba(255,255,255,.08);
 
-    backdrop-filter:
-    blur(24px);
+backdrop-filter:
+blur(20px);
 
-    padding:24px;
+padding:24px;
 
-    display:flex;
+display:flex;
 
-    flex-direction:column;
+flex-direction:column;
+
 }
 
 .logo{
 
-    font-size:42px;
+font-size:42px;
 
-    font-weight:900;
+font-weight:900;
 
-    margin-bottom:36px;
+margin-bottom:36px;
+
 }
 
 .menu{
 
-    display:flex;
+display:flex;
 
-    flex-direction:column;
+flex-direction:column;
 
-    gap:14px;
+gap:14px;
+
 }
 
 .menu button{
 
-    border:none;
+border:none;
 
-    padding:18px;
+padding:18px;
 
-    border-radius:22px;
+border-radius:22px;
 
-    background:
-    rgba(255,255,255,.04);
+background:
+rgba(255,255,255,.05);
 
-    color:white;
+color:white;
 
-    font-size:17px;
+font-size:17px;
 
-    font-weight:800;
+font-weight:800;
 
-    text-align:left;
+text-align:left;
 
-    cursor:pointer;
+cursor:pointer;
 
-    transition:.2s;
+transition:.2s;
+
 }
 
 .menu button:hover{
 
-    transform:
-    translateX(8px);
+transform:
+translateX(8px);
 
-    background:
-    linear-gradient(
-        90deg,
-        rgba(0,255,174,.18),
-        rgba(0,195,255,.18)
-    );
+background:
+linear-gradient(
+90deg,
+rgba(0,255,174,.18),
+rgba(0,195,255,.18)
+);
+
 }
 
-/* ========================================================= */
+/* ===================================================== */
 /* MAIN */
-/* ========================================================= */
+/* ===================================================== */
 
 .main{
 
-    padding:24px;
+padding:24px;
+
+overflow:auto;
+
 }
 
 .topbar{
 
-    display:flex;
+display:flex;
 
-    justify-content:space-between;
+justify-content:space-between;
 
-    align-items:center;
+align-items:center;
 
-    margin-bottom:24px;
+margin-bottom:24px;
+
 }
 
 .title{
 
-    font-size:58px;
+font-size:58px;
 
-    font-weight:900;
+font-weight:900;
+
 }
 
 .subtitle{
 
-    color:#9ca3af;
+color:#9ca3af;
+
 }
 
 .login-btn{
 
-    border:none;
+border:none;
 
-    padding:16px 24px;
+padding:16px 24px;
 
-    border-radius:18px;
+border-radius:18px;
 
-    font-weight:900;
+font-weight:900;
 
-    cursor:pointer;
+cursor:pointer;
 
-    background:
-    linear-gradient(
-        90deg,
-        #00ffae,
-        #00c3ff
-    );
+background:
+linear-gradient(
+90deg,
+#00ffae,
+#00c3ff
+);
 
-    color:#001b12;
+color:#001b12;
+
 }
 
-/* ========================================================= */
+/* ===================================================== */
 /* HERO */
-/* ========================================================= */
+/* ===================================================== */
 
 .hero{
 
-    position:relative;
+padding:44px;
 
-    overflow:hidden;
+border-radius:34px;
 
-    padding:44px;
+margin-bottom:24px;
 
-    border-radius:34px;
+background:
+linear-gradient(
+135deg,
+rgba(255,255,255,.05),
+rgba(255,255,255,.02)
+);
 
-    margin-bottom:24px;
+border:
+1px solid rgba(255,255,255,.08);
 
-    background:
-    linear-gradient(
-        135deg,
-        rgba(255,255,255,.05),
-        rgba(255,255,255,.02)
-    );
+position:relative;
 
-    border:
-    1px solid rgba(255,255,255,.08);
+overflow:hidden;
+
 }
 
 .hero::before{
 
-    content:"";
+content:"";
 
-    position:absolute;
+position:absolute;
 
-    width:500px;
-    height:500px;
+width:500px;
+height:500px;
 
-    border-radius:50%;
+border-radius:50%;
 
-    background:
-    radial-gradient(
-        rgba(0,255,174,.2),
-        transparent 70%
-    );
+background:
+radial-gradient(
+rgba(0,255,174,.22),
+transparent 70%
+);
 
-    top:-180px;
-    right:-180px;
+top:-200px;
+right:-200px;
+
 }
 
 .hero h1{
 
-    font-size:74px;
+font-size:72px;
 
-    line-height:1.05;
+line-height:1.05;
 
-    margin-bottom:18px;
+margin-bottom:16px;
+
 }
 
 .hero span{
 
-    background:
-    linear-gradient(
-        90deg,
-        #00ffae,
-        #00c3ff
-    );
+background:
+linear-gradient(
+90deg,
+#00ffae,
+#00c3ff
+);
 
-    -webkit-background-clip:text;
+-webkit-background-clip:text;
 
-    -webkit-text-fill-color:transparent;
+-webkit-text-fill-color:transparent;
+
 }
 
-/* ========================================================= */
+/* ===================================================== */
 /* CONTENT */
-/* ========================================================= */
+/* ===================================================== */
 
 .content{
 
-    display:grid;
+display:grid;
 
-    grid-template-columns:
-    1fr 340px;
+grid-template-columns:
+1fr 340px;
 
-    gap:24px;
+gap:24px;
+
 }
 
 .card{
 
-    background:
-    linear-gradient(
-        180deg,
-        rgba(255,255,255,.05),
-        rgba(255,255,255,.03)
-    );
+background:
+linear-gradient(
+180deg,
+rgba(255,255,255,.05),
+rgba(255,255,255,.03)
+);
 
-    border:
-    1px solid rgba(255,255,255,.08);
+border:
+1px solid rgba(255,255,255,.08);
 
-    border-radius:34px;
+border-radius:34px;
 
-    padding:24px;
+padding:24px;
 
-    backdrop-filter:
-    blur(24px);
+backdrop-filter:
+blur(20px);
+
 }
 
-/* ========================================================= */
+/* ===================================================== */
 /* BOARD */
-/* ========================================================= */
+/* ===================================================== */
 
 .board-wrapper{
 
-    position:relative;
+position:relative;
 
-    width:min(82vw,720px);
+width:min(82vw,720px);
 
-    margin:auto;
-}
+margin:auto;
 
-#arrowLayer{
-
-    position:absolute;
-
-    inset:0;
-
-    width:100%;
-    height:100%;
-
-    pointer-events:none;
-
-    z-index:5;
 }
 
 .board{
 
-    width:100%;
+width:100%;
 
-    aspect-ratio:1/1;
+aspect-ratio:1/1;
 
-    display:grid;
+display:grid;
 
-    grid-template-columns:
-    repeat(8,1fr);
+grid-template-columns:
+repeat(8,1fr);
 
-    overflow:hidden;
+overflow:hidden;
 
-    border-radius:22px;
+border-radius:24px;
 
-    box-shadow:
-    0 0 40px rgba(0,255,174,.18);
+box-shadow:
+0 0 40px rgba(0,255,174,.2);
+
 }
 
 .square{
 
-    aspect-ratio:1/1;
+aspect-ratio:1/1;
 
-    display:flex;
+display:flex;
 
-    justify-content:center;
+justify-content:center;
 
-    align-items:center;
+align-items:center;
 
-    position:relative;
+position:relative;
+
 }
 
 .light{
-    background:#f0d9b5;
+background:#f0d9b5;
 }
 
 .dark{
-    background:#b58863;
+background:#b58863;
 }
 
 .selected{
 
-    box-shadow:
-    inset 0 0 0 5px #00ffae;
+box-shadow:
+inset 0 0 0 5px #00ffae;
+
 }
 
 .move::after{
 
-    content:"";
+content:"";
 
-    width:18px;
-    height:18px;
+width:18px;
+height:18px;
 
-    border-radius:50%;
+border-radius:50%;
 
-    background:
-    rgba(0,255,174,.75);
+background:
+rgba(0,255,174,.8);
 
-    position:absolute;
+position:absolute;
+
 }
 
 .piece{
 
-    width:78%;
-    height:78%;
+width:78%;
+height:78%;
 
-    object-fit:contain;
+object-fit:contain;
 
-    cursor:grab;
+cursor:grab;
 
-    transition:.12s;
+user-select:none;
 
-    user-select:none;
+-webkit-user-drag:none;
 
-    -webkit-user-drag:none;
+transition:.12s;
 
-    z-index:2;
 }
 
 .piece:hover{
 
-    transform:scale(1.08);
+transform:scale(1.08);
+
 }
 
-/* ========================================================= */
-/* ACTIONS */
-/* ========================================================= */
+/* ===================================================== */
+/* BUTTONS */
+/* ===================================================== */
 
 .actions{
 
-    display:flex;
+display:flex;
 
-    gap:12px;
+gap:12px;
 
-    flex-wrap:wrap;
+flex-wrap:wrap;
 
-    margin-top:22px;
+margin-top:24px;
+
 }
 
 .actions button{
 
-    border:none;
+border:none;
 
-    padding:14px 18px;
+padding:14px 18px;
 
-    border-radius:16px;
+border-radius:16px;
 
-    font-weight:900;
+font-weight:900;
 
-    cursor:pointer;
+cursor:pointer;
 
-    background:
-    linear-gradient(
-        90deg,
-        #00ffae,
-        #00c3ff
-    );
+background:
+linear-gradient(
+90deg,
+#00ffae,
+#00c3ff
+);
 
-    color:#001b12;
+color:#001b12;
+
 }
 
-/* ========================================================= */
+/* ===================================================== */
 /* PROFILE */
-/* ========================================================= */
+/* ===================================================== */
 
 .profile{
 
-    text-align:center;
+text-align:center;
+
 }
 
 .avatar{
 
-    width:120px;
-    height:120px;
+width:120px;
+height:120px;
 
-    border-radius:50%;
+border-radius:50%;
 
-    border:
-    4px solid #00ffae;
+border:
+4px solid #00ffae;
 
-    margin-bottom:18px;
+margin-bottom:18px;
+
 }
 
 .badge{
 
-    display:inline-block;
+display:inline-block;
 
-    margin-top:14px;
+margin-top:14px;
 
-    padding:8px 14px;
+padding:8px 14px;
 
-    border-radius:999px;
+border-radius:999px;
 
-    background:
-    linear-gradient(
-        90deg,
-        #00ffae,
-        #00c3ff
-    );
+background:
+linear-gradient(
+90deg,
+#00ffae,
+#00c3ff
+);
 
-    color:#001b12;
+color:#001b12;
 
-    font-weight:900;
+font-weight:900;
+
 }
 
 .history{
 
-    margin-top:24px;
+margin-top:24px;
 
-    padding:16px;
+padding:16px;
 
-    border-radius:18px;
+border-radius:18px;
 
-    background:
-    rgba(255,255,255,.05);
+background:
+rgba(255,255,255,.05);
 
-    max-height:220px;
+max-height:220px;
 
-    overflow:auto;
+overflow:auto;
+
 }
 
-/* ========================================================= */
-/* LAYER */
-/* ========================================================= */
+/* ===================================================== */
+/* VIDEO EDITOR */
+/* ===================================================== */
+
+#editorModal{
+
+display:none;
+
+position:fixed;
+
+inset:0;
+
+background:rgba(0,0,0,.84);
+
+backdrop-filter:blur(18px);
+
+z-index:9999;
+
+justify-content:center;
+
+align-items:center;
+
+padding:30px;
+
+}
+
+.editor{
+
+width:95%;
+height:92%;
+
+background:#0b1220;
+
+border-radius:30px;
+
+overflow:hidden;
+
+display:grid;
+
+grid-template-columns:
+1fr 320px;
+
+grid-template-rows:
+1fr 220px;
+
+gap:2px;
+
+}
+
+.preview{
+
+background:#111827;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+position:relative;
+
+}
+
+#miniBoard{
+
+width:420px;
+height:420px;
+
+display:grid;
+
+grid-template-columns:
+repeat(8,1fr);
+
+border-radius:20px;
+
+overflow:hidden;
+
+box-shadow:
+0 0 30px rgba(0,255,174,.2);
+
+}
+
+.layers{
+
+background:#0f172a;
+
+padding:20px;
+
+overflow:auto;
+
+}
 
 .layer{
 
-    padding:16px;
+padding:16px;
 
-    border-radius:18px;
+border-radius:18px;
 
-    margin-bottom:14px;
+margin-bottom:14px;
 
-    background:
-    rgba(255,255,255,.05);
+background:
+rgba(255,255,255,.05);
 
-    font-weight:800;
+font-weight:800;
 
-    transition:.2s;
+cursor:pointer;
 
-    cursor:pointer;
+transition:.2s;
+
 }
 
 .layer:hover{
 
-    transform:
-    translateX(6px);
+transform:
+translateX(6px);
 
-    background:
-    rgba(0,255,174,.15);
+background:
+rgba(0,255,174,.16);
+
 }
 
-/* ========================================================= */
+.timeline{
+
+grid-column:1/3;
+
+background:#111827;
+
+padding:20px;
+
+}
+
+.timeline-bar{
+
+height:90px;
+
+background:#1f2937;
+
+border-radius:18px;
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+/* ===================================================== */
 /* MOBILE */
-/* ========================================================= */
+/* ===================================================== */
 
 @media(max-width:1100px){
 
-    .container{
+.container{
 
-        grid-template-columns:
-        1fr;
-    }
+grid-template-columns:
+1fr;
 
-    .sidebar{
+}
 
-        display:none;
-    }
+.sidebar{
 
-    .content{
+display:none;
 
-        grid-template-columns:
-        1fr;
-    }
+}
+
+.content{
+
+grid-template-columns:
+1fr;
+
+}
 
 }
 
@@ -612,177 +744,174 @@ body{
 
 <div class="bg">
 
-    <div class="glow glow1"></div>
+<div class="glow glow1"></div>
 
-    <div class="glow glow2"></div>
+<div class="glow glow2"></div>
 
 </div>
 
 <div class="container">
 
-    <!-- ================================================= -->
-    <!-- SIDEBAR -->
-    <!-- ================================================= -->
+<!-- ===================================================== -->
+<!-- SIDEBAR -->
+<!-- ===================================================== -->
 
-    <div class="sidebar">
+<div class="sidebar">
 
-        <div class="logo">
-            ♟ NeonChess
-        </div>
+<div class="logo">
+♟ NeonChess
+</div>
 
-        <div class="menu">
+<div class="menu">
 
-            <button onclick="startBullet()">
-                ⚡ Bullet
-            </button>
+<button onclick="startBullet()">
+⚡ Bullet
+</button>
 
-            <button onclick="startBlitz()">
-                🔥 Blitz
-            </button>
+<button onclick="startBlitz()">
+🔥 Blitz
+</button>
 
-            <button onclick="startRapid()">
-                🧠 Rapid
-            </button>
+<button onclick="startRapid()">
+🧠 Rapid
+</button>
 
-            <button onclick="startMultiplayer()">
-                🌍 Multiplayer
-            </button>
+<button onclick="startMultiplayer()">
+🌍 Multiplayer
+</button>
 
-            <button onclick="startPuzzle()">
-                🧩 Puzzle
-            </button>
+<button onclick="startPuzzle()">
+🧩 Puzzle
+</button>
 
-            <button onclick="playVsAI()">
-                🤖 Play vs AI
-            </button>
+<button onclick="playVsAI()">
+🤖 Play vs AI
+</button>
 
-            <button onclick="openTrainer()">
-                🎯 Trainer
-            </button>
+<button onclick="openTrainer()">
+🎯 Trainer
+</button>
 
-            <button onclick="openEditor()">
-                🎬 Edit Video
-            </button>
+<button onclick="openEditor()">
+🎬 Edit Video
+</button>
 
-        </div>
+</div>
 
-    </div>
+</div>
 
-    <!-- ================================================= -->
-    <!-- MAIN -->
-    <!-- ================================================= -->
+<!-- ===================================================== -->
+<!-- MAIN -->
+<!-- ===================================================== -->
 
-    <div class="main">
+<div class="main">
 
-        <div class="topbar">
+<div class="topbar">
 
-            <div>
+<div>
 
-                <div class="title">
-                    NeonChess
-                </div>
+<div class="title">
+NeonChess
+</div>
 
-                <div class="subtitle">
-                    PS5 Style Chess Experience
-                </div>
+<div class="subtitle">
+PS5 Style Chess Experience
+</div>
 
-            </div>
+</div>
 
-            <button
-            class="login-btn"
-            id="loginBtn">
+<button
+class="login-btn"
+id="loginBtn">
 
-                🔐 Login Google
+🔐 Login Google
 
-            </button>
+</button>
 
-        </div>
+</div>
 
-        <div class="hero">
+<div class="hero">
 
-            <h1>
+<h1>
 
-                Play Chess
-                Like a
-                <span>PS5 Game</span>
+Play Chess
+Like a
+<span>PS5 Game</span>
 
-            </h1>
+</h1>
 
-        </div>
+</div>
 
-        <div class="content">
+<div class="content">
 
-            <!-- ========================================= -->
-            <!-- BOARD -->
-            <!-- ========================================= -->
+<!-- ================================================= -->
+<!-- BOARD -->
+<!-- ================================================= -->
 
-            <div class="card">
+<div class="card">
 
-                <div class="board-wrapper">
+<div class="board-wrapper">
 
-                    <svg
-                    id="arrowLayer"></svg>
+<div
+id="board"
+class="board"></div>
 
-                    <div
-                    id="board"
-                    class="board"></div>
+</div>
 
-                </div>
+<div class="actions">
 
-                <div class="actions">
+<button onclick="newGame()">
+♻ New Game
+</button>
 
-                    <button onclick="newGame()">
-                        ♻ New Game
-                    </button>
+<button onclick="showBestMove()">
+🤖 Best Move
+</button>
 
-                    <button onclick="showBestMove()">
-                        🤖 Best Move
-                    </button>
+</div>
 
-                </div>
+<div class="history">
 
-                <div class="history">
+<b>📜 Match History</b>
 
-                    <b>📜 Match History</b>
+<div id="moves"></div>
 
-                    <div id="moves"></div>
+</div>
 
-                </div>
+</div>
 
-            </div>
+<!-- ================================================= -->
+<!-- PROFILE -->
+<!-- ================================================= -->
 
-            <!-- ========================================= -->
-            <!-- PROFILE -->
-            <!-- ========================================= -->
+<div class="card">
 
-            <div class="card">
+<div class="profile">
 
-                <div class="profile">
+<img
+id="avatar"
+class="avatar"
+src="https://i.pravatar.cc/200">
 
-                    <img
-                    id="avatar"
-                    class="avatar"
-                    src="https://i.pravatar.cc/200">
+<h2 id="username">
+Guest 🇻🇳
+</h2>
 
-                    <h2 id="username">
-                        Guest 🇻🇳
-                    </h2>
+<p id="email">
+Not logged in
+</p>
 
-                    <p id="email">
-                        Not logged in
-                    </p>
+<div class="badge">
+ADMIN SITE
+</div>
 
-                    <div class="badge">
-                        ADMIN SITE
-                    </div>
+</div>
 
-                </div>
+</div>
 
-            </div>
+</div>
 
-        </div>
-
-    </div>
+</div>
 
 </div>
 
@@ -790,89 +919,17 @@ body{
 <!-- VIDEO EDITOR -->
 <!-- ===================================================== -->
 
-<div
-id="editorModal"
+<div id="editorModal">
 
-style="
-display:none;
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.82);
-backdrop-filter:blur(18px);
-z-index:9999;
-justify-content:center;
-align-items:center;
-padding:30px;
-">
+<div class="editor">
 
-<div
+<div class="preview">
 
-style="
-width:95%;
-height:92%;
-background:#0b1220;
-border-radius:30px;
-overflow:hidden;
-display:grid;
-grid-template-columns:1fr 320px;
-grid-template-rows:1fr 220px;
-gap:2px;
-box-shadow:0 0 50px rgba(0,255,174,.2);
-"
-
->
-
-<!-- PREVIEW -->
-
-<div
-
-style="
-background:#111827;
-display:flex;
-justify-content:center;
-align-items:center;
-position:relative;
-"
-
->
-
-<div
-
-style="
-width:420px;
-height:420px;
-border-radius:20px;
-overflow:hidden;
-box-shadow:0 0 30px rgba(0,255,174,.25);
-background:#000;
-display:flex;
-justify-content:center;
-align-items:center;
-"
-
->
-
-<div
-id="miniBoard"
-
-style="
-width:100%;
-height:100%;
-display:grid;
-grid-template-columns:repeat(8,1fr);
-"
-
-></div>
-
-</div>
+<div id="miniBoard"></div>
 
 <button
 
-onclick="
-document.getElementById(
-'editorModal'
-).style.display='none'
-"
+onclick="closeEditor()"
 
 style="
 position:absolute;
@@ -895,26 +952,10 @@ cursor:pointer;
 
 </div>
 
-<!-- LAYERS -->
+<div class="layers">
 
-<div
-
-style="
-background:#0f172a;
-padding:20px;
-overflow:auto;
-"
-
->
-
-<h2
-style="
-margin-bottom:18px;
-"
->
-
+<h2 style="margin-bottom:18px;">
 🎬 Layers
-
 </h2>
 
 <div class="layer">
@@ -939,42 +980,19 @@ margin-bottom:18px;
 
 </div>
 
-<!-- TIMELINE -->
+<div class="timeline">
 
 <div
-
-style="
-grid-column:1/3;
-background:#111827;
-padding:20px;
-"
-
->
-
-<div
-
 style="
 margin-bottom:16px;
 font-weight:900;
-"
-
->
+">
 
 ⏱ Timeline
 
 </div>
 
-<div
-
-style="
-height:90px;
-background:#1f2937;
-border-radius:18px;
-position:relative;
-overflow:hidden;
-"
-
->
+<div class="timeline-bar">
 
 <div
 
@@ -1017,10 +1035,11 @@ top:0;
 width:4px;
 height:100%;
 background:white;
-box-shadow:0 0 12px white;
 "
 
 ></div>
+
+</div>
 
 </div>
 
@@ -1052,9 +1071,9 @@ onAuthStateChanged
 from
 "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
 
-/* ========================================================= */
+/* ===================================================== */
 /* FIREBASE */
-/* ========================================================= */
+/* ===================================================== */
 
 const firebaseConfig = {
 
@@ -1095,9 +1114,9 @@ getAuth(app);
 const provider =
 new GoogleAuthProvider();
 
-/* ========================================================= */
+/* ===================================================== */
 /* LOGIN */
-/* ========================================================= */
+/* ===================================================== */
 
 const loginBtn =
 document.getElementById(
@@ -1147,13 +1166,30 @@ signOut(auth);
 
 };
 
-}
+}else{
+
+document.getElementById(
+"username"
+).textContent =
+"Guest 🇻🇳";
+
+document.getElementById(
+"email"
+).textContent =
+"Not logged in";
+
+loginBtn.innerHTML =
+"🔐 Login Google";
 
 }
 
-/* ========================================================= */
+}
+
+);
+
+/* ===================================================== */
 /* OPEN EDITOR */
-/* ========================================================= */
+/* ===================================================== */
 
 window.openEditor =
 ()=>{
@@ -1164,6 +1200,349 @@ document.getElementById(
 "flex";
 
 };
+
+window.closeEditor =
+()=>{
+
+document.getElementById(
+"editorModal"
+).style.display =
+"none";
+
+};
+
+/* ===================================================== */
+/* CHESS */
+/* ===================================================== */
+
+const game =
+new Chess();
+
+const board =
+document.getElementById(
+"board"
+);
+
+const movesDiv =
+document.getElementById(
+"moves"
+);
+
+let selected =
+null;
+
+const pieces = {
+
+wp:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/wp.png",
+wr:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/wr.png",
+wn:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/wn.png",
+wb:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/wb.png",
+wq:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/wq.png",
+wk:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/wk.png",
+
+bp:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/bp.png",
+br:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/br.png",
+bn:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/bn.png",
+bb:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/bb.png",
+bq:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/bq.png",
+bk:"https://images.chesscomfiles.com/chess-themes/pieces/neo/150/bk.png"
+
+};
+
+function drawBoard(){
+
+board.innerHTML =
+"";
+
+const state =
+game.board();
+
+for(let y=0;y<8;y++){
+
+for(let x=0;x<8;x++){
+
+const square =
+document.createElement(
+"div"
+);
+
+const file =
+String.fromCharCode(
+97+x
+);
+
+const rank =
+8-y;
+
+const pos =
+file + rank;
+
+square.className =
+"square " +
+(
+(x+y)%2===0
+? "light"
+: "dark"
+);
+
+square.dataset.square =
+pos;
+
+square.onclick =
+()=>clickSquare(
+pos
+);
+
+const piece =
+state[y][x];
+
+if(piece){
+
+const img =
+document.createElement(
+"img"
+);
+
+img.className =
+"piece";
+
+img.draggable =
+false;
+
+img.src =
+pieces[
+piece.color +
+piece.type
+];
+
+square.appendChild(
+img
+);
+
+}
+
+board.appendChild(
+square
+);
+
+}
+
+}
+
+updateMoves();
+
+}
+
+function clickSquare(pos){
+
+clearHighlights();
+
+if(selected === pos){
+
+selected =
+null;
+
+return;
+
+}
+
+if(selected){
+
+const move =
+game.move({
+
+from:selected,
+to:pos,
+promotion:"q"
+
+});
+
+if(move){
+
+selected =
+null;
+
+drawBoard();
+
+return;
+
+}
+
+}
+
+const piece =
+game.get(pos);
+
+if(
+piece &&
+piece.color === game.turn()
+){
+
+selected =
+pos;
+
+highlight(pos);
+
+}
+
+}
+
+function highlight(pos){
+
+const moves =
+game.moves({
+
+square:pos,
+verbose:true
+
+});
+
+moves.forEach(m=>{
+
+const sq =
+document.querySelector(
+'[data-square="' +
+m.to +
+'"]'
+);
+
+if(sq){
+
+sq.classList.add(
+"move"
+);
+
+}
+
+});
+
+const selectedSq =
+document.querySelector(
+'[data-square="' +
+pos +
+'"]'
+);
+
+if(selectedSq){
+
+selectedSq.classList.add(
+"selected"
+);
+
+}
+
+}
+
+function clearHighlights(){
+
+document
+.querySelectorAll(
+".square"
+)
+.forEach(s=>{
+
+s.classList.remove(
+"move"
+);
+
+s.classList.remove(
+"selected"
+);
+
+});
+
+}
+
+function updateMoves(){
+
+movesDiv.innerHTML =
+game.history().join(
+"<br>"
+);
+
+}
+
+/* ===================================================== */
+/* BUTTONS */
+/* ===================================================== */
+
+window.newGame =
+()=>{
+
+game.reset();
+
+drawBoard();
+
+};
+
+window.showBestMove =
+()=>{
+
+alert(
+"🤖 Stockfish connected!"
+);
+
+};
+
+window.startBullet =
+()=>alert("⚡ Bullet");
+
+window.startBlitz =
+()=>alert("🔥 Blitz");
+
+window.startRapid =
+()=>alert("🧠 Rapid");
+
+window.startPuzzle =
+()=>alert("🧩 Puzzle");
+
+window.startMultiplayer =
+()=>alert("🌍 Multiplayer");
+
+window.playVsAI =
+()=>alert("🤖 Play vs AI");
+
+window.openTrainer =
+()=>alert("🎯 Trainer");
+
+/* ===================================================== */
+/* MINI BOARD */
+/* ===================================================== */
+
+function drawMiniBoard(){
+
+const mini =
+document.getElementById(
+"miniBoard"
+);
+
+for(let y=0;y<8;y++){
+
+for(let x=0;x<8;x++){
+
+const sq =
+document.createElement(
+"div"
+);
+
+sq.style.background =
+(x+y)%2===0
+? "#f0d9b5"
+: "#b58863";
+
+mini.appendChild(
+sq
+);
+
+}
+
+}
+
+}
+
+drawMiniBoard();
+
+drawBoard();
 
 </script>
 
